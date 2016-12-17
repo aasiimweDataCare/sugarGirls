@@ -22,7 +22,7 @@ date_default_timezone_set('Etc/GMT-3');
 
 /*$config['base_url'] = 'http://localhost/dev_miss_travel/'; */
 
-$config['base_url'] = 'http://mis.ftfcpm.com:9000/demo3/'; //*Live
+$config['base_url'] = 'http://vps311567.ovh.net/miss_travel/'; //*Live
 
 
 /*
