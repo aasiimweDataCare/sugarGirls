@@ -34,7 +34,7 @@ class EppMainController extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('left_nav_menu', $data);
-        $this->load->view('EppMain/eppMain_view', $data);
+        $this->load->view('SugarGirlsMain/eppMain_view', $data);
         $this->load->view('footer');
         $this->load->view('footer_close_tags');
 
@@ -44,4 +44,4 @@ class EppMainController extends CI_Controller
 }
 
 /* End of file welcome.php */
-/* Location: ./application/controllers/EppMainController.php */
+/* Location: ./application/controllers/SugarGirlsMainController.php */

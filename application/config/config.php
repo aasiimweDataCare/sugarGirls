@@ -18,11 +18,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 date_default_timezone_set('Etc/GMT-3');
-/*$config['base_url'] = 'http://localhost:82/eppClient';  local*/
 
-/*$config['base_url'] = 'http://localhost/dev_miss_travel/'; */
 
-$config['base_url'] = 'http://vps311567.ovh.net/miss_travel/'; //*Live
+$config['base_url'] = 'http://localhost:82/sugarGirls/';
+
+/*$config['base_url'] = 'http://vps311567.ovh.net/miss_travel/';*/
 
 
 /*

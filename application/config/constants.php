@@ -85,11 +85,7 @@ define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
-//customized constants
-/*define('oldsite_url','http://mis.ftfcpm.com:9000/Old_Sys/');*/
-define('oldsite_url', 'http://mis.ftfcpm:82/DEV_CPM/');
-/*define('oldsite_url','http://196.10.119.130:83/fsduganda/old/');*/
-define('projectName', 'MissTravel');
+define('projectName', 'Sugar Girls');
 define('cpma_dollar_rate', 2500);
 define('Ha', 0.40468);
 define('thisMonth', date('F'));

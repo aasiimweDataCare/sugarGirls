@@ -9,16 +9,23 @@
 }
 
 body {
-    background-color: rgba(185, 247, 255, 0.31);
+    background-color: rgba(213, 109, 255, 0.19);
     /*margin: 40px;*/
     /*font: 13px/20px normal Helvetica, Arial, sans-serif;*/
     font-family: "nta", "GDS-Regular", sans-serif;
     color: #4F5155;
-    margin: 10% 0% 5% 0%;
+    margin: 5% 0% 5% 0%;
+}
+
+.home-banner{
+    background: url(../assets/images/home-page-model-4.jpg);
+    height: 700px;
+    background-size: 100% 100%;
+    opacity: 0.75;
 }
 
 a {
-    color: #69C8C9;
+    color: #3E726A;
     background-color: transparent;
     font-weight: normal;
 }
@@ -164,3 +171,6 @@ p.footer {
     color: #FFFFFF;
 
 }
+
+
+

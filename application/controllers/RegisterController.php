@@ -43,4 +43,4 @@ class RegisterController extends CI_Controller
 }
 
 /* End of file welcome.php */
-/* Location: ./application/controllers/EppMainController.php */
+/* Location: ./application/controllers/SugarGirlsMainController.php */
