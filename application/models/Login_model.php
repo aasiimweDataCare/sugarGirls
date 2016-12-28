@@ -20,21 +20,21 @@ class Login_model extends CI_Model
     //get the username & password from tbl_users
     function getUserData($usr, $pwd)
     {
-        $this->db->select("`s`.`tbl_staffId`,
-            `g`.tbl_staff_groupsId,
-            `s`.`groupCode`,
-            `s`.fullNames,
-            `s`.userName,
-            `s`.password,
-            `s`.designation,
+        $this->db->select("`u`.`tbl_userId`,
+            `g`.tbl_user_groupsId,
+            `u`.`groupCode`,
+            `u`.fullNames,
+            `u`.userName,
+            `u`.password,
+            `u`.designation,
             `d`.countryName,
-            `s`.staffStatus
-             from tbl_staff as `s`
-            left join tbl_country as `d` on(`d`.countryCode=`s`.country)
-            left join tbl_staff_groups as `g` on(`s`.groupCode=`g`.tbl_staff_groupsId)
-            where `s`.username='" . $usr . "'
-            && `s`.password= '" . md5($pwd) . "'
-            && `s`.staffStatus like 'Active'", FALSE);
+            `u`.userStatus
+             from tbl_users as `u`
+            left join tbl_country as `d` on(`d`.countryCode=`u`.country)
+            left join tbl_user_groups as `g` on(`u`.groupCode=`g`.tbl_user_groupsId)
+            where `u`.username='" . $usr . "'
+            && `u`.password= '" . md5($pwd) . "'
+            && `u`.userStatus like 'Active'", FALSE);
         $db_rows = $this->db->get();
         if ($db_rows->num_rows() > 0) {
             foreach ($db_rows->result() as $data) {

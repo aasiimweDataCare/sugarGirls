@@ -18,8 +18,8 @@ body {
 }
 
 .home-banner{
-    background: url(../assets/images/home-page-model-4.jpg);
-    height: 700px;
+    background: url(../assets/images/home-page-model-2.gif) no-repeat;
+    height: 800px;
     background-size: 100% 100%;
     opacity: 0.75;
 }
@@ -28,6 +28,7 @@ a {
     color: #3E726A;
     background-color: transparent;
     font-weight: normal;
+    text-decoration: none;
 }
 
 h1 {

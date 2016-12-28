@@ -21,13 +21,13 @@ class Dashboard_model extends CI_Model
 
     public function record_count()
     {
-        return $this->db->count_all("tbl_student");
+        return $this->db->count_all("tbl_users");
     }
 
-    public function fetch_students($limit, $start)
+    public function fetch_users($limit, $start)
     {
         $this->db->limit($limit, $start);
-        $query = $this->db->get("tbl_student");
+        $query = $this->db->get("tbl_users");
 
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
@@ -53,14 +53,14 @@ class Dashboard_model extends CI_Model
             'age' => $ag,
             'address' => $ad
         );
-        $this->db->insert('tbl_student', $data);
+        $this->db->insert('tbl_users', $data);
 
 
     }
 
     function view()
     {
-        $db_rows = $this->db->get('tbl_student');
+        $db_rows = $this->db->get('tbl_users');
         if ($db_rows->num_rows() > 0) {
             foreach ($db_rows->result() as $data) {
                 $db_data_fetched_array[] = $data;
@@ -71,13 +71,13 @@ class Dashboard_model extends CI_Model
 
     function edit($a)
     {
-        $d = $this->db->get_where('tbl_student', array('studentId' => $a))->row();
+        $d = $this->db->get_where('tbl_users', array('userId' => $a))->row();
         return $d;
     }
 
     function delete($a)
     {
-        $this->db->delete('tbl_student', array('studentId' => $a));
+        $this->db->delete('tbl_users', array('userId' => $a));
         return;
     }
 
@@ -93,7 +93,7 @@ class Dashboard_model extends CI_Model
             'age' => $ag,
             'address' => $ad
         );
-        $this->db->where('studentId', $id);
-        $this->db->update('tbl_student', $data);
+        $this->db->where('userId', $id);
+        $this->db->update('tbl_users', $data);
     }
 }

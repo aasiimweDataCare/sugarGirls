@@ -4,17 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Online Reporting System">
-    <meta name="keywords" content="Reporting,Human,Resource,Uganda,ORS">
-    <meta name="author" content="Data Care, Asiimwe, Apollo,">
+    <meta name="description" content="Online Dating and Travelling Site">
+    <meta name="keywords" content="Dating,Travelling,Girls,Sugar">
+    <meta name="author" content="Web, Solutions, Uganda, Asiimwe, Apollo,">
     <link rel="icon" href="<?= base_url() ?>assets/images/favicon.png">
 
     <link href="<?php echo base_url() ?>css/nta.css" media="all" rel="stylesheet" type="text/css">
     <title><?= projectName; ?>:Login</title>
-
     <!-- Bootstrap -->
     <link href="<?php echo base_url() ?>bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="<?php echo base_url() ?>assets/jquery.ui.1.9.2.theme/ui/1.9.2/themes/base/jquery-ui.css"
           type="text/html">
     <link href="<?php echo base_url() ?>assets/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" type="text/html">
@@ -88,7 +86,7 @@
 
 </div>
 
-<div class="container-fluid home-banner">
+<div class="col-sm-12 col-xs-12 container-fluid home-banner">
 
 </div>
 
@@ -109,33 +107,40 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="well">
-                            <form id="loginForm" method="POST" action="/login/" novalidate="novalidate">
-                                <div class="form-group">
-                                    <label for="username" class="control-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" value=""
-                                           required="" title="Please enter you username"
-                                           placeholder="example@gmail.com">
-                                    <span class="help-block"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="control-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" value=""
-                                           required="" title="Please enter your password">
-                                    <span class="help-block"></span>
-                                </div>
-                                <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" id="remember"> Remember login
-                                    </label>
-
-                                    <p class="help-block">(if this is a private computer)</p>
-                                </div>
-                                <button type="submit" class="btn btn-success btn-block">Login</button>
-                                <a href="/forgot/" class="btn btn-default btn-block">Help to login</a>
-                            </form>
+                        <?php
+                        $attributes = array("class" => "", "id" => "loginform", "name" => "loginform");
+                        echo form_open("LoginController/index", $attributes); ?>
+                        <div class="form-group">
+                            <label for="txt_username" class="control-label">Username</label>
+                            <input type="text" class="form-control" id="txt_username" name="txt_username"
+                                   value="<?php echo set_value('txt_username'); ?>"
+                                   required="required" title="Please enter you username"
+                                   placeholder="example@gmail.com">
+                            <span class="text-danger"><?php echo form_error('txt_username'); ?></span>
                         </div>
+
+                        <div class="form-group">
+                            <label for="txt_password" class="control-label">Password</label>
+                            <input type="password" class="form-control" id="txt_password" name="txt_password"
+                                   placeholder="Password" type="password"
+                                   value="<?php echo set_value('txt_password'); ?>"
+                                   required="required" title="Please enter your password"/>
+                            <span class="text-danger"><?php echo form_error('txt_password'); ?></span>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="remember" id="remember"> Remember login
+                            </label>
+
+                            <p class="help-block">(if this is a private computer)</p>
+                        </div>
+                        <input type="submit" id="btn_login" name="btn_login" type="submit"
+                               class="btn btn-success btn-block" value="Login"/>
+                        <br/>
+                        <?php echo form_close(); ?>
+                        <?php echo $this->session->flashdata('msg'); ?>
+
+                        <a href="/forgot/" class="btn btn-default btn-block">Help to login</a>
                     </div>
                 </div>
             </div>
@@ -159,67 +164,104 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="well">
-                            <form id="loginForm" method="POST" action="/login/" novalidate="novalidate">
+                        <?php
+                        $attributes = array("class" => "", "id" => "register_form", "name" => "register_form");
+                        echo form_open("LoginController/register", $attributes); ?>
 
-                                <div class="form-group">
-                                    <label for="username" class="control-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" value=""
-                                           required="" title="Please enter you username"
-                                           placeholder="Traveler1">
-                                    <span class="help-block"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="username" class="control-label">Email Address</label>
-                                    <input type="text" class="form-control" id="username" name="username" value=""
-                                           required="" title="Please enter you username"
-                                           placeholder="example@gmail.com">
-                                    <span class="help-block"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="password" class="control-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" value=""
-                                           required="" placeholder="Safe Password" title="Please enter your password">
-                                    <span class="help-block"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="password" class="control-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" value=""
-                                           required="" placeholder="Confirm Password"
-                                           title="Please re-enter your password">
-                                    <span class="help-block"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <p>if you have promo code, <a>enter it here</a></p>
-                                    <input type="text" class="form-control" id="promo-code" name="promo-code" value=""
-                                           placeholder="Enter Promo Code" title="Please enter Promo code">
-                                    <span class="help-block"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="checkbox" value="">
-                                    By creating an account, you agree to our
-                                    <a>Terms</a>
-                                    and
-                                    <a>Privacy Policy</a>
-                                    <span class="help-block"></span>
-                                </div>
-
-                                <button type="submit" class="btn btn-success btn-block">Create Account</button>
-                            </form>
-                            <p class="footer">Please <a href="#" data-toggle="modal" data-target="#loginModal">Log
-                                    In</a> if you already have an account</p>
+                        <div class="form-group">
+                            <label for="username" class="control-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   value="<?php echo set_value('username'); ?>"
+                                   required="required" title="Please enter your desired username"
+                                   placeholder="Traveler1"/>
+                            <span class="text-danger"><?php echo form_error('username'); ?></span>
                         </div>
+
+                        <div class="form-group">
+                            <label for="username" class="control-label">Email Address</label>
+                            <input type="email" class="form-control" id="email_add" name="email_add"
+                                   value="<?php echo set_value('email_add'); ?>"
+                                   required="required" title="Please enter your email address"
+                                   placeholder="example@gmail.com"/>
+                            <span class="text-danger"><?php echo form_error('email_add'); ?></span></div>
+
+                        <div class="form-group">
+                            <label for="password" class="control-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   value="<?php echo set_value('password'); ?>"
+                                   required="required" title="Please enter your desired Password"
+                                   placeholder="Safe Password"/>
+                            <span class="text-danger"><?php echo form_error('password'); ?></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpassword" class="control-label">Confirm Password</label>
+                            <input type="cpassword" class="form-control" id="cpassword" name="cpassword"
+                                   value="<?php echo set_value('cpassword'); ?>"
+                                   required="required" title="Please re-enter your password"
+                                   placeholder="Confirm Password"/>
+                            <span class="text-danger"><?php echo form_error('cpassword'); ?></span>
+                        </div>
+
+                        <div class="form-group">
+                            <p>if you have promo code, <a>enter it here</a></p>
+                            <input type="text" class="form-control" id="promo_code" name="promo_code"
+                                   value="<?php echo set_value('promo_code'); ?>"
+                                   title="Please enter Promo code"
+                                   placeholder="Enter Promo Code"/>
+                            <span class="text-danger"><?php echo form_error('promo_code'); ?></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="checkbox" value="" id="privacy_policy" name="privacy_policy">
+                            By creating an account, you agree to our
+                            <a>Terms</a>
+                            and
+                            <a>Privacy Policy</a>
+                            <span class="text-danger"><?php echo form_error('privacy_policy'); ?></span>
+                        </div>
+
+                        <input type="submit" name="register_user" id="register_user" value="Create Account"
+                                class="btn btn-success btn-block"/>
+                        <br/>
+                        <?php echo form_close(); ?>
+                        <?php echo $this->session->flashdata('msg'); ?>
+                        <p class="footer">Please <a href="#" data-toggle="modal" data-target="#loginModal">Log
+                                In</a> if you already have an account</p>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $('#register_user').click(function() {
+        var form_data = {
+            username: $('#username').val(),
+            email_add: $('#email_add').val(),
+            password: $('#password').val(),
+
+            cpassword: $('#cpassword').val(),
+            promo_code: $('#promo_code').val(),
+            privacy_policy: $('#privacy_policy').val()
+        $.ajax({
+            url: "<?php echo site_url('sugarGirls/register'); ?>",
+            type: 'POST',
+            data: form_data,
+            success: function(msg) {
+                if (msg == "no")
+                {
+                    $('#register_form').append(msg);
+                }
+                if (msg == "yes")
+                {
+                }
+            }
+        });
+        return false;
+    });
+</script>
 <!--End Register Modal -->
 
 </body>
