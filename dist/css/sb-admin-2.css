@@ -2718,3 +2718,7 @@ th, thead > tr {
     background: -moz-linear-gradient(right, #003399, #E9FCFF); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to right, #003399, #E9FCFF); /* Standard syntax */
 }
+
+.sg-background-default{
+    background-color: #00b3ee;
+}

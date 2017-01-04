@@ -8,7 +8,7 @@
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class EppMainController extends CI_Controller
+class SugarGirlsMain extends CI_Controller
 {
 
     public function __construct()
@@ -44,4 +44,4 @@ class EppMainController extends CI_Controller
 }
 
 /* End of file welcome.php */
-/* Location: ./application/controllers/SugarGirlsMainController.php */
+/* Location: ./application/controllers/SugarGirlsMain.php */

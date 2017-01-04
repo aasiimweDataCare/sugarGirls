@@ -8,7 +8,7 @@
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class DashboardController extends CI_Controller
+class Dashboard extends CI_Controller
 {
 
     public function __construct()
@@ -36,4 +36,4 @@ class DashboardController extends CI_Controller
 }
 
 /* End of file welcome.php */
-/* Location: ./application/controllers/DashboardController.php */
+/* Location: ./application/controllers/Dashboard.php */

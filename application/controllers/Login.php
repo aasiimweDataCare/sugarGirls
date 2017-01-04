@@ -8,7 +8,7 @@
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class LoginController extends CI_Controller
+class Login extends CI_Controller
 {
 
     public function __construct()
@@ -70,10 +70,10 @@ class LoginController extends CI_Controller
                         $this->Login_model->Login_systemLogs();
 
                         if (!in_array(($row->tbl_user_groupsId), array('5', '6', '13', '14'), true)) {
-                            redirect("DashboardController/index");
+                            redirect("Dashboard/index");
                         } else {
 
-                            redirect("DashboardController/salesDashboard");
+                            redirect("Dashboard/salesDashboard");
 
                         }
 
@@ -83,16 +83,32 @@ class LoginController extends CI_Controller
 
                 } else {
                     $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Invalid username and password!</div>');
-                    redirect('LoginController/index');
+                    redirect('Login/index');
                 }
             } //if validation fails
             else {
-                redirect('LoginController/index');
+                redirect('Login/index');
             }
         }
     }
 
-    public function register()   {
+    public function register_form()
+    {
+        //get the posted filter values
+        $pageAndFilterParameters = array(
+            'page_name' => 'User Register Form',
+        );
+        $this->session->set_userdata($pageAndFilterParameters);
+
+        $this->load->view('header');
+        $this->load->view('left_nav_menu');
+        $this->load->view('SugarGirlsMain/sg_register_view');
+        $this->load->view('footer');
+        $this->load->view('footer_close_tags');
+    }
+
+    public function register_submit()
+    {
         //set validations
         $this->form_validation->set_rules("username", "Username", 'trim|required|min_length[5]|max_length[12]|xss_clean|callback_alpha_space_only');
         $this->form_validation->set_rules("email_add", "Email Address", "trim|required|valid_email");
@@ -102,8 +118,8 @@ class LoginController extends CI_Controller
         $this->form_validation->set_rules("privacy_policy", "Privacy Policy", "trim|required");
 
 
-        if ($this->form_validation->run() == TRUE) {
-            echo('yes');
+        if ($this->form_validation->run() == FALSE) {
+            redirect('Login/register_form');
         } else {
             echo('no');
         }
@@ -112,7 +128,7 @@ class LoginController extends CI_Controller
     public function logout()
     {
         $this->session->sess_destroy();
-        redirect('LoginController/index');
+        redirect('Login/index');
     }
 
     //custom validation function to accept alphabets and space

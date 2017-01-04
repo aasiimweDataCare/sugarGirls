@@ -20,213 +20,85 @@ if (empty($user_name)) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?= projectName; ?>">
-    <meta name="keywords" content="<?= projectName; ?>,Domain,Registry,Rwanda,Uganda">
-    <meta name="author" content="Web Solutions">
+    <meta name="description" content="Online Dating and Travelling Site">
+    <meta name="keywords" content="Dating,Travelling,Girls,Sugar">
+    <meta name="author" content="Web, Solutions, Uganda, Asiimwe, Apollo,">
     <link rel="icon" href="<?= base_url() ?>assets/images/favicon.png">
 
-    <link href="<?= base_url() ?>css/nta.css" media="all" rel="stylesheet" type="text/css">
-    <title><?= projectName; ?>: <?= $page_name; ?></title>
-    <!-- Bootstrap Core CSS -->
-    <link href="<?= base_url() ?>bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>css/nta.css" media="all" rel="stylesheet" type="text/css">
+    <title><?= projectName; ?>:Login</title>
+    <!-- Bootstrap -->
+    <link href="<?php echo base_url() ?>bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>assets/jquery.ui.1.9.2.theme/ui/1.9.2/themes/base/jquery-ui.css"
+          type="text/html">
+    <link href="<?php echo base_url() ?>assets/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" type="text/html">
+    <link href="<?php echo base_url() ?>font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <link href="<?= base_url() ?>dist/css/bootstrap-datepicker.css" rel="stylesheet">
-    <link href="<?= base_url() ?>dist/css/bootstrap-datepicker3.css" rel="stylesheet">
-
-
-    <!-- Timeline CSS -->
-    <link href="<?= base_url() ?>dist/css/timeline.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="<?= base_url() ?>dist/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="<?= base_url() ?>font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          type="text/css">
-    <style type="text/css">
-        @media screen and (min-width: 768px) {
-            .modal-dialog {
-                width: 700px; /* New width for default modal */
-            }
-
-            .modal-sm {
-                width: 350px; /* New width for small modal */
-            }
-        }
-
-        @media screen and (min-width: 992px) {
-            .modal-lg {
-                width: 950px; /* New width for large modal */
-            }
-        }
-    </style>
-
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/login.css">
 </head>
-
-
 <body>
 
 
-<div id="loading">
-    <img id="loading-image" src="<?= base_url() ?>assets/images/ajax_loader.gif" alt="Loading..."/>
+<div class="container-fluid">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
+                    <li><a href="#" onclick="location.href='<?= site_url('Login/register_form') ?>'">Sign Up</a></li>
+                </ul>
+
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+    </nav>
+
+    <div class="col-sm-8 container-fluid well-sm"><img src="<?php echo base_url() ?>assets/images/SG-logo.png"
+                                                       width="10%" height="10%"/></div>
+    <div class="col-sm-4 container-fluid">
+        <a href="#"> <i class="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;About</a>&nbsp;&nbsp;&nbsp;
+        <a href="#"> <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;&nbsp;How It works</a>&nbsp;&nbsp;&nbsp;
+        <a href="#"> <i class="fa fa-newspaper-o" aria-hidden="true"></i>&nbsp;&nbsp;Press</a>&nbsp;&nbsp;&nbsp;
+    </div>
+
+
 </div>
 
-<div id="wrapper">
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <img src="<?= base_url() ?>assets/images/header2.gif" width="100%" height="100%"
-                 alt="<?= projectName; ?>-Banner">
-        </div>
-
-        <!-- /.navbar-header -->
-
-        <ul class="nav navbar-top-links navbar-right">
-            <!--<li class="dropdown">
-                <a class="dropdown-toggle" onclick="showHideMenu()" href="#">Admin Menu
-                    <i class="fa fa-caret-down"></i>
-                </a>
-            </li>-->
-
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account
-                    <i class="fa fa-user-circle fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                    <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#"><i class="fa fa-gear fa-fw"></i>View Client</a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="#">Summary</a></li>
-                            <li><a href="#">Pricing and policy</a></li>
-                            <li><a href="#">View Pricing</a></li>
-                            <li><a href="#">Credit Statement</a></li>
-                            <li><a href="#">Pro-foma Invoice</a></li>
-                            <li><a href="#">Manage Logins</a></li>
-                            <!--<li class="dropdown-submenu">
-                                <a href="#">Even More..</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">3rd level</a></li>
-                                    <li><a href="#">3rd level</a></li>
-                                </ul>
-                            </li>-->
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a tabindex="-2" href="#"><i class="fa fa-gear fa-fw"></i>Clear History</a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="#">Account Modifications</a></li>
-                            <li><a href="#">Login Activity</a></li>
-                            <li><a href="#">Second level</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a tabindex="-3" href="#"><i class="fa fa-gear fa-fw"></i>Edit Client</a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="#">Details</a></li>
-                            <li><a href="#">EPP Settings</a></li>
-                            <li><a href="#">EPP Restrictions</a></li>
-                            <li><a href="#">Automation</a></li>
-                            <li><a href="#">Client Reminders</a></li>
-                            <li><a href="#">Email Settings</a></li>
-                            <li><a href="#">Email Drop lists</a></li>
-                            <li><a href="#">Proxy Information</a></li>
-                            <li><a href="#">Resellers</a></li>
-                            <li><a href="#">Purchase Credit</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a tabindex="-4" href="#"><i class="fa fa-gear fa-fw"></i>Client Relations</a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="#" onclick="displayView('')">Domains</a></li>
-                            <li><a href="#">Contacts</a></li>
-                            <li><a href="#">Hosts</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
 
 
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Register
-                    <i class="fa fa-file-text fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-register">
-                    <li>
-                        <a href="#"><i class="fa fa-user fa-fw"></i>Search Domains</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>Import Domains</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>Transfer Request</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>Recent Transfer Activity</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>Download droplist</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Name servers
-                    <i class="fa fa-server fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-servers">
-                    <li>
-                        <a href="#"><i class="fa fa-user fa-fw"></i>Search Hosts</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>Create Hosts</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Contacts
-                    <i class="fa fa-address-book fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-contacts">
-                    <li>
-                        <a href="#"><i class="fa fa-user fa-fw"></i>Search Contacts</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>Create Contacts</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>Active Contacts</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>Inactive Contacts</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Profile
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> Logged in as: <b
-                                style="color: green"><?= ($this->session->userdata['name']); ?></b></a>
-                    </li>
-                    <?php
-                    $dateLastReported = (($this->session->userdata['dateLastReported']) != '') ? $this->session->userdata['dateLastReported'] : '';
-                    $dayLast = date('l', strtotime($dateLastReported));
-                    ?>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Last Reported on:<b
-                                style="color: #29388F"><?= $dayLast; ?>, <?= $dateLastReported; ?></b></a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="#" onclick="location.href='<?= site_url('LoginController/logout') ?>'"><i
-                                class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
-            <!-- /.dropdown -->
-        </ul>
-        <!-- /.navbar-top-links -->
