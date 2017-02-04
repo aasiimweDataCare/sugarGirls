@@ -10,8 +10,7 @@ class ficoraEppContactPostalInfo extends eppContactPostalInfo
     private $isFinnish;
     private $birthDate;
 
-    public function __construct($name = null, $city = null, $countrycode = null, $organisationName = null, $street = null, $province = null, $zipcode = null, $type = eppContact::TYPE_AUTO, $firstName = null, $lastName = null, $isFinnish = null, $identity = null, $birthDate = null, $registerNumber = null)
-    {
+    public function __construct($name = null, $city = null, $countrycode = null, $organisationName = null, $street = null, $province = null, $zipcode = null, $type = eppContact::TYPE_AUTO, $firstName = null, $lastName = null, $isFinnish = null, $identity = null, $birthDate = null, $registerNumber = null) {
 
         parent::__construct($name, $city, $countrycode, $organisationName, $street, $province, $zipcode, $type);
 
@@ -21,6 +20,42 @@ class ficoraEppContactPostalInfo extends eppContactPostalInfo
         $this->setIdentity($identity);
         $this->setBirthDate($birthDate);
         $this->setRegisterNumber($registerNumber);
+    }
+
+    /**
+     * Sets the first name of the person
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = htmlspecialchars($firstName, ENT_COMPAT, "UTF-8");
+    }
+
+    /**
+     * Gets the first name of the person
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Sets the last name of the person
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName =  htmlspecialchars($lastName, ENT_COMPAT, "UTF-8");
+    }
+
+    /**
+     * Gets the last name of the person
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
     }
 
     /**
@@ -37,39 +72,12 @@ class ficoraEppContactPostalInfo extends eppContactPostalInfo
     }
 
     /**
-     * Gets the first name of the person
-     * @return string
+     * Sets the "is finnish" status of the contact
+     * @param string $isFinnish
      */
-    public function getFirstName()
+    public function setIsFinnish($isFinnish)
     {
-        return $this->firstName;
-    }
-
-    /**
-     * Sets the first name of the person
-     * @param string $firstName
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = htmlspecialchars($firstName, ENT_COMPAT, "UTF-8");
-    }
-
-    /**
-     * Gets the last name of the person
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Sets the last name of the person
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = htmlspecialchars($lastName, ENT_COMPAT, "UTF-8");
+        $this->isFinnish = htmlspecialchars($isFinnish, ENT_COMPAT, "UTF-8");
     }
 
     /**
@@ -82,12 +90,12 @@ class ficoraEppContactPostalInfo extends eppContactPostalInfo
     }
 
     /**
-     * Sets the "is finnish" status of the contact
-     * @param string $isFinnish
+     * Sets the identity (social security number) of the person
+     * @param string $identity
      */
-    public function setIsFinnish($isFinnish)
+    public function setIdentity($identity)
     {
-        $this->isFinnish = htmlspecialchars($isFinnish, ENT_COMPAT, "UTF-8");
+        $this->identity = htmlspecialchars($identity, ENT_COMPAT, "UTF-8");
     }
 
     /**
@@ -100,12 +108,12 @@ class ficoraEppContactPostalInfo extends eppContactPostalInfo
     }
 
     /**
-     * Sets the identity (social security number) of the person
-     * @param string $identity
+     * Sets the birth of the (foreign) person
+     * @param string $birthDate
      */
-    public function setIdentity($identity)
+    public function setBirthDate($birthDate)
     {
-        $this->identity = htmlspecialchars($identity, ENT_COMPAT, "UTF-8");
+        $this->birthDate = htmlspecialchars($birthDate, ENT_COMPAT, "UTF-8");
     }
 
     /**
@@ -118,12 +126,12 @@ class ficoraEppContactPostalInfo extends eppContactPostalInfo
     }
 
     /**
-     * Sets the birth of the (foreign) person
-     * @param string $birthDate
+     * Sets the register number of the organisation
+     * @param string $registerNumber
      */
-    public function setBirthDate($birthDate)
+    public function setRegisterNumber($registerNumber)
     {
-        $this->birthDate = htmlspecialchars($birthDate, ENT_COMPAT, "UTF-8");
+        $this->registerNumber = htmlspecialchars($registerNumber, ENT_COMPAT, "UTF-8");
     }
 
     /**
@@ -133,15 +141,6 @@ class ficoraEppContactPostalInfo extends eppContactPostalInfo
     public function getRegisterNumber()
     {
         return $this->registerNumber;
-    }
-
-    /**
-     * Sets the register number of the organisation
-     * @param string $registerNumber
-     */
-    public function setRegisterNumber($registerNumber)
-    {
-        $this->registerNumber = htmlspecialchars($registerNumber, ENT_COMPAT, "UTF-8");
     }
 
 }

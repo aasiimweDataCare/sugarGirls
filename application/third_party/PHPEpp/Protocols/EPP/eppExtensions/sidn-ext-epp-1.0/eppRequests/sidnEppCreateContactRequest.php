@@ -12,12 +12,10 @@ namespace Metaregistrar\EPP;
       </sidn-ext-epp:ext>
     </extension>
  */
-class sidnEppCreateContactRequest extends eppCreateContactRequest
-{
+class sidnEppCreateContactRequest extends eppCreateContactRequest {
 
 
-    function __construct($createinfo)
-    {
+    function __construct($createinfo) {
         parent::__construct($createinfo);
         if ($createinfo instanceof eppContact) {
             $this->addSidnExtension($createinfo);
@@ -25,14 +23,13 @@ class sidnEppCreateContactRequest extends eppCreateContactRequest
         $this->addSessionId();
     }
 
-    private function addSidnExtension(eppContact $contact)
-    {
+    private function addSidnExtension(eppContact $contact) {
         $postal = $contact->getPostalInfo(0);
 
         if (strlen($postal->getOrganisationName())) {
             $legalform = 'ANDERS';
         } else {
-            $legalform = 'PERSOON';
+            $legalform= 'PERSOON';
         }
         $sidnext = $this->createElement('sidn-ext-epp:ext');
         $create = $this->createElement('sidn-ext-epp:create');

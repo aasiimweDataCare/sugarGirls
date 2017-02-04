@@ -14,13 +14,11 @@ namespace Metaregistrar\EPP;
   </command>
 </epp>
  */
-class dnsbeEppCreateNsgroupRequest extends eppRequest
-{
+class dnsbeEppCreateNsgroupRequest extends eppRequest {
 
     private $hostobject;
 
-    function __construct($createinfo)
-    {
+    function __construct($createinfo) {
         parent::__construct();
 
         if ($createinfo instanceof eppHost) {
@@ -30,8 +28,7 @@ class dnsbeEppCreateNsgroupRequest extends eppRequest
         $this->addSessionId();
     }
 
-    private function addNsGroup(eppHost $host)
-    {
+    private function addNsGroup(eppHost $host) {
         if (!strlen($host->getHostname())) {
             throw new eppException('No valid hostname in create host request');
         }

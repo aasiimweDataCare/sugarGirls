@@ -11,11 +11,10 @@
  */
 namespace Metaregistrar\EPP;
 
-class metaregSudoRequest extends eppRequest
-{
-
+class metaregSudoRequest extends eppRequest {
+   
     private $originalRequest;
-
+    
     function __construct(eppRequest $request, $sudoUser)
     {
         $this->originalRequest = $request;
@@ -27,7 +26,7 @@ class metaregSudoRequest extends eppRequest
         $clID = $this->createElement('ext:clID');
         $clID->nodeValue = $sudoUser;
         $extSudo->appendChild($clID);
-
+        
         $command = $request->getElementsByTagName('command');
         if ($command->length > 0) {
             $extCommand = $this->createElement('ext:command');
@@ -47,7 +46,8 @@ class metaregSudoRequest extends eppRequest
                 }
                 $extCommand->appendChild($extension);
             }
-        } else {
+        }
+        else {
             $extCommand = $this->createElement('ext:extCommand');
             $extSudo->appendChild($extCommand);
             $command = $request->getElementsByTagName('ext:command');
@@ -58,10 +58,9 @@ class metaregSudoRequest extends eppRequest
             }
         }
     }
-
-
-    public function getOriginalRequest()
-    {
+    
+    
+    public function getOriginalRequest() {
         return $this->originalRequest;
     }
 }

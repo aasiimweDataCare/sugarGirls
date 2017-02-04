@@ -10,8 +10,7 @@ namespace Metaregistrar\EPP;
 
 include_once(dirname(__FILE__) . '/eppConnection.php');
 
-class eppHttpConnection extends eppConnection
-{
+class eppHttpConnection extends eppConnection {
 
     /**
      * CURL resource
@@ -37,8 +36,7 @@ class eppHttpConnection extends eppConnection
      * @return bool
      */
 
-    public function connect($hostname = null, $port = null)
-    {
+    public function connect($hostname = null, $port = null) {
         return true;
     }
 
@@ -48,48 +46,15 @@ class eppHttpConnection extends eppConnection
      * @return bool
      */
 
-    public function disconnect()
-    {
+    public function disconnect() {
         return true;
     }
 
-    public function __destruct()
-    {
+    public function __destruct() {
         parent::__destruct();
         if ($this->ch) {
             curl_close($this->ch);
         }
-    }
-
-    /**
-     * Write to CURL resource
-     *
-     * @param string $content
-     * @return bool
-     * @throws eppException
-     */
-
-    public function write($content)
-    {
-        $this->writeLog("Writing: " . strlen($content), 'WRITE');
-
-        $ch = $this->initCurl();
-        if (!is_resource($ch)) {
-            throw new eppException('Failed to init CURL resource.');
-        }
-
-        $this->writeLog($content, 'WRITE');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
-        $response = curl_exec($ch);
-
-        $error = curl_errno($ch);
-
-        if ($error) {
-            throw new eppException(sprintf('Error occurred while executing CURL %d: %s', $error, curl_error($ch)), $error, null, curl_error($ch));
-        }
-
-        $this->response = $response;
-        return true;
     }
 
     /**
@@ -101,8 +66,7 @@ class eppHttpConnection extends eppConnection
      * @return null|resource
      */
 
-    protected function initCurl($postMode = true)
-    {
+    protected function initCurl($postMode = true) {
         if ($this->ch === null) {
             $ch = curl_init('http://' . $this->getHostname());
 
@@ -132,15 +96,44 @@ class eppHttpConnection extends eppConnection
     }
 
     /**
+     * Write to CURL resource
+     *
+     * @param string $content
+     * @return bool
+     * @throws eppException
+     */
+
+    public function write($content) {
+        $this->writeLog("Writing: " . strlen($content),'WRITE');
+
+        $ch = $this->initCurl();
+        if (!is_resource($ch)) {
+            throw new eppException('Failed to init CURL resource.');
+        }
+
+        $this->writeLog($content,'WRITE');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
+        $response = curl_exec($ch);
+
+        $error = curl_errno($ch);
+
+        if ($error) {
+            throw new eppException(sprintf('Error occurred while executing CURL %d: %s', $error, curl_error($ch)),$error,null,curl_error($ch));
+        }
+
+        $this->response = $response;
+        return true;
+    }
+
+    /**
      * Read CURL response
      *
      * @return string
      * @throws eppException
      */
 
-    public function read($nonBlocking = false)
-    {
-        $this->writeLog("Reading response.", 'READ');
+    public function read($nonBlocking=false) {
+        $this->writeLog("Reading response.",'READ');
 
         if ($this->response === null) {
             throw new eppException('Response is empty. Could be reading without writing.');

@@ -1,8 +1,7 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppBase
-{
+class eppBase {
 
     /**
      * Determines if a log is output after the end of the script or not
@@ -21,12 +20,20 @@ class eppBase
      * @var resource $connection
      */
     protected $connection;
-
+    
     /**
      * Time-out value for the server connection
      * @var integer
      */
     protected $timeout = 5;
+
+    public function getTimeout() {
+        return $this->timeout;
+    }
+
+    public function setTimeout($timeout) {
+        $this->timeout = $timeout;
+    }
 
     /**
      * @param string $configfile
@@ -34,8 +41,7 @@ class eppBase
      * @return mixed
      * @throws eppException
      */
-    static function create($configfile, $debug = false)
-    {
+    static function create($configfile,$debug=false) {
         if ($configfile) {
             if (is_readable($configfile)) {
                 $settings = file($configfile, FILE_IGNORE_NEW_LINES);
@@ -47,13 +53,13 @@ class eppBase
                 }
 
             } else {
-                throw new eppException('File not found: ' . $configfile);
+                throw new eppException('File not found: '.$configfile);
             }
         } else {
             throw new eppException('Configuration file not specified on eppConnection:create');
         }
         if (isset($result['interface'])) {
-            $classname = 'Metaregistrar\\EPP\\' . $result['interface'];
+            $classname = 'Metaregistrar\\EPP\\'.$result['interface'];
             $c = new $classname($debug);
             /* @var $c eppConnection */
             $c->setConnectionDetails($configfile);
@@ -63,15 +69,6 @@ class eppBase
 
     }
 
-    public function getTimeout()
-    {
-        return $this->timeout;
-    }
-
-    public function setTimeout($timeout)
-    {
-        $this->timeout = $timeout;
-    }
 
     /**
      * This will read 1 response from the connection if there is one
@@ -79,8 +76,7 @@ class eppBase
      * @return string
      * @throws eppException
      */
-    public function read($nonBlocking = false)
-    {
+    public function read($nonBlocking=false) {
         putenv('SURPRESS_ERROR_HANDLER=1');
         $content = '';
         $time = time() + $this->timeout;
@@ -88,7 +84,7 @@ class eppBase
         while ((!isset ($length)) || ($length > 0)) {
             if (feof($this->connection)) {
                 putenv('SURPRESS_ERROR_HANDLER=0');
-                throw new eppException ('Unexpected closed connection by remote host...', 0, null, null, $read);
+                throw new eppException ('Unexpected closed connection by remote host...',0,null,null,$read);
             }
             //Check if timeout occured
             if (time() >= $time) {
@@ -115,10 +111,10 @@ class eppBase
                 }
                 //$this->writeLog("Read 4 bytes for integer. (read: " . strlen($read) . "):$read","READ");
                 $length = $this->readInteger($read) - 4;
-                $this->writeLog("Reading next: $length bytes", "READ");
+                $this->writeLog("Reading next: $length bytes","READ");
             }
             if ($length > 1000000) {
-                throw new eppException("Packet size is too big: $length. Closing connection", 0, null, null, $read);
+                throw new eppException("Packet size is too big: $length. Closing connection",0,null,null,$read);
             }
             //We know the length of what to read, so lets read the stuff
             if ((isset($length)) && ($length > 0)) {
@@ -134,7 +130,8 @@ class eppBase
                     $content .= $read;
                 }
             }
-            if ($nonBlocking && strlen($content) < 1) {
+            if($nonBlocking && strlen($content)<1)
+            {
                 //there is no content don't keep waiting
                 break;
             }
@@ -155,23 +152,20 @@ class eppBase
      * @param string $content
      * @return integer
      */
-    private function readInteger($content)
-    {
+    private function readInteger($content) {
         $int = unpack('N', substr($content, 0, 4));
         return $int[1];
     }
 
     /**
-     * Writes a new entry to the log
-     * @param string $text
-     * @param string $action
+     * This adds the content-length to the content that is about to be written over the EPP Protocol
+     *
+     * @param string $content Your XML
+     * @return string String to write
      */
-    protected function writeLog($text, $action)
-    {
-        if ($this->logging) {
-            //echo "-----".date("Y-m-d H:i:s")."-----".$text."-----end-----\n";
-            $this->logentries[] = "-----" . $action . "-----" . date("Y-m-d H:i:s") . "-----\n" . $text . "\n-----END-----" . date("Y-m-d H:i:s") . "-----\n";
-        }
+    private function addInteger($content) {
+        $int = pack('N', intval(strlen($content) + 4));
+        return $int . $content;
     }
 
     /**
@@ -180,9 +174,8 @@ class eppBase
      * @return bool
      * @throws eppException
      */
-    public function write($content)
-    {
-        $this->writeLog("Writing: " . strlen($content) . " + 4 bytes", "WRITE");
+    public function write($content) {
+        $this->writeLog("Writing: " . strlen($content) . " + 4 bytes","WRITE");
         $content = $this->addInteger($content);
         if (!is_resource($this->connection)) {
             throw new eppException ('Writing while no connection is made is not supported.');
@@ -199,23 +192,11 @@ class eppBase
         return false;
     }
 
-    /**
-     * This adds the content-length to the content that is about to be written over the EPP Protocol
-     *
-     * @param string $content Your XML
-     * @return string String to write
-     */
-    private function addInteger($content)
-    {
-        $int = pack('N', intval(strlen($content) + 4));
-        return $int . $content;
-    }
 
     /**
      * Starts logging
      */
-    protected function enableLogging()
-    {
+    protected function enableLogging() {
         date_default_timezone_set("Europe/Amsterdam");
         $this->logging = true;
     }
@@ -223,13 +204,24 @@ class eppBase
     /**
      * Shows the log when the script has ended
      */
-    protected function showLog()
-    {
+    protected function showLog() {
         echo "==== LOG ====\n";
         if (property_exists($this, 'logentries')) {
             foreach ($this->logentries as $logentry) {
                 echo $logentry . "\n";
             }
+        }
+    }
+
+    /**
+     * Writes a new entry to the log
+     * @param string $text
+     * @param string $action
+     */
+    protected function writeLog($text,$action) {
+        if ($this->logging) {
+            //echo "-----".date("Y-m-d H:i:s")."-----".$text."-----end-----\n";
+            $this->logentries[] = "-----" . $action . "-----" . date("Y-m-d H:i:s") . "-----\n" . $text . "\n-----END-----" . date("Y-m-d H:i:s") . "-----\n";
         }
     }
 }

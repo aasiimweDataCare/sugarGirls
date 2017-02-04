@@ -1,17 +1,15 @@
 <?php
 namespace Metaregistrar\EPP;
 
-use DOMElement;
+use \DOMElement;
 
-class eppCheckDomainResponse extends eppResponse
-{
-
+class eppCheckDomainResponse extends eppResponse {
+    
     /**
      *
      * @return array of checked domains with status true/false
      */
-    public function getCheckedDomains()
-    {
+    public function getCheckedDomains() {
         $result = null;
         if ($this->getResultCode() == self::RESULT_SUCCESS) {
             $result = array();
@@ -22,7 +20,7 @@ class eppCheckDomainResponse extends eppResponse
                 $checkeddomain = array('domainname' => null, 'available' => false, 'reason' => null);
                 foreach ($childs as $child) {
                     if ($child instanceof DOMElement) {
-                        if ($child->localName == 'name') {
+                        if ($child->localName=='name') {
                             $available = $child->getAttribute('avail');
                             switch ($available) {
                                 case '0':
@@ -36,7 +34,7 @@ class eppCheckDomainResponse extends eppResponse
                             }
                             $checkeddomain['domainname'] = $child->nodeValue;
                         }
-                        if ($child->localName == 'reason') {
+                        if ($child->localName=='reason') {
                             $checkeddomain['reason'] = $child->nodeValue;
                         }
                     }

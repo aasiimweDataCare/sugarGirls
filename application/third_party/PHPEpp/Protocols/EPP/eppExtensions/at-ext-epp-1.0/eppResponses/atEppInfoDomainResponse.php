@@ -11,8 +11,7 @@ namespace Metaregistrar\EPP;
 
 class atEppInfoDomainResponse extends eppInfoDomainResponse
 {
-    public function getKeydata()
-    {
+    public function getKeydata() {
         // Check if dnssec is enabled on this interface
 
         if ($this->findNamespace('secDNS')) {

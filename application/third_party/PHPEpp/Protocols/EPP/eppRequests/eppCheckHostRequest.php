@@ -1,10 +1,8 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCheckHostRequest extends eppHostRequest
-{
-    function __construct($checkrequest, $namespacesinroot = true)
-    {
+class eppCheckHostRequest extends eppHostRequest {
+    function __construct($checkrequest, $namespacesinroot = true) {
         $this->setNamespacesinroot($namespacesinroot);
         parent::__construct(eppRequest::TYPE_CHECK);
 
@@ -13,15 +11,18 @@ class eppCheckHostRequest extends eppHostRequest
         } else {
             if (is_array($checkrequest)) {
                 //if ($checkrequest[0] instanceof eppHost) { WHY DID I PUT THIS IN?
-                $this->setHosts($checkrequest);
+                    $this->setHosts($checkrequest);
                 //}
             }
         }
         $this->addSessionId();
     }
 
-    public function setHosts($hosts)
-    {
+    function __destruct() {
+        parent::__destruct();
+    }
+
+    public function setHosts($hosts) {
         #
         # Domain check structure
         #
@@ -40,11 +41,6 @@ class eppCheckHostRequest extends eppHostRequest
                 }
             }
         }
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 
 

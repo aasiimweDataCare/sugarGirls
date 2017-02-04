@@ -2,9 +2,9 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppCreateHostRequest;
 use Metaregistrar\EPP\eppException;
 use Metaregistrar\EPP\eppHost;
+use Metaregistrar\EPP\eppCreateHostRequest;
 
 if ($argc <= 1) {
     echo "Usage: createhost.php <hostname>\n";
@@ -28,13 +28,13 @@ try {
 }
 
 
+
 /**
  * @param $conn eppConnection
  * @param $hostname string
  * @return null
  */
-function createhost($conn, $hostname)
-{
+function createhost($conn, $hostname) {
     $create = new eppCreateHostRequest(new eppHost($hostname));
     if ($response = $conn->request($create)) {
         /* @var $response Metaregistrar\EPP\eppCreateHostResponse */

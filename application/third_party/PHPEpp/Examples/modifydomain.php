@@ -2,13 +2,13 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppContactHandle;
-use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppException;
-use Metaregistrar\EPP\eppHost;
+use Metaregistrar\EPP\eppContactHandle;
 use Metaregistrar\EPP\eppInfoDomainRequest;
 use Metaregistrar\EPP\eppUpdateDomainRequest;
 use Metaregistrar\EPP\eppUpdateDomainResponse;
+use Metaregistrar\EPP\eppHost;
+use Metaregistrar\EPP\eppDomain;
 
 /*
  * This sample script modifies a domain name within your account
@@ -50,8 +50,7 @@ try {
  * @param null $billingcontact string
  * @param null $nameservers string
  */
-function modifydomain($conn, $domainname, $registrant = null, $admincontact = null, $techcontact = null, $billingcontact = null, $nameservers = null)
-{
+function modifydomain($conn, $domainname, $registrant = null, $admincontact = null, $techcontact = null, $billingcontact = null, $nameservers = null) {
     $response = null;
     try {
         // First, retrieve the current domain info. Nameservers can be unset and then set again.

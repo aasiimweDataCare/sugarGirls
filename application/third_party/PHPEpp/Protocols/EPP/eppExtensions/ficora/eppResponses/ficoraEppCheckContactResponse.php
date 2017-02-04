@@ -1,14 +1,12 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class ficoraEppCheckContactResponse extends eppCheckContactResponse
-{
+class ficoraEppCheckContactResponse extends eppCheckContactResponse {
     /**
      *
      * @return array of checked contacts with status true/false
      */
-    public function getCheckedContacts()
-    {
+    public function getCheckedContacts() {
         $avail = null;
         $result = null;
         if ($this->getResultCode() == self::RESULT_SUCCESS) {

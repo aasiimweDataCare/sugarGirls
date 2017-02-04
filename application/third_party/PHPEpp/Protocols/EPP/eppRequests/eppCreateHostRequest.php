@@ -1,10 +1,8 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCreateHostRequest extends eppHostRequest
-{
-    function __construct($createinfo, $namespacesinroot = true)
-    {
+class eppCreateHostRequest extends eppHostRequest {
+    function __construct($createinfo, $namespacesinroot = true) {
         $this->setNamespacesinroot($namespacesinroot);
         parent::__construct(eppRequest::TYPE_CREATE);
 
@@ -16,14 +14,17 @@ class eppCreateHostRequest extends eppHostRequest
         $this->addSessionId();
     }
 
+    function __destruct() {
+        parent::__destruct();
+    }
+
     /**
      *
      * @param eppHost $host
      * @return \DOMElement
      * @throws eppException
      */
-    public function setHost(eppHost $host)
-    {
+    public function setHost(eppHost $host) {
         if (!strlen($host->getHostname())) {
             throw new eppException('No valid hostname in create host request');
         }
@@ -40,11 +41,6 @@ class eppCreateHostRequest extends eppHostRequest
             }
         }
         return;
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 
 }

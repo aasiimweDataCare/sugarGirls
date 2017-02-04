@@ -8,7 +8,7 @@ class eppRgpRestoreRequest extends eppUpdateDomainRequest
 {
     /**
      * eppRgpRestoreRequest constructor.
-     * @param eppDomain $objectname
+     * @param eppDomain      $objectname
      * @param eppDomain|null $addinfo
      * @param eppDomain|null $removeinfo
      * @param eppDomain|null $updateinfo

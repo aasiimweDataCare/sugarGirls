@@ -2,10 +2,10 @@
 require('../autoloader.php');
 
 
-use Metaregistrar\EPP\eppCheckDomainRequest;
-use Metaregistrar\EPP\eppCheckDomainResponse;
 use Metaregistrar\EPP\eppConnection;
 use Metaregistrar\EPP\eppException;
+use Metaregistrar\EPP\eppCheckDomainRequest;
+use Metaregistrar\EPP\eppCheckDomainResponse;
 
 /*
  * This script checks for the availability of domain names
@@ -14,8 +14,7 @@ use Metaregistrar\EPP\eppException;
  */
 
 
-function GeneratePassword($crypt = false, $len = 8, $regexp = '/^[a-z]{1}[a-z0-9]*$/i')
-{
+function GeneratePassword($crypt = false, $len = 8, $regexp = '/^[a-z]{1}[a-z0-9]*$/i') {
     $testpass = null;
     $pass = null;
     while (strlen($pass) < $len) {
@@ -34,8 +33,7 @@ function GeneratePassword($crypt = false, $len = 8, $regexp = '/^[a-z]{1}[a-z0-9
     return $array;
 }
 
-function randomstring($length)
-{
+function randomstring($length) {
     /*$c = "abcdefghijklmnopqrstuvwxyz";
     $rand = '';
     srand((double)microtime()*1000000);
@@ -99,15 +97,14 @@ try {
  * @param $conn Metaregistrar\EPP\eppConnection
  * @param $domains array
  */
-function checkdomains($conn, $domains)
-{
+function checkdomains($conn, $domains) {
     try {
         $check = new eppCheckDomainRequest($domains);
         if ($response = $conn->request($check)) {
             /* @var $response eppCheckDomainResponse */
             $checks = $response->getCheckedDomains();
             foreach ($checks as $check) {
-                echo $check['domainname'] . " is " . ($check['available'] ? 'free' : 'taken') . " (" . $check['reason'] . ")\n";
+                echo $check['domainname']." is ".($check['available'] ? 'free' : 'taken')." (".$check['reason'].")\n";
             }
         } else {
             echo "ERROR2\n";

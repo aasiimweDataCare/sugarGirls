@@ -1,10 +1,10 @@
 <?php
 require('../autoloader.php');
 
-use Metaregistrar\EPP\eppCheckDomainRequest;
-use Metaregistrar\EPP\eppCheckDomainResponse;
 use Metaregistrar\EPP\eppConnection;
 use Metaregistrar\EPP\eppException;
+use Metaregistrar\EPP\eppCheckDomainRequest;
+use Metaregistrar\EPP\eppCheckDomainResponse;
 
 
 /*
@@ -47,8 +47,7 @@ try {
  * @param $conn eppConnection
  * @param $domains array of domain names
  */
-function checkdomains($conn, $domains)
-{
+function checkdomains($conn, $domains) {
     // Create request to be sent to EPP service
     $check = new eppCheckDomainRequest($domains);
     // Write request to EPP service, read and check the results
@@ -59,7 +58,7 @@ function checkdomains($conn, $domains)
         foreach ($checks as $check) {
             echo $check['domainname'] . " is " . ($check['available'] ? 'free' : 'taken');
             if ($check['available']) {
-                echo ' (' . $check['reason'] . ')';
+                echo ' (' . $check['reason'] .')';
             }
             echo "\n";
         }

@@ -18,11 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 date_default_timezone_set('Etc/GMT-3');
-
-
 $config['base_url'] = 'http://localhost:82/sugarGirls/';
-
-/*$config['base_url'] = 'http://vps311567.ovh.net/miss_travel/';*/
+/*$config['base_url'] = 'http://vps311567.ovh.net/miss_travel/'; */
 
 
 /*
@@ -35,7 +32,7 @@ $config['base_url'] = 'http://localhost:82/sugarGirls/';
 | variable so that it is blank.
 |
 */
-/*$config['index_page'] = 'index.php';*/
+/* $config['index_page'] = 'index.php'; */
 $config['index_page'] = '';
 
 /*
@@ -116,7 +113,7 @@ $config['enable_hooks'] = FALSE;
 | http://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'SugarGirls_';
+$config['subclass_prefix'] = 'EppClient_';
 
 /*
 |--------------------------------------------------------------------------

@@ -2,10 +2,10 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppDnssecUpdateDomainRequest;
 use Metaregistrar\EPP\eppDomain;
-use Metaregistrar\EPP\eppException;
 use Metaregistrar\EPP\eppSecdns;
+use Metaregistrar\EPP\eppDnssecUpdateDomainRequest;
+use Metaregistrar\EPP\eppException;
 
 try {
     $domainname = 'dnssectest.nl';

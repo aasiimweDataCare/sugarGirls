@@ -1,15 +1,12 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCheckHostResponse extends eppResponse
-{
-    function __construct()
-    {
+class eppCheckHostResponse extends eppResponse {
+    function __construct() {
         parent::__construct();
     }
 
-    function __destruct()
-    {
+    function __destruct() {
         parent::__destruct();
     }
 
@@ -17,8 +14,7 @@ class eppCheckHostResponse extends eppResponse
      *
      * @return array of checked hosts with status true/false
      */
-    public function getCheckedHosts()
-    {
+    public function getCheckedHosts() {
         $avail = null;
         $result = null;
         if ($this->getResultCode() == self::RESULT_SUCCESS) {

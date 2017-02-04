@@ -6,8 +6,7 @@ namespace Metaregistrar\EPP;
  */
 
 
-class eppResponse extends \DOMDocument
-{
+class eppResponse extends \DOMDocument {
     const RESULT_SUCCESS = '1000';
     const RESULT_SUCCESS_ACTION_PENDING = '1001';
     const RESULT_NO_MESSAGES = '1300';
@@ -89,6 +88,12 @@ class eppResponse extends \DOMDocument
             '/epp:epp/epp:response/epp:extension/launch:creData'
         ]
     ];*/
+
+    /**
+     *
+     * @var string Category of problem
+     */
+    private $problemtype;
     /**
      *
      * @var array of object uri
@@ -103,40 +108,33 @@ class eppResponse extends \DOMDocument
      * @var array of xpath uri
      */
     public $xpathuri;
-    public $language;
     /*
      * @var array of supported languages
      */
-    public $version;
+    public $language;
     /*
      * @var array of supported versions
      */
+    public $version;
+
     public $originalrequest;
     /**
      *
      * @var string $defaultnamespace
      */
     public $defaultnamespace;
-    /**
-     *
-     * @var string Category of problem
-     */
-    private $problemtype;
 
-    public function __construct($originalrequest = null)
-    {
+    public function __construct($originalrequest = null) {
         parent::__construct();
         $this->formatOutput = true;
         $this->originalrequest = $originalrequest;
         #$this->validateOnParse = true;
     }
 
-    public function __destruct()
-    {
+    public function __destruct() {
     }
 
-    public function findNamespace($namespace)
-    {
+    public function findNamespace($namespace) {
         if (!is_null($this->xpathuri)) {
             if (is_array($this->xpathuri)) {
                 if (in_array($namespace, $this->xpathuri)) {
@@ -147,14 +145,12 @@ class eppResponse extends \DOMDocument
         return false;
     }
 
-    public function dumpContents()
-    {
-        echo $this->saveXML();
+    public function saveXML(\DOMNode $node = NULL, $options = NULL) {
+        return str_replace("\t", '  ', parent::saveXML($node, LIBXML_NOEMPTYTAG));
     }
 
-    public function saveXML(\DOMNode $node = NULL, $options = NULL)
-    {
-        return str_replace("\t", '  ', parent::saveXML($node, LIBXML_NOEMPTYTAG));
+    public function dumpContents() {
+        echo $this->saveXML();
     }
 
     //public function setParameters($language,$version,$objuri,$exturi,$xpathuri)
@@ -170,8 +166,7 @@ class eppResponse extends \DOMDocument
      * @return bool
      * @throws eppException
      */
-    public function Success()
-    {
+    public function Success() {
         $resultcode = $this->getResultCode();
         $success = ($resultcode{0} == '1');
         if (!$success) {
@@ -238,10 +233,25 @@ class eppResponse extends \DOMDocument
 
     /**
      *
+     * @param string $problemtype
+     */
+    public function setProblemtype($problemtype) {
+        $this->problemtype = $problemtype;
+    }
+
+    /**
+     *
      * @return string
      */
-    public function getResultCode()
-    {
+    public function getProblemtype() {
+        return $this->problemtype;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getResultCode() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:result/@code');
         if (is_object($result) && ($result->length > 0)) {
@@ -252,37 +262,10 @@ class eppResponse extends \DOMDocument
     }
 
     /**
-     * @return \DOMXpath
-     */
-    public function xPath()
-    {
-        $xpath = new \DOMXpath($this);
-        $this->defaultnamespace = $this->documentElement->lookupNamespaceUri(NULL);
-        $xpath->registerNamespace('epp', $this->defaultnamespace);
-        if (is_array($this->xpathuri)) {
-            foreach ($this->xpathuri as $uri => $namespace) {
-                if ($namespace != 'epp') { // epp was already registered as default namespace, see above
-                    $xpath->registerNamespace($namespace, $uri);
-                }
-            }
-        }
-#        if (is_array($this->exturi))
-#        {
-#            foreach($this->exturi as $uri=>$namespace)
-#            {
-#                echo "RegisterNamespace exturi $namespace $uri\n";
-#                $xpath->registerNamespace($namespace,$uri);
-#            }
-#        }
-        return $xpath;
-    }
-
-    /**
      *
      * @return string
      */
-    public function getResultMessage()
-    {
+    public function getResultMessage() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:msg');
         if (is_object($result) && ($result->length > 0)) {
@@ -292,8 +275,21 @@ class eppResponse extends \DOMDocument
         }
     }
 
-    public function getResultValue()
-    {
+    /**
+     *
+     * @return string
+     */
+    public function getResultReason() {
+        $xpath = $this->xPath();
+        $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:reason');
+        if (is_object($result) && ($result->length > 0)) {
+            return trim($result->item(0)->nodeValue);
+        } else {
+            return null;
+        }
+    }
+
+    public function getResultValue() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value');
         if (is_object($result) && ($result->length > 0)) {
@@ -308,8 +304,7 @@ class eppResponse extends \DOMDocument
         }
     }
 
-    public function getResultContactId()
-    {
+    public function getResultContactId() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/contact:id');
         if (is_object($result) && ($result->length > 0)) {
@@ -324,24 +319,7 @@ class eppResponse extends \DOMDocument
         }
     }
 
-    public function getResultHostName()
-    {
-        $xpath = $this->xPath();
-        $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/host:name');
-        if (is_object($result) && ($result->length > 0)) {
-            return trim($result->item(0)->nodeValue);
-        } else {
-            $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:value/host:name');
-            if (is_object($result) && ($result->length > 0)) {
-                return trim($result->item(0)->nodeValue);
-            } else {
-                return null;
-            }
-        }
-    }
-
-    public function getResultDomainName()
-    {
+    public function getResultDomainName() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/domain:name');
         if (is_object($result) && ($result->length > 0)) {
@@ -356,14 +334,13 @@ class eppResponse extends \DOMDocument
         }
     }
 
-    public function getResultHostStatus()
-    {
+    public function getResultHostName() {
         $xpath = $this->xPath();
-        $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/host:status/@s');
+        $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/host:name');
         if (is_object($result) && ($result->length > 0)) {
             return trim($result->item(0)->nodeValue);
         } else {
-            $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/host:status/@s');
+            $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:value/host:name');
             if (is_object($result) && ($result->length > 0)) {
                 return trim($result->item(0)->nodeValue);
             } else {
@@ -372,8 +349,8 @@ class eppResponse extends \DOMDocument
         }
     }
 
-    public function getResultHostAddr()
-    {
+
+    public function getResultHostAddr() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/host:addr');
         if (is_object($result) && ($result->length > 0)) {
@@ -388,18 +365,18 @@ class eppResponse extends \DOMDocument
         }
     }
 
-    /**
-     *
-     * @return string
-     */
-    public function getResultReason()
-    {
+    public function getResultHostStatus() {
         $xpath = $this->xPath();
-        $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:reason');
+        $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/host:status/@s');
         if (is_object($result) && ($result->length > 0)) {
             return trim($result->item(0)->nodeValue);
         } else {
-            return null;
+            $result = $xpath->query('/epp:epp/epp:response/epp:result/epp:extValue/epp:value/host:status/@s');
+            if (is_object($result) && ($result->length > 0)) {
+                return trim($result->item(0)->nodeValue);
+            } else {
+                return null;
+            }
         }
     }
 
@@ -407,26 +384,7 @@ class eppResponse extends \DOMDocument
      *
      * @return string
      */
-    public function getProblemtype()
-    {
-        return $this->problemtype;
-    }
-
-    /**
-     *
-     * @param string $problemtype
-     */
-    public function setProblemtype($problemtype)
-    {
-        $this->problemtype = $problemtype;
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public function getServerTransactionId()
-    {
+    public function getServerTransactionId() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:trID/epp:svTRID');
         if (is_object($result) && ($result->length > 0)) {
@@ -445,14 +403,24 @@ class eppResponse extends \DOMDocument
      *
      * @return string
      */
-    public function getClientTransactionId()
-    {
+    public function getClientTransactionId() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:trID/epp:clTRID');
         if (is_object($result) && ($result->length > 0)) {
             return $result->item(0)->nodeValue;
         } else {
             return null;
+        }
+    }
+
+    public function setXpath($xpathuri) {
+        if (!$this->xpathuri) {
+            $this->xpathuri = $xpathuri;
+        } else {
+            if (is_array($xpathuri)) {
+                $this->xpathuri = array_merge($this->xpathuri, $xpathuri);
+            }
+
         }
     }
 
@@ -475,18 +443,6 @@ class eppResponse extends \DOMDocument
         return $this;
     }*/
 
-    public function setXpath($xpathuri)
-    {
-        if (!$this->xpathuri) {
-            $this->xpathuri = $xpathuri;
-        } else {
-            if (is_array($xpathuri)) {
-                $this->xpathuri = array_merge($this->xpathuri, $xpathuri);
-            }
-
-        }
-    }
-
     /**
      * Checks and sees if an element is present using xpath
      * @param array $matches
@@ -496,10 +452,12 @@ class eppResponse extends \DOMDocument
     {
         libxml_use_internal_errors(true);
         $xpath = $this->xPath();
-        foreach ($matches as $match) {
+        foreach($matches as $match)
+        {
             $results = $xpath->query($match);
 
-            if ($results->length > 0) {
+            if($results->length>0)
+            {
                 libxml_clear_errors();
                 return true;
             }
@@ -508,13 +466,38 @@ class eppResponse extends \DOMDocument
         return false;
     }
 
+
+    /**
+     * @return \DOMXpath
+     */
+    public function xPath() {
+        $xpath = new \DOMXpath($this);
+        $this->defaultnamespace = $this->documentElement->lookupNamespaceUri(NULL);
+        $xpath->registerNamespace('epp', $this->defaultnamespace);
+        if (is_array($this->xpathuri)) {
+            foreach ($this->xpathuri as $uri => $namespace) {
+                if ($namespace != 'epp') { // epp was already registered as default namespace, see above
+                    $xpath->registerNamespace($namespace, $uri);
+                }
+            }
+        }
+#        if (is_array($this->exturi))
+#        {
+#            foreach($this->exturi as $uri=>$namespace)
+#            {
+#                echo "RegisterNamespace exturi $namespace $uri\n";
+#                $xpath->registerNamespace($namespace,$uri);
+#            }
+#        }
+        return $xpath;
+    }
+
     /**
      * Make an xpath query and return the results if applicable
      * @param string $path
      * @return null|string
      */
-    protected function queryPath($path)
-    {
+    protected function queryPath($path) {
         $xpath = $this->xPath();
         $result = $xpath->query($path);
         if (is_object($result) && ($result->length > 0)) {

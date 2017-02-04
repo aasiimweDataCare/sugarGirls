@@ -1,17 +1,19 @@
-$(function () {
+$(function() {
 
     $('#side-menu').metisMenu();
 
 });
 
 
+
 /*$('#suspectModal').on('hidden.bs.modal', function (e) {
- /!*window.alert('hidden event fired!');*!/
- $(this).removeData();
- });*/
+    /!*window.alert('hidden event fired!');*!/
+    $(this).removeData();
+});*/
 
 
-$(document).ready(function () {    // codes works on all bootstrap modal windows in application
+$(document).ready(function()
+{    // codes works on all bootstrap modal windows in application
     $('#suspectModal').on('hidden.bs.modal', function (e) {
         /*window.alert('hidden event fired!');*/
         $(this).removeData();
@@ -24,8 +26,8 @@ $(document).ready(function () {    // codes works on all bootstrap modal windows
     });
 });
 
-$(function () {
-    $(window).bind("load resize", function () {
+$(function() {
+    $(window).bind("load resize", function() {
         topOffset = 50;
         width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
         if (width < 768) {
@@ -44,7 +46,7 @@ $(function () {
     });
 
     var url = window.location;
-    var element = $('ul.nav a').filter(function () {
+    var element = $('ul.nav a').filter(function() {
         return this.href == url || url.href.indexOf(this.href) == 0;
     }).addClass('active').parent().parent().addClass('in').parent();
     if (element.is('li')) {
@@ -53,22 +55,27 @@ $(function () {
 });
 
 
+
+
+
+
+
 $('.sendCredentialsMail').click(function () {
     $('#loading').show();
 
     var request = $.ajax({
-        type: 'GET',
+        type:'GET',
         url: $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/")) + "/staffMembers/",
-        data: {query: $(".sendCredentialsMail").val()},
-        dataType: 'json',
+        data:{query: $(".sendCredentialsMail").val()},
+        dataType:'json',
         async: false
     });
 
-    request.done(function () {
+    request.done(function() {
         $('#loading').fadeOut("slow");
     });
 
-    request.fail(function () {
+    request.fail(function() {
         $('#loading').fadeOut("slow");
     });
 

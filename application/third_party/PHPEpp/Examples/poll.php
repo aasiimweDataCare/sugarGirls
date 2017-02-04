@@ -4,7 +4,6 @@ use Metaregistrar\EPP\eppConnection;
 use Metaregistrar\EPP\eppException;
 use Metaregistrar\EPP\eppPollRequest;
 use Metaregistrar\EPP\eppResponse;
-
 /*
  * This script polls for new messages in the EPP system
  * The messages tell you if a domain name was transferred away to another provider
@@ -34,8 +33,7 @@ try {
  * @param $conn Metaregistrar\EPP\eppConnection
  * @return null|string
  */
-function poll($conn)
-{
+function poll($conn) {
     try {
         $poll = new eppPollRequest(eppPollRequest::POLL_REQ, 0);
         if ($response = $conn->request($poll)) {
@@ -59,8 +57,7 @@ function poll($conn)
  * @param $conn eppConnection
  * @param $messageid string
  */
-function pollack($conn, $messageid)
-{
+function pollack($conn, $messageid) {
     try {
         $poll = new eppPollRequest(eppPollRequest::POLL_ACK, $messageid);
         if ($response = $conn->request($poll)) {

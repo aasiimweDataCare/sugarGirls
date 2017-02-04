@@ -23,10 +23,8 @@ C:           </secDNS:dsData>
 C:         </secDNS:add>
  */
 
-class eppDnssecUpdateDomainRequest extends eppUpdateDomainRequest
-{
-    function __construct($objectname, $addinfo = null, $removeinfo = null, $updateinfo = null)
-    {
+class eppDnssecUpdateDomainRequest extends eppUpdateDomainRequest {
+    function __construct($objectname, $addinfo = null, $removeinfo = null, $updateinfo = null) {
         /* @var $addinfo eppDomain */
         /* @var $removeinfo eppDomain */
         /* @var $updateinfo eppDomain */
@@ -99,8 +97,7 @@ class eppDnssecUpdateDomainRequest extends eppUpdateDomainRequest
         $this->addSessionId();
     }
 
-    function __destruct()
-    {
+    function __destruct() {
         parent::__destruct();
     }
 

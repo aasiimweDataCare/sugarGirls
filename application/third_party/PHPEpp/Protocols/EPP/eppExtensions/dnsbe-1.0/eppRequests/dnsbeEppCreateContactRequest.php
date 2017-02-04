@@ -15,8 +15,7 @@ namespace Metaregistrar\EPP;
 
 
 */
-class dnsbeEppCreateContactRequest extends eppCreateContactRequest
-{
+class dnsbeEppCreateContactRequest extends eppCreateContactRequest {
 
     /**
      * dnsbeEppCreateContactRequest constructor.
@@ -25,8 +24,7 @@ class dnsbeEppCreateContactRequest extends eppCreateContactRequest
      * $param string $language
      * @throws eppException
      */
-    function __construct($createinfo, $contacttype = 'licensee', $language = 'en')
-    {
+    function __construct($createinfo, $contacttype='licensee', $language = 'en') {
         parent::__construct($createinfo);
         $this->addDnsbeExtension($contacttype, $language);
         $this->addSessionId();
@@ -36,8 +34,7 @@ class dnsbeEppCreateContactRequest extends eppCreateContactRequest
      * @param string $contacttype
      * @param string $language
      */
-    public function addDnsbeExtension($contacttype, $language)
-    {
+    public function addDnsbeExtension($contacttype, $language) {
         $this->addExtension('xmlns:dnsbe', 'http://www.dns.be/xml/epp/dnsbe-1.0');
         $ext = $this->createElement('extension');
         $dnsbeext = $this->createElement('dnsbe:ext');

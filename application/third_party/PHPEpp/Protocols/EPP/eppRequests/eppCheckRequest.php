@@ -1,10 +1,8 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCheckRequest extends eppRequest
-{
-    function __construct($checkrequest)
-    {
+class eppCheckRequest extends eppRequest {
+    function __construct($checkrequest) {
         parent::__construct();
 
         if ($checkrequest instanceof eppDomain) {
@@ -37,12 +35,16 @@ class eppCheckRequest extends eppRequest
         }
     }
 
+    function __destruct() {
+        parent::__destruct();
+    }
+
+
     /**
      *
      * @param array $domains
      */
-    public function setDomainNames($domains)
-    {
+    public function setDomainNames($domains) {
         #
         # Domain check structure
         #
@@ -59,8 +61,7 @@ class eppCheckRequest extends eppRequest
         $this->getCommand()->appendChild($check);
     }
 
-    public function setContactHandles($contacthandles)
-    {
+    public function setContactHandles($contacthandles) {
         #
         # Domain check structure
         #
@@ -77,8 +78,7 @@ class eppCheckRequest extends eppRequest
         $this->getCommand()->appendChild($check);
     }
 
-    public function setHosts($hosts)
-    {
+    public function setHosts($hosts) {
         #
         # Domain check structure
         #
@@ -101,11 +101,6 @@ class eppCheckRequest extends eppRequest
         }
         $check->appendChild($this->hostobject);
         $this->getCommand()->appendChild($check);
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 
 

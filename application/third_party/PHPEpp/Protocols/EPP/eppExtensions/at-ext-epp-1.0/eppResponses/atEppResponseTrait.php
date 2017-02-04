@@ -15,8 +15,7 @@ trait atEppResponseTrait
      *
      * @return string client ticket request id
      */
-    public function getClTrId()
-    {
+    public function getClTrId() {
 
         $xpath = $this->xPath();
         $result = $xpath->query("/epp:epp/epp:response/epp:trID/epp:clTRID");
@@ -32,8 +31,7 @@ trait atEppResponseTrait
      *
      * @return string server ticket request id
      */
-    public function getSvTrId()
-    {
+    public function getSvTrId() {
         $xpath = $this->xPath();
         $result = $xpath->query("/epp:epp/epp:response/epp:trID/epp:svTRID");
         if (is_object($result) && ($result->length > 0)) {
@@ -45,10 +43,130 @@ trait atEppResponseTrait
 
     /**
      *
+     * @return array
+     */
+    public function getExtensionResult() {
+        $xpath = $this->xPath();
+        $xpath->registerNamespace ( "at-ext" , atEppConstants::atExtResultNamespaceUri );
+
+        $result = $this->getXPathExtension($xpath);
+
+        if (is_object($result) && ($result->length > 0)) {
+            $resultList=[];
+            for($i=0;$i < $result->length;$i++) {
+                $xpathExtensionIndex = $i+1;
+                $code_ = $this->getExtensionResultCode($xpathExtensionIndex);
+                  $resultList[] =
+                ['code' => $code_,'severity' => $this->getExtensionResultSeverity($xpathExtensionIndex),
+                'message' => $this->getExtensionResultMessage($xpathExtensionIndex), 'details' =>  $this->getExtensionResultDetails($xpathExtensionIndex)];
+            }
+            return $resultList;
+        } else {
+            return null;
+        }
+    }
+
+    private function getXPathExtension($xpath)
+    {
+        $xpath = $this->xPath();
+        $xpath->registerNamespace ( "at-ext" , atEppConstants::atExtResultNamespaceUri );
+        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition');
+
+        if (!is_object($result) || ($result->length == 0)) {
+            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition');
+        }
+        return $result;
+
+    }
+
+
+    /**
+     *
+     * @return string extension result code
+     */
+    public function getExtensionResultCode($xpathExtensionIndex=1) {
+        $xpath = $this->xPath();
+        $xpath->registerNamespace ( "at-ext" , atEppConstants::atExtResultNamespaceUri );
+        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/@code');
+
+        if (is_object($result) && ($result->length > 0)) {
+            return trim($result->item(0)->nodeValue);
+        } else {
+            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/@code');
+            if (is_object($result) && ($result->length > 0)) {
+                return trim($result->item(0)->nodeValue);
+            }
+        }
+        return null;
+    }
+
+
+
+    /**
+     *
+     * @return string extension result severity
+     */
+    public function getExtensionResultSeverity($xpathExtensionIndex=1) {
+        $xpath = $this->xPath();
+        $xpath->registerNamespace ( "at-ext" , atEppConstants::atExtResultNamespaceUri );
+        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/@severity');
+        if (is_object($result) && ($result->length > 0)) {
+            return trim($result->item(0)->nodeValue);
+        } else {
+            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/@severity');
+            if (is_object($result) && ($result->length > 0)) {
+                return trim($result->item(0)->nodeValue);
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @return string extension result severity
+     */
+    public function getExtensionResultMessage($xpathExtensionIndex=1) {
+        $xpath = $this->xPath();
+        $xpath->registerNamespace ( "at-ext" , atEppConstants::atExtResultNamespaceUri );
+        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/at-ext:msg');
+        if (is_object($result) && ($result->length > 0)) {
+            return trim($result->item(0)->nodeValue);
+        } else {
+            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/at-ext:msg');
+            if (is_object($result) && ($result->length > 0)) {
+                return trim($result->item(0)->nodeValue);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     *
+     * @return string extension result severity
+     */
+    public function getExtensionResultDetails($xpathExtensionIndex=1) {
+        $xpath = $this->xPath();
+        $xpath->registerNamespace ( "at-ext" , atEppConstants::atExtResultNamespaceUri );
+        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/at-ext:details');
+        if (is_object($result) && ($result->length > 0)) {
+            return trim($result->item(0)->nodeValue);
+        } else {
+            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/at-ext:details');
+            if (is_object($result) && ($result->length > 0)) {
+                return trim($result->item(0)->nodeValue);
+            } else {
+                return null;
+            }
+        }
+    }
+
+
+    /**
+     *
      * @return string result created domain
      */
-    public function getDomainCreated()
-    {
+    public function getDomainCreated() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:resData/domain:creData/domain:name');
         if (is_object($result) && ($result->length > 0)) {
@@ -62,8 +180,7 @@ trait atEppResponseTrait
      *
      * @return string result create date
      */
-    public function getDomainCreateDate()
-    {
+    public function getDomainCreateDate() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:resData/domain:creData/domain:crDate');
         if (is_object($result) && ($result->length > 0)) {
@@ -73,8 +190,8 @@ trait atEppResponseTrait
         }
     }
 
-    public function Success()
-    {
+
+    public function Success() {
         $resultcode = $this->getResultCode();
         $success = ($resultcode{0} == '1');
         if (!$success) {
@@ -139,128 +256,6 @@ trait atEppResponseTrait
             throw new eppException($errorstring, $resultcode, null, $extendedReason_, $id);
         } else {
             return true;
-        }
-    }
-
-    /**
-     *
-     * @return array
-     */
-    public function getExtensionResult()
-    {
-        $xpath = $this->xPath();
-        $xpath->registerNamespace("at-ext", atEppConstants::atExtResultNamespaceUri);
-
-        $result = $this->getXPathExtension($xpath);
-
-        if (is_object($result) && ($result->length > 0)) {
-            $resultList = [];
-            for ($i = 0; $i < $result->length; $i++) {
-                $xpathExtensionIndex = $i + 1;
-                $code_ = $this->getExtensionResultCode($xpathExtensionIndex);
-                $resultList[] =
-                    ['code' => $code_, 'severity' => $this->getExtensionResultSeverity($xpathExtensionIndex),
-                        'message' => $this->getExtensionResultMessage($xpathExtensionIndex), 'details' => $this->getExtensionResultDetails($xpathExtensionIndex)];
-            }
-            return $resultList;
-        } else {
-            return null;
-        }
-    }
-
-    private function getXPathExtension($xpath)
-    {
-        $xpath = $this->xPath();
-        $xpath->registerNamespace("at-ext", atEppConstants::atExtResultNamespaceUri);
-        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition');
-
-        if (!is_object($result) || ($result->length == 0)) {
-            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition');
-        }
-        return $result;
-
-    }
-
-    /**
-     *
-     * @return string extension result code
-     */
-    public function getExtensionResultCode($xpathExtensionIndex = 1)
-    {
-        $xpath = $this->xPath();
-        $xpath->registerNamespace("at-ext", atEppConstants::atExtResultNamespaceUri);
-        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/@code');
-
-        if (is_object($result) && ($result->length > 0)) {
-            return trim($result->item(0)->nodeValue);
-        } else {
-            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/@code');
-            if (is_object($result) && ($result->length > 0)) {
-                return trim($result->item(0)->nodeValue);
-            }
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @return string extension result severity
-     */
-    public function getExtensionResultSeverity($xpathExtensionIndex = 1)
-    {
-        $xpath = $this->xPath();
-        $xpath->registerNamespace("at-ext", atEppConstants::atExtResultNamespaceUri);
-        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/@severity');
-        if (is_object($result) && ($result->length > 0)) {
-            return trim($result->item(0)->nodeValue);
-        } else {
-            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/@severity');
-            if (is_object($result) && ($result->length > 0)) {
-                return trim($result->item(0)->nodeValue);
-            }
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @return string extension result severity
-     */
-    public function getExtensionResultMessage($xpathExtensionIndex = 1)
-    {
-        $xpath = $this->xPath();
-        $xpath->registerNamespace("at-ext", atEppConstants::atExtResultNamespaceUri);
-        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/at-ext:msg');
-        if (is_object($result) && ($result->length > 0)) {
-            return trim($result->item(0)->nodeValue);
-        } else {
-            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/at-ext:msg');
-            if (is_object($result) && ($result->length > 0)) {
-                return trim($result->item(0)->nodeValue);
-            } else {
-                return null;
-            }
-        }
-    }
-
-    /**
-     *
-     * @return string extension result severity
-     */
-    public function getExtensionResultDetails($xpathExtensionIndex = 1)
-    {
-        $xpath = $this->xPath();
-        $xpath->registerNamespace("at-ext", atEppConstants::atExtResultNamespaceUri);
-        $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/at-ext:details');
-        if (is_object($result) && ($result->length > 0)) {
-            return trim($result->item(0)->nodeValue);
-        } else {
-            $result = $xpath->query('/epp:epp/epp:response/epp:msgq/epp:extension/at-ext:conditions/at-ext:condition[' . $xpathExtensionIndex . ']/at-ext:details');
-            if (is_object($result) && ($result->length > 0)) {
-                return trim($result->item(0)->nodeValue);
-            } else {
-                return null;
-            }
         }
     }
 

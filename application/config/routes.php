@@ -50,10 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //$route['default_controller'] = 'welcome';
-$route['default_controller'] = 'Login';
+$route['default_controller'] = 'SgLogin';
 $route['assets/(:any)'] = 'assets/$1';
 $route['pages/(:any)'] = 'pages/$1';
-$route['dist/(:any)'] = 'Dev_CPM/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 

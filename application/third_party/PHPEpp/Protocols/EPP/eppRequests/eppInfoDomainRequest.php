@@ -5,8 +5,7 @@ namespace Metaregistrar\EPP;
  * This object contains all the logic to create an EPP domain:info command
  */
 
-class eppInfoDomainRequest extends eppDomainRequest
-{
+class eppInfoDomainRequest extends eppDomainRequest {
     const HOSTS_ALL = 'all';
     const HOSTS_DELEGATED = 'del';
     const HOSTS_SUBORDINATE = 'sub';
@@ -19,8 +18,7 @@ class eppInfoDomainRequest extends eppDomainRequest
      * @param null $hosts
      * @throws eppException
      */
-    public function __construct($infodomain, $hosts = null, $namespacesinroot = true)
-    {
+    public function __construct($infodomain, $hosts = null, $namespacesinroot = true) {
         $this->setNamespacesinroot($namespacesinroot);
         parent::__construct(eppRequest::TYPE_INFO);
 
@@ -32,8 +30,11 @@ class eppInfoDomainRequest extends eppDomainRequest
         $this->addSessionId();
     }
 
-    public function setDomain(eppDomain $domain, $hosts = null)
-    {
+    function __destruct() {
+        parent::__destruct();
+    }
+
+    public function setDomain(eppDomain $domain, $hosts = null) {
         if (!strlen($domain->getDomainname())) {
             throw new eppException('Domain object does not contain a valid domain name');
         }
@@ -49,15 +50,11 @@ class eppInfoDomainRequest extends eppDomainRequest
             }
         }
         $this->domainobject->appendChild($dname);
-        if (!is_null($domain->getAuthorisationCode())) {
+        if (!is_null($domain->getAuthorisationCode()))
+        {
             $authinfo = $this->createElement('domain:authInfo');
             $authinfo->appendChild($this->createElement('domain:pw', $domain->getAuthorisationCode()));
             $this->domainobject->appendChild($authinfo);
         }
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 }

@@ -7,8 +7,7 @@ namespace Metaregistrar\EPP;
  *
  */
 
-class eppContactPostalInfo
-{
+class eppContactPostalInfo {
     private $name;
     private $organisationName;
     private $street;
@@ -30,8 +29,7 @@ class eppContactPostalInfo
      * @param string $zipcode
      * @param string $type POSTAL_TYPE_LOC or POSTAL_TYPE_INT
      */
-    public function __construct($name = null, $city = null, $countrycode = null, $organisationName = null, $street = null, $province = null, $zipcode = null, $type = eppContact::TYPE_AUTO)
-    {
+    public function __construct($name = null, $city = null, $countrycode = null, $organisationName = null, $street = null, $province = null, $zipcode = null, $type = eppContact::TYPE_AUTO) {
         $this->setName($name);
         #
         # Street can be an array of max 3 streets, or a string with an address
@@ -58,8 +56,7 @@ class eppContactPostalInfo
      * @param string $street
      * @return void
      */
-    public function addStreet($street)
-    {
+    public function addStreet($street) {
         if ((is_string($street)) && (strlen($street) > 0)) {
             if (count($this->street) < 3) {
                 $this->street[count($this->street)] = htmlspecialchars($street, ENT_COMPAT, "UTF-8");
@@ -74,31 +71,19 @@ class eppContactPostalInfo
      * @param int $line
      * @return string
      */
-    public function getStreet($line)
-    {
+    public function getStreet($line) {
         if ($this->street[$line]) {
             return $this->street[$line];
         }
         return null;
     }
 
-    public function getStreetCount()
-    {
+    public function getStreetCount() {
         return count($this->street);
     }
 
-    public function getStreets()
-    {
+    public function getStreets() {
         return $this->street;
-    }
-
-    /**
-     * Gets the organisation name
-     * @return string
-     */
-    public function getOrganisationName()
-    {
-        return $this->organisationName;
     }
 
     /**
@@ -106,18 +91,16 @@ class eppContactPostalInfo
      * @param string $organisationName
      * @return void
      */
-    public function setOrganisationName($organisationName)
-    {
+    public function setOrganisationName($organisationName) {
         $this->organisationName = htmlspecialchars($organisationName, ENT_COMPAT, "UTF-8");
     }
 
     /**
-     * Gets the name
+     * Gets the organisation name
      * @return string
      */
-    public function getName()
-    {
-        return $this->name;
+    public function getOrganisationName() {
+        return $this->organisationName;
     }
 
     /**
@@ -125,18 +108,16 @@ class eppContactPostalInfo
      * @param string $name
      * @return void
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = htmlspecialchars($name, ENT_COMPAT, "UTF-8");
     }
 
     /**
-     * Gets the city
+     * Gets the name
      * @return string
      */
-    public function getCity()
-    {
-        return $this->city;
+    public function getName() {
+        return $this->name;
     }
 
     /**
@@ -144,18 +125,16 @@ class eppContactPostalInfo
      * @param string $city
      * @return void
      */
-    public function setCity($city)
-    {
+    public function setCity($city) {
         $this->city = htmlspecialchars($city, ENT_COMPAT, "UTF-8");
     }
 
     /**
-     * Gets the zipcode
+     * Gets the city
      * @return string
      */
-    public function getZipcode()
-    {
-        return $this->zipcode;
+    public function getCity() {
+        return $this->city;
     }
 
     /**
@@ -163,20 +142,18 @@ class eppContactPostalInfo
      * @param string $zipcode
      * @return void
      */
-    public function setZipcode($zipcode)
-    {
+    public function setZipcode($zipcode) {
         //DONT Remove garbage from the zipcode, never modify customer input!
         //$zipcode = preg_replace('/[^a-z\d]/i', '', $zipcode);
         $this->zipcode = $zipcode;
     }
 
     /**
-     * Gets the province
+     * Gets the zipcode
      * @return string
      */
-    public function getProvince()
-    {
-        return $this->province;
+    public function getZipcode() {
+        return $this->zipcode;
     }
 
     /**
@@ -184,19 +161,16 @@ class eppContactPostalInfo
      * @param string $province
      * @return void
      */
-    public function setProvince($province)
-    {
+    public function setProvince($province) {
         $this->province = htmlspecialchars($province, ENT_COMPAT, "UTF-8");
     }
 
     /**
-     * Gets the countrycode
-     * @link http://xml.coverpages.org/country3166.html
+     * Gets the province
      * @return string
      */
-    public function getCountrycode()
-    {
-        return $this->countrycode;
+    public function getProvince() {
+        return $this->province;
     }
 
     /**
@@ -205,17 +179,24 @@ class eppContactPostalInfo
      * @link http://xml.coverpages.org/country3166.html
      * @return void
      */
-    public function setCountrycode($countrycode)
-    {
+    public function setCountrycode($countrycode) {
         $this->countrycode = $countrycode;
+    }
+
+    /**
+     * Gets the countrycode
+     * @link http://xml.coverpages.org/country3166.html
+     * @return string
+     */
+    public function getCountrycode() {
+        return $this->countrycode;
     }
 
     /**
      *
      * @return string int or loc
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -223,10 +204,9 @@ class eppContactPostalInfo
      *
      * @param string $type int or loc
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $type = strtolower($type);
-        if (($type != eppContact::TYPE_AUTO) && ($type != eppContact::TYPE_LOC) && ($type != eppContact::TYPE_INT)) {
+        if (($type != eppContact::TYPE_AUTO) && ($type != eppContact::TYPE_LOC)&& ($type != eppContact::TYPE_INT)) {
             throw new eppException('PostalInfo type can only be INT or LOC');
         }
         $this->type = $type;

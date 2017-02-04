@@ -7,8 +7,7 @@ namespace Metaregistrar\EPP;
  *
  */
 
-class eppContact
-{
+class eppContact {
 
     #
     # These status values cannot be set, only viewed
@@ -40,11 +39,11 @@ class eppContact
 
 
     private $postalInfo = array();
-    private $voice = null;
-    private $fax = null;
-    private $email = null;
-    private $password = null;
-    private $status = null;
+    private $voice=null;
+    private $fax=null;
+    private $email=null;
+    private $password=null;
+    private $status=null;
     private $type = self::TYPE_AUTO;
     private $disclose = null;
 
@@ -58,8 +57,7 @@ class eppContact
      * @param string $password
      * @param string $status
      */
-    public function __construct($postalInfo = null, $email = null, $voice = null, $fax = null, $password = null, $status = null)
-    {
+    public function __construct($postalInfo = null, $email = null, $voice = null, $fax = null, $password = null, $status = null) {
         if ($postalInfo instanceof eppContactPostalInfo) {
             $this->addPostalInfo($postalInfo);
         } else {
@@ -79,13 +77,29 @@ class eppContact
         $this->setPassword(self::generateRandomString(10));
     }
 
+    public function setDisclose($disclose) {
+        $this->disclose = $disclose;
+    }
+
+    public function getDisclose() {
+        return $this->disclose;
+    }
+
+
+    public function setType($type) {
+        $this->type = $type;
+    }
+
+    public function getType() {
+        return $this->type;
+    }
+
     /**
      * Add postal info to this contact
      * @param eppContactPostalInfo $postalInfo
      * @throws eppException
      */
-    public function addPostalInfo(eppContactPostalInfo $postalInfo)
-    {
+    public function addPostalInfo(eppContactPostalInfo $postalInfo) {
         if (count($this->postalInfo) < 2) {
             $this->postalInfo[count($this->postalInfo)] = $postalInfo;
         } else {
@@ -93,43 +107,11 @@ class eppContact
         }
     }
 
-    public static function generateRandomString($length = 10)
-    {
-        $characters = '123456789ABCDEFGHIJKLMNPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-
-    public function getDisclose()
-    {
-        return $this->disclose;
-    }
-
-    public function setDisclose($disclose)
-    {
-        $this->disclose = $disclose;
-    }
-
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
     /**
      * Gets the total number of postalinfo objects this contact holds
      * @return int
      */
-    public function getPostalInfoLength()
-    {
+    public function getPostalInfoLength() {
         return count($this->postalInfo);
     }
 
@@ -139,8 +121,7 @@ class eppContact
      * @param int $line
      * @return eppContactPostalInfo
      */
-    public function getPostalInfo($line)
-    {
+    public function getPostalInfo($line) {
         if ($this->postalInfo[$line]) {
             return $this->postalInfo[$line];
         } else {
@@ -150,19 +131,9 @@ class eppContact
 
     /**
      * Sets the status
-     * @return string status
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Sets the status
      * @param string $status
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         if (is_array($status)) {
             $this->status = $status;
         } else {
@@ -173,12 +144,11 @@ class eppContact
     }
 
     /**
-     * Gets the email address
-     * @return string
+     * Sets the status
+     * @return string status
      */
-    public function getEmail()
-    {
-        return $this->email;
+    public function getStatus() {
+        return $this->status;
     }
 
     /**
@@ -186,18 +156,16 @@ class eppContact
      * @param string $email
      * @return void
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
     }
 
     /**
-     * Gets the password
+     * Gets the email address
      * @return string
      */
-    public function getPassword()
-    {
-        return $this->password;
+    public function getEmail() {
+        return $this->email;
     }
 
     /**
@@ -208,8 +176,7 @@ class eppContact
      * @return void
      */
 
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         if ($password) {
             $this->password = htmlspecialchars($password, ENT_COMPAT, "UTF-8");
         } else {
@@ -219,12 +186,11 @@ class eppContact
     }
 
     /**
-     * Gets the phone number
+     * Gets the password
      * @return string
      */
-    public function getVoice()
-    {
-        return $this->voice;
+    public function getPassword() {
+        return $this->password;
     }
 
     /**
@@ -232,18 +198,16 @@ class eppContact
      * @param int $voice
      * @return void
      */
-    public function setVoice($voice)
-    {
+    public function setVoice($voice) {
         $this->voice = $this->validatePhoneNumber($voice);
     }
 
     /**
-     * Gets the fax number
+     * Gets the phone number
      * @return string
      */
-    public function getFax()
-    {
-        return $this->fax;
+    public function getVoice() {
+        return $this->voice;
     }
 
     /**
@@ -251,18 +215,16 @@ class eppContact
      * @param int $fax
      * @return void
      */
-    public function setFax($fax)
-    {
+    public function setFax($fax) {
         $this->fax = $this->validatePhoneNumber($fax);
     }
 
     /**
-     *
-     * @return string ContactId
+     * Gets the fax number
+     * @return string
      */
-    public function generateContactId()
-    {
-        return uniqid('MRG');
+    public function getFax() {
+        return $this->fax;
     }
 
     /**
@@ -271,8 +233,7 @@ class eppContact
      * @return string
      * @throws eppException
      */
-    private function validatePhoneNumber($number)
-    {
+    private function validatePhoneNumber($number) {
         //Format the phone number according to EPP formatting rules.
         if (!strlen($number)) {
             return null;
@@ -284,5 +245,23 @@ class eppContact
             throw new eppException('Phone number ' . $number . ' is not valid for EPP. Valid format is +cc.nnnnnnnnnnn');
         }
         return $number;
+    }
+
+    /**
+     *
+     * @return string ContactId
+     */
+    public function generateContactId() {
+        return uniqid('MRG');
+    }
+
+    public static function generateRandomString($length = 10) {
+        $characters = '123456789ABCDEFGHIJKLMNPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

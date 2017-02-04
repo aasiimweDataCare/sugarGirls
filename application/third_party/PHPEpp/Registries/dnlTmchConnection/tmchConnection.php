@@ -1,11 +1,9 @@
 <?php
 namespace Metaregistrar\TMCH;
 
-class dnlTmchConnection extends tmchConnection
-{
+class dnlTmchConnection extends tmchConnection {
 
-    public function getDnl()
-    {
+    public function getDnl() {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, parent::getHostname());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

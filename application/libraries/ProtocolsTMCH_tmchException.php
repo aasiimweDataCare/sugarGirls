@@ -9,7 +9,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-require_once APPPATH . "/third_party/PHPEpp/Protocols/TMCH/tmchData/tmchException.php";
+require_once APPPATH."/third_party/PHPEpp/Protocols/TMCH/tmchData/tmchException.php";
 
 
 class TmchException extends Metaregistrar\TMCH\tmchException

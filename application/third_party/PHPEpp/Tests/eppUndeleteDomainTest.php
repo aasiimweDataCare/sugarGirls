@@ -1,5 +1,5 @@
 <?php
-include_once(dirname(__FILE__) . '/eppTestCase.php');
+include_once(dirname(__FILE__).'/eppTestCase.php');
 
 class eppRestoreDomainTest extends eppTestCase
 {
@@ -19,13 +19,13 @@ class eppRestoreDomainTest extends eppTestCase
             $response = $this->conn->writeandread($restore);
             // Restore done, check the results with assertions
             /* @var $response \Metaregistrar\EPP\eppRgpRestoreResponse */
-            $this->assertInstanceOf('Metaregistrar\EPP\eppRgpRestoreResponse', $response);
+            $this->assertInstanceOf('Metaregistrar\EPP\eppRgpRestoreResponse',$response);
             $statuses = $response->getRestoreStatuses();
-            $this->assertCount(1, $statuses);
-            $this->assertEquals('pendingRestore', $statuses[0]);
+            $this->assertCount(1,$statuses);
+            $this->assertEquals('pendingRestore',$statuses[0]);
             $this->assertTrue($response->Success());
-            $this->assertEquals('Command completed succesfully', $response->getResultMessage());
-            $this->assertEquals(1000, $response->getResultCode());
+            $this->assertEquals('Command completed succesfully',$response->getResultMessage());
+            $this->assertEquals(1000,$response->getResultCode());
         }
     }
 }

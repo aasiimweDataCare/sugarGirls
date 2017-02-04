@@ -3,13 +3,13 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppContactHandle;
-use Metaregistrar\EPP\eppCreateDomainRequest;
-use Metaregistrar\EPP\eppDomain;
-use Metaregistrar\EPP\eppDomainClaim;
 use Metaregistrar\EPP\eppException;
-use Metaregistrar\EPP\eppHost;
 use Metaregistrar\EPP\eppLaunchCheckRequest;
+use Metaregistrar\EPP\eppDomainClaim;
+use Metaregistrar\EPP\eppDomain;
+use Metaregistrar\EPP\eppContactHandle;
+use Metaregistrar\EPP\eppHost;
+use Metaregistrar\EPP\eppCreateDomainRequest;
 use Metaregistrar\EPP\eppLaunchCreateDomainRequest;
 use Metaregistrar\TMCH\cnisTmchConnection;
 use Metaregistrar\TMCH\tmchException;
@@ -42,9 +42,9 @@ try {
             $contactid = '';
             $techcontact = $contactid;
             $billingcontact = $contactid;
-            $nameservers = array('ns1.metaregistrar.nl', 'ns2.metaregistrar.nl');
+            $nameservers = array('ns1.metaregistrar.nl','ns2.metaregistrar.nl');
             echo "Registering $domainname\n";
-            $claim = checkdomainclaim($conn, $domainname);
+            $claim = checkdomainclaim($conn,$domainname);
             if ($claim) {
                 createclaimeddomain($conn, $domainname, $claim, $contactid, $contactid, $techcontact, $billingcontact, $nameservers);
             } else {
@@ -66,8 +66,7 @@ try {
  * @throws eppException
  * @throws tmchException
  */
-function checkdomainclaim($conn, $domainname)
-{
+function checkdomainclaim($conn, $domainname) {
     $check = new eppLaunchCheckRequest(array($domainname));
     $check->setLaunchPhase(eppLaunchCheckRequest::PHASE_CLAIMS, null, eppLaunchCheckRequest::TYPE_CLAIMS);
     if ($response = $conn->request($check)) {
@@ -81,13 +80,13 @@ function checkdomainclaim($conn, $domainname)
                 if ($check['claim']) {
                     if ($check['claim'] instanceof eppDomainClaim) {
                         echo "Claim validator: " . $check['claim']->getValidator() . ", claim key: " . $check['claim']->getClaimKey() . "\n";
-                        $tmch = new cnisTmchConnection(true, 'settingslive.ini');
+                        $tmch = new cnisTmchConnection(true,'settingslive.ini');
                         $claim = array();
                         $output = $tmch->getCnis($check['claim']->getClaimKey());
                         /* @var $output Metaregistrar\TMCH\tmchClaimData */
-                        $claim['noticeid'] = $output->getNoticeId();
-                        $claim['notafter'] = $output->getNotAfter();
-                        $claim['confirmed'] = gmdate("Y-m-d\TH:i:s\Z");
+                        $claim['noticeid']= $output->getNoticeId();
+                        $claim['notafter']= $output->getNotAfter();
+                        $claim['confirmed']= gmdate("Y-m-d\TH:i:s\Z");
                         return $claim;
                     } else {
                         throw new eppException("Domain name " . $check['domainname'] . " is claimed, but no valid claim key is present");
@@ -116,8 +115,7 @@ function checkdomainclaim($conn, $domainname)
  * @param string $billingcontact
  * @param array $nameservers
  */
-function createclaimeddomain($conn, $domainname, $claim, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers)
-{
+function createclaimeddomain($conn, $domainname, $claim, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers) {
     $domain = new eppDomain($domainname, $registrant);
     $domain->setPeriod(1);
     $reg = new eppContactHandle($registrant);
@@ -164,8 +162,7 @@ function createclaimeddomain($conn, $domainname, $claim, $registrant, $admincont
  * @param array $nameservers
  * @throws eppException
  */
-function createdomain($conn, $domainname, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers)
-{
+function createdomain($conn, $domainname, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers) {
     $domain = new eppDomain($domainname, $registrant);
     $reg = new eppContactHandle($registrant);
     $domain->setRegistrant($reg);
@@ -176,8 +173,10 @@ function createdomain($conn, $domainname, $registrant, $admincontact, $techconta
     $billing = new eppContactHandle($billingcontact, eppContactHandle::CONTACT_TYPE_BILLING);
     $domain->addContact($billing);
     $domain->setAuthorisationCode($domain->generateRandomString(8));
-    if (is_array($nameservers)) {
-        foreach ($nameservers as $nameserver) {
+    if (is_array($nameservers))
+    {
+        foreach ($nameservers as $nameserver)
+        {
             $host = new eppHost($nameserver);
             $domain->addHost($host);
         }

@@ -1,8 +1,7 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class atEppCreateResponse extends eppCreateResponse
-{
+class atEppCreateResponse extends eppCreateResponse {
 
     use atEppResponseTrait;
 
@@ -13,10 +12,10 @@ class atEppCreateResponse extends eppCreateResponse
      *
      * @return string contact_id
      */
-    public function getContactId()
-    {
-        $result = parent::getContactId();
-        if (!is_null($result)) {
+    public function getContactId() {
+        $result=parent::getContactId();
+        if(!is_null($result))
+        {
             $result .= "-NICAT";
         }
         return $result;

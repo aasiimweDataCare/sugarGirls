@@ -9,8 +9,7 @@ namespace Metaregistrar\EPP;
  *
  */
 
-class eppContactHandle
-{
+class eppContactHandle {
     const CONTACT_TYPE_REGISTRANT = 'reg';
     const CONTACT_TYPE_ADMIN = 'admin';
     const CONTACT_TYPE_TECH = 'tech';
@@ -29,7 +28,7 @@ class eppContactHandle
      * Authcode to retrieve contact information
      * @var string
      */
-    private $password = null;
+    private $password=null;
 
     /**
      *
@@ -37,8 +36,7 @@ class eppContactHandle
      * @param string $contactType
      * @throws eppException
      */
-    public function  __construct($contactHandle, $contactType = null)
-    {
+    public function  __construct($contactHandle, $contactType = null) {
         $this->setContactHandle($contactHandle);
         if ($contactType) {
             $this->setContactType($contactType);
@@ -52,8 +50,7 @@ class eppContactHandle
      * Gets the contact handle
      * @return string
      */
-    public function getContactHandle()
-    {
+    public function getContactHandle() {
         return $this->contactHandle;
     }
 
@@ -62,8 +59,7 @@ class eppContactHandle
      * @param string $contactHandle
      * @throws eppException
      */
-    public function setContactHandle($contactHandle)
-    {
+    public function setContactHandle($contactHandle) {
         if (!strlen($contactHandle)) {
             throw new eppException('Contact handle specified is not valid: ' . $contactHandle);
         }
@@ -74,8 +70,7 @@ class eppContactHandle
      * Gets the contact handle
      * @return string
      */
-    public function getContactType()
-    {
+    public function getContactType() {
         return $this->contactType;
     }
 
@@ -84,18 +79,8 @@ class eppContactHandle
      * @param string $contactType
      * @return void
      */
-    public function setContactType($contactType)
-    {
+    public function setContactType($contactType) {
         $this->contactType = $contactType;
-    }
-
-    /**
-     * Gets the password
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -106,9 +91,16 @@ class eppContactHandle
      * @return void
      */
 
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = htmlspecialchars($password, ENT_COMPAT, "UTF-8");
+    }
+
+    /**
+     * Gets the password
+     * @return string
+     */
+    public function getPassword() {
+        return $this->password;
     }
 
 }

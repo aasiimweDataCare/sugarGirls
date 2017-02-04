@@ -26,7 +26,6 @@ class Login_model extends CI_Model
             `u`.fullNames,
             `u`.userName,
             `u`.password,
-            `u`.designation,
             `d`.countryName,
             `u`.userStatus
              from tbl_users as `u`

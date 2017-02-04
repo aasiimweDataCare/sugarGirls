@@ -107,7 +107,7 @@ if (!function_exists('readNumber()')) {
 if (!function_exists('appendSuperpositionInteger()')) {
     function appendSuperpositionInteger($string)
     {
-        $lastDigitInString = mb_substr($string, -1);
+        $lastDigitInString =  mb_substr($string, -1);
         $sup = '';
         switch ($lastDigitInString) {
             case 0:

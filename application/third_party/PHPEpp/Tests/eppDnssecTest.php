@@ -1,13 +1,11 @@
 <?php
-include_once(dirname(__FILE__) . '/eppTestCase.php');
+include_once(dirname(__FILE__).'/eppTestCase.php');
 
-class eppDnssecTest extends eppTestCase
-{
+class eppDnssecTest extends eppTestCase {
 
-    public function testCreateWithDnssecSuccess()
-    {
+    public function testCreateWithDnssecSuccess() {
         $contactid = $this->createContact();
-        $domain = new \Metaregistrar\EPP\eppDomain($this->randomstring(20) . '.frl');
+        $domain = new \Metaregistrar\EPP\eppDomain($this->randomstring(20).'.frl');
         $domain->setPeriod(1);
         $domain->setRegistrant($contactid);
         $domain->setAuthorisationCode('fubar');
@@ -18,11 +16,11 @@ class eppDnssecTest extends eppTestCase
         $domain->addSecdns($secdns);
         $create = new \Metaregistrar\EPP\eppCreateDomainRequest($domain);
         $response = $this->conn->writeandread($create);
-        $this->assertInstanceOf('Metaregistrar\EPP\eppCreateDomainResponse', $response);
+        $this->assertInstanceOf('Metaregistrar\EPP\eppCreateDomainResponse',$response);
         /* @var $response Metaregistrar\EPP\eppCreateDomainResponse */
         $this->assertTrue($response->Success());
-        $this->assertEquals('Command completed successfully', $response->getResultMessage());
-        $this->assertEquals(1000, $response->getResultCode());
+        $this->assertEquals('Command completed successfully',$response->getResultMessage());
+        $this->assertEquals(1000,$response->getResultCode());
     }
 
 

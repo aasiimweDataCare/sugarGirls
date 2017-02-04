@@ -16,8 +16,7 @@ class atEppContactHandle extends eppContactHandle
      * @param string $contactHandle
      * @return void
      */
-    public function setContactHandle($contactHandle)
-    {
+    public function setContactHandle($contactHandle) {
 
         parent::setContactHandle($this->parseContactHandle($contactHandle));
     }
@@ -31,7 +30,7 @@ class atEppContactHandle extends eppContactHandle
      */
     protected function parseContactHandle($handle)
     {
-        if (!empty($handle)) {
+        if(!empty($handle)) {
             $handle = strtoupper($handle);
             $handle = str_replace("-NICAT", "", $handle);
         }

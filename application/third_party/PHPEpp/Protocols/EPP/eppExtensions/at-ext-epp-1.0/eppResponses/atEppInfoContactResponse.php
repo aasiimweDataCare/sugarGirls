@@ -17,7 +17,7 @@ class atEppInfoContactResponse extends eppInfoContactResponse
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:resData/contact:infData/contact:disclose/contact:voice');
 
-        if (!is_null($result) && $result->length > 0) {
+        if (!is_null($result) &&$result->length > 0) {
             return 1;
         } else {
             return 0;
@@ -29,7 +29,7 @@ class atEppInfoContactResponse extends eppInfoContactResponse
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:resData/contact:infData/contact:disclose/contact:fax');
 
-        if (!is_null($result) && $result->length > 0) {
+        if (!is_null($result) &&$result->length > 0) {
             return 1;
         } else {
             return 0;
@@ -53,7 +53,7 @@ class atEppInfoContactResponse extends eppInfoContactResponse
     {
 
         $xpath = $this->xPath();
-        $xpath->registerNamespace("at-ext-contact", atEppConstants::namespaceAtExtContact);
+       $xpath->registerNamespace ( "at-ext-contact" , atEppConstants::namespaceAtExtContact );
 
         $result = $xpath->query('/epp:epp/epp:response/epp:extension/at-ext-contact:infData/at-ext-contact:type');
         if (!is_null($result) && $result->length > 0) {
@@ -62,6 +62,7 @@ class atEppInfoContactResponse extends eppInfoContactResponse
             return atEppContact::PERS_TYPE_UNSPECIFIED;
         }
     }
+
 
 
 }

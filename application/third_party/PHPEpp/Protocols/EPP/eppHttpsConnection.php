@@ -13,8 +13,7 @@ namespace Metaregistrar\EPP;
 
 include_once(dirname(__FILE__) . '/eppHttpConnection.php');
 
-class eppHttpsConnection extends eppHttpConnection
-{
+class eppHttpsConnection extends eppHttpConnection {
 
     /**
      * Uses eppHttpConnection curl resource but adds
@@ -24,8 +23,7 @@ class eppHttpsConnection extends eppHttpConnection
      * @return null|resource
      */
 
-    protected function initCurl($postMode = true)
-    {
+    protected function initCurl($postMode = true) {
         $ch = parent::initCurl($postMode);
 
         // Set secure protocol

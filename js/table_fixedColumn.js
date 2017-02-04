@@ -3,13 +3,13 @@
  */
 
 var responsiveTables = {
-    init: function () {
+    init: function() {
         $(document).find('.fixed-columns').each(function (i, elem) {
             responsiveTables.fixColumns(elem);
         });
     },
 
-    fixColumns: function (table, columns) {
+    fixColumns: function(table, columns) {
         var $table = $(table);
         $table.removeClass('fixed-columns');
         var $fixedColumns = $table.clone().attr('id', $table.attr('id') + '-fixed').insertBefore($table).addClass('fixed-columns-fixed');

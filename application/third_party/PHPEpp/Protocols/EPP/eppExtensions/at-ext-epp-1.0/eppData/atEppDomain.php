@@ -15,10 +15,9 @@ class atEppDomain extends eppDomain
      *
      * @param string $registrant
      */
-    public function setRegistrant($registrant)
-    {
+    public function setRegistrant($registrant) {
         if ($registrant instanceof eppContactHandle) {
-            parent::setRegistrant($registrant);
+           parent::setRegistrant($registrant);
         } else {
             parent::setRegistrant($this->parseContactHandle($registrant));
         }
@@ -33,7 +32,7 @@ class atEppDomain extends eppDomain
      */
     protected function parseContactHandle($handle)
     {
-        if (!empty($handle)) {
+        if(!empty($handle)) {
             $handle = strtoupper($handle);
             $handle = str_replace("-NICAT", "", $handle);
         }

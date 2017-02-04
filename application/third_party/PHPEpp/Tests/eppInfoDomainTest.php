@@ -1,42 +1,39 @@
 <?php
-include_once(dirname(__FILE__) . '/eppTestCase.php');
+include_once(dirname(__FILE__).'/eppTestCase.php');
 
-class eppInfoDomainTest extends eppTestCase
-{
+class eppInfoDomainTest extends eppTestCase {
     /**
      * Test succesful contact info
      * @throws \Metaregistrar\EPP\eppException
      */
-    public function testInfoDomainSuccess()
-    {
+    public function testInfoDomainSuccess() {
         $domainname = $this->createDomain();
         $domain = new Metaregistrar\EPP\eppDomain($domainname);
         $info = new Metaregistrar\EPP\eppInfoDomainRequest($domain);
         $response = $this->conn->writeandread($info);
-        $this->assertInstanceOf('Metaregistrar\EPP\eppInfoDomainResponse', $response);
+        $this->assertInstanceOf('Metaregistrar\EPP\eppInfoDomainResponse',$response);
         /* @var $response Metaregistrar\EPP\eppInfoDomainResponse */
         $this->assertTrue($response->Success());
-        $this->assertEquals('Command completed successfully', $response->getResultMessage());
-        $this->assertEquals(1000, $response->getResultCode());
+        $this->assertEquals('Command completed successfully',$response->getResultMessage());
+        $this->assertEquals(1000,$response->getResultCode());
     }
 
     /**
      * Test succesful contact info giving an authcode
      * @throws \Metaregistrar\EPP\eppException
      */
-    public function testInfoDomainWithAuthcode()
-    {
+    public function testInfoDomainWithAuthcode() {
         $domainname = $this->createDomain();
         $domain = new Metaregistrar\EPP\eppDomain($domainname);
         $domain->setAuthorisationCode('foorbar');
         $info = new Metaregistrar\EPP\eppInfoDomainRequest($domain);
         //$info->dumpContents();
         $response = $this->conn->writeandread($info);
-        $this->assertInstanceOf('Metaregistrar\EPP\eppInfoDomainResponse', $response);
+        $this->assertInstanceOf('Metaregistrar\EPP\eppInfoDomainResponse',$response);
         /* @var $response Metaregistrar\EPP\eppInfoDomainResponse */
         $this->assertTrue($response->Success());
-        $this->assertEquals('Command completed successfully', $response->getResultMessage());
-        $this->assertEquals(1000, $response->getResultCode());
+        $this->assertEquals('Command completed successfully',$response->getResultMessage());
+        $this->assertEquals(1000,$response->getResultCode());
     }
 
 
@@ -44,16 +41,15 @@ class eppInfoDomainTest extends eppTestCase
      * Test succesful contact info giving an authcode
      * @throws \Metaregistrar\EPP\eppException
      */
-    public function testInfoDomainWithoutAuthcode()
-    {
-        $domainname = $this->createDomain($this->randomstring(20) . '.be');
+    public function testInfoDomainWithoutAuthcode() {
+        $domainname = $this->createDomain($this->randomstring(20).'.be');
         $info = new Metaregistrar\EPP\metaregEppAuthcodeRequest(new Metaregistrar\EPP\eppDomain($domainname));
         $response = $this->conn->writeandread($info);
-        $this->assertInstanceOf('Metaregistrar\EPP\eppInfoDomainResponse', $response);
+        $this->assertInstanceOf('Metaregistrar\EPP\eppInfoDomainResponse',$response);
         /* @var $response Metaregistrar\EPP\eppInfoDomainResponse */
         $this->assertTrue($response->Success());
-        $this->assertEquals('Command completed successfully', $response->getResultMessage());
-        $this->assertEquals(1000, $response->getResultCode());
+        $this->assertEquals('Command completed successfully',$response->getResultMessage());
+        $this->assertEquals(1000,$response->getResultCode());
     }
 
 
@@ -61,8 +57,7 @@ class eppInfoDomainTest extends eppTestCase
      * Test that cannot be performed using the EPP client, because the client will not allow this
      * This test should fail
      */
-    public function testInfoDomainEmptyContact()
-    {
+    public function testInfoDomainEmptyContact() {
         $xml = '<?xml version="1.0" encoding="utf-8"?>
 <epp xmlns:host="urn:ietf:params:xml:ns:host-1.0" xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" xmlns:obj="urn:ietf:params:xml:ns:obj-1.0" xmlns="urn:ietf:params:xml:ns:epp-1.0">
   <response>
@@ -98,9 +93,9 @@ class eppInfoDomainTest extends eppTestCase
         $infodomain = new \Metaregistrar\EPP\eppInfoDomainResponse;
         $infodomain->loadXML($xml);
         $contacts = $infodomain->getDomainContacts();
-        $this->assertEquals(count($contacts), 1);
-        $this->assertEquals($contacts[0]->getContactHandle(), 'CXXXXX');
-        $this->assertEquals($contacts[0]->getContactType(), 'tech');
+        $this->assertEquals(count($contacts),1);
+        $this->assertEquals($contacts[0]->getContactHandle(),'CXXXXX');
+        $this->assertEquals($contacts[0]->getContactType(),'tech');
     }
 
 }

@@ -14,12 +14,13 @@ class atEppUpdateContactRequest extends eppUpdateContactRequest
     use atEppCommandTrait;
     protected $atEppExtensionChain = null;
 
-    function __construct($objectname, atEppContact $addinfo = null, atEppContact $removeinfo = null, atEppContact $updateinfo = null, atEppExtensionChain $atEppExtensionChain = null)
-    {
+    function __construct($objectname, atEppContact $addinfo = null, atEppContact $removeinfo = null,atEppContact $updateinfo = null,atEppExtensionChain $atEppExtensionChain=null) {
         $this->atEppExtensionChain = $atEppExtensionChain;
-        parent::__construct($objectname, $addinfo, $removeinfo, $updateinfo);
+        parent::__construct($objectname, $addinfo , $removeinfo , $updateinfo);
         $this->addSessionId();
     }
+
+
 
 
     /**
@@ -30,8 +31,7 @@ class atEppUpdateContactRequest extends eppUpdateContactRequest
      * @param atEppContact $updateInfo
      * @return \domElement
      */
-    public function updateContact($contactid, atEppContact $addInfo, atEppContact $removeInfo, atEppContact $updateInfo)
-    {
+    public function updateContact($contactid,atEppContact $addInfo,atEppContact $removeInfo,atEppContact $updateInfo) {
         #
         # Object create structure
         #
@@ -63,13 +63,31 @@ class atEppUpdateContactRequest extends eppUpdateContactRequest
      * @param \domElement $element
      * @param eppContact $contact
      */
-    private function addContactChanges(\domElement $element, atEppContact $contact)
-    {
+    private function addContactStatus(\domElement $element, atEppContact $contact) {
+        if ((is_array($contact->getStatus())) && (count($contact->getStatus()) > 0)) {
+            $statuses = $contact->getStatus();
+            if (is_array($statuses)) {
+                foreach ($statuses as $status) {
+                    $stat = $this->createElement('contact:status');
+                    $stat->setAttribute('s', $status);
+                    $element->appendChild($stat);
+                }
+            }
+        }
+    }
+
+
+    /**
+     *
+     * @param \domElement $element
+     * @param eppContact $contact
+     */
+    private function addContactChanges(\domElement $element, atEppContact $contact) {
 
         if ($contact->getPostalInfoLength() > 0) {
             $postal = $contact->getPostalInfo(0);
             $postalinfo = $this->createElement('contact:postalInfo');
-            if ($postal->getType() == eppContact::TYPE_AUTO) {
+            if ($postal->getType()==eppContact::TYPE_AUTO) {
                 // If all fields are ascii, type = int (international) else type = loc (localization)
                 if ((self::isAscii($postal->getName())) && (self::isAscii($postal->getOrganisationName())) && (self::isAscii($postal->getStreet(0)))) {
                     $postal->setType(eppContact::TYPE_INT);
@@ -121,61 +139,43 @@ class atEppUpdateContactRequest extends eppUpdateContactRequest
             $authinfo->appendChild($this->createElement('contact:pw', $contact->getPassword()));
             $element->appendChild($authinfo);
         }
-        $this->setAtContactDisclosure($element, $contact);
+        $this->setAtContactDisclosure($element,$contact);
 
     }
 
-    protected function setAtContactDisclosure(\domElement $element, atEppContact $contact)
+
+    protected function setAtContactDisclosure(\domElement $element,atEppContact $contact)
     {
 
         if (!is_null($contact->getDisclose())) {
             $disclose = $this->createElement('contact:disclose');
-            $disclose->setAttribute('flag', $contact->getDisclose());
+            $disclose->setAttribute('flag',$contact->getDisclose());
 
             $disclPhone = $this->createElement('contact:voice');
-            if ($contact->getDisclose() == 1) {
-                $disclPhone->setAttribute('type', eppContact::TYPE_LOC);
+            if ($contact->getDisclose()==1) {
+                $disclPhone->setAttribute('type',eppContact::TYPE_LOC);
             }
-            if ($contact->getDisclose() != $contact->getWhoisHidePhone()) {
+            if($contact->getDisclose() != $contact->getWhoisHidePhone()) {
                 $disclose->appendChild($disclPhone);
             }
             $disclFax = $this->createElement('contact:fax');
-            if ($contact->getDisclose() == 1) {
-                $disclFax->setAttribute('type', eppContact::TYPE_LOC);
+            if ($contact->getDisclose()==1) {
+                $disclFax->setAttribute('type',eppContact::TYPE_LOC);
             }
-            if ($contact->getWhoisHideFax() != $contact->getDisclose()) {
+            if($contact->getWhoisHideFax() != $contact->getDisclose()) {
                 $disclose->appendChild($disclFax);
             }
             $disclEmail = $this->createElement('contact:email');
-            if ($contact->getDisclose() == 1) {
-                $disclEmail->setAttribute('type', eppContact::TYPE_LOC);
+            if ($contact->getDisclose()==1) {
+                $disclEmail->setAttribute('type',eppContact::TYPE_LOC);
             }
-            if ($contact->getWhoisHideEmail() != $contact->getDisclose()) {
+            if($contact->getWhoisHideEmail() != $contact->getDisclose()) {
                 $disclose->appendChild($disclEmail);
             }
             $element->appendChild($disclose);
         }
 
 
-    }
-
-    /**
-     *
-     * @param \domElement $element
-     * @param eppContact $contact
-     */
-    private function addContactStatus(\domElement $element, atEppContact $contact)
-    {
-        if ((is_array($contact->getStatus())) && (count($contact->getStatus()) > 0)) {
-            $statuses = $contact->getStatus();
-            if (is_array($statuses)) {
-                foreach ($statuses as $status) {
-                    $stat = $this->createElement('contact:status');
-                    $stat->setAttribute('s', $status);
-                    $element->appendChild($stat);
-                }
-            }
-        }
     }
 
 }

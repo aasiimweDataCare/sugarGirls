@@ -1,11 +1,9 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppDeleteContactRequest extends eppContactRequest
-{
+class eppDeleteContactRequest extends eppContactRequest {
 
-    function __construct(eppContactHandle $deleteinfo, $namespacesinroot = true)
-    {
+    function __construct(eppContactHandle $deleteinfo, $namespacesinroot = true) {
         $this->setNamespacesinroot($namespacesinroot);
         parent::__construct(eppRequest::TYPE_DELETE);
 
@@ -17,8 +15,11 @@ class eppDeleteContactRequest extends eppContactRequest
         $this->addSessionId();
     }
 
-    public function setContactHandle(eppContactHandle $contacthandle)
-    {
+    function __destruct() {
+        parent::__destruct();
+    }
+
+    public function setContactHandle(eppContactHandle $contacthandle) {
         if (!strlen($contacthandle->getContactHandle())) {
             throw new eppException('eppDeleteRequest contacthandle object does not contain a valid contacthandle');
         }
@@ -28,10 +29,6 @@ class eppDeleteContactRequest extends eppContactRequest
         $this->contactobject->appendChild($this->createElement('contact:id', $contacthandle->getContactHandle()));
     }
 
-    function __destruct()
-    {
-        parent::__destruct();
-    }
 
 
 }

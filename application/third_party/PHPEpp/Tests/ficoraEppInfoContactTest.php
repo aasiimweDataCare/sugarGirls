@@ -1,19 +1,15 @@
 <?php
-include_once(dirname(__FILE__) . '/eppTestCase.php');
+include_once(dirname(__FILE__).'/eppTestCase.php');
 
-class ficoraEppInfoContactTest extends eppTestCase
-{
+class ficoraEppInfoContactTest extends eppTestCase {
 
-    public function testParentContactMethods()
+    /**
+     * @param null $configfile
+     */
+    protected function setUp($configfile=null)
     {
-        $contactResponse = $this->getFicoraContactResponse();
-        $this->assertEquals($contactResponse->getContactId(), 'C12345');
-        $this->assertEquals($contactResponse->getContactVoice(), '+35840123456');
-        $this->assertEquals($contactResponse->getContactEmail(), 'example@mail.mail');
-        $this->assertEquals($contactResponse->getContactClientId(), 'C1234');
-        $this->assertEquals($contactResponse->getContactCreateClientId(), 'C4321');
-        $this->assertEquals($contactResponse->getContactCreateDate(), '2016-08-08T13:19:37');
-        $this->assertEquals($contactResponse->getContactStatus(), null);
+        // Initialize ficora to load ficora extension classes
+        $this->connection = new \Metaregistrar\EPP\ficoraEppConnection;
     }
 
     protected function getFicoraContactResponse()
@@ -64,8 +60,19 @@ class ficoraEppInfoContactTest extends eppTestCase
         return $response;
     }
 
-    public function testAdditionalContactMethods()
+    public function testParentContactMethods()
     {
+        $contactResponse = $this->getFicoraContactResponse();
+        $this->assertEquals($contactResponse->getContactId(), 'C12345');
+        $this->assertEquals($contactResponse->getContactVoice(), '+35840123456');
+        $this->assertEquals($contactResponse->getContactEmail(), 'example@mail.mail');
+        $this->assertEquals($contactResponse->getContactClientId(), 'C1234');
+        $this->assertEquals($contactResponse->getContactCreateClientId(), 'C4321');
+        $this->assertEquals($contactResponse->getContactCreateDate(), '2016-08-08T13:19:37');
+        $this->assertEquals($contactResponse->getContactStatus(), null);
+    }
+
+    public function testAdditionalContactMethods() {
         $contactResponse = $this->getFicoraContactResponse();
         $this->assertEquals($contactResponse->getContactRole(), 5);
         $this->assertEquals($contactResponse->getContactType(), 0);
@@ -75,8 +82,7 @@ class ficoraEppInfoContactTest extends eppTestCase
         $this->assertCount(1, $contacts);
     }
 
-    public function testPostalInfo()
-    {
+    public function testPostalInfo() {
         $contactResponse = $this->getFicoraContactResponse();
         $postalInfo = $contactResponse->getContactPostalInfo();
         // parent method tests
@@ -99,14 +105,5 @@ class ficoraEppInfoContactTest extends eppTestCase
         $this->assertEquals($postalInfo[0]->getIdentity(), '123456-123X');
         $this->assertEquals($postalInfo[0]->getBirthDate(), '1.2.1980');
         $this->assertEquals($postalInfo[0]->getRegisterNumber(), '1234567-1');
-    }
-
-    /**
-     * @param null $configfile
-     */
-    protected function setUp($configfile = null)
-    {
-        // Initialize ficora to load ficora extension classes
-        $this->connection = new \Metaregistrar\EPP\ficoraEppConnection;
     }
 }

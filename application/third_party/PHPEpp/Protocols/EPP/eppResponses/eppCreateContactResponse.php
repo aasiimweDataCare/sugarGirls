@@ -1,15 +1,12 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCreateContactResponse extends eppResponse
-{
-    function __construct()
-    {
+class eppCreateContactResponse extends eppResponse {
+    function __construct() {
         parent::__construct();
     }
 
-    function __destruct()
-    {
+    function __destruct() {
         parent::__destruct();
     }
 
@@ -21,8 +18,7 @@ class eppCreateContactResponse extends eppResponse
      *
      * @return string contact_id
      */
-    public function getContactId()
-    {
+    public function getContactId() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/contact:creData/contact:id');
     }
 
@@ -30,8 +26,7 @@ class eppCreateContactResponse extends eppResponse
      *
      * @return string create_date
      */
-    public function getContactCreateDate()
-    {
+    public function getContactCreateDate() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/contact:creData/contact:crDate');
     }
 
@@ -39,8 +34,7 @@ class eppCreateContactResponse extends eppResponse
      *
      * @return eppContactHandle contacthandle
      */
-    public function getContactHandle()
-    {
+    public function getContactHandle() {
         if ($handle = $this->queryPath('/epp:epp/epp:response/epp:resData/contact:creData/contact:id')) {
             return new eppContactHandle($handle);
         } else {

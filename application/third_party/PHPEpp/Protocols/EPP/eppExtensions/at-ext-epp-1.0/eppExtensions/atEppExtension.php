@@ -10,15 +10,14 @@ namespace Metaregistrar\EPP;
  */
 abstract class atEppExtensionChain
 {
-    protected $additionaEppExtension = null;
+    protected $additionaEppExtension=null;
 
-    function __construct(atEppExtensionChain $additionaEppExtension = null)
-    {
+    function __construct(atEppExtensionChain $additionaEppExtension=null) {
 
         $this->additionaEppExtension = $additionaEppExtension;
     }
 
-    public function setEppRequestExtension(eppRequest $request, \DOMElement $extension)
+    public function setEppRequestExtension(eppRequest $request,\DOMElement $extension)
     {
 
 

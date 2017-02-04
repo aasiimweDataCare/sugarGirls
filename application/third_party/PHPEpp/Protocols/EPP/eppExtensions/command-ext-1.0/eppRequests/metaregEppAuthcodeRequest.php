@@ -34,8 +34,7 @@ class metaregEppAuthcodeRequest extends eppInfoDomainRequest
         $this->addSessionId();
     }
 
-    function addAuthcodeRequest()
-    {
+    function addAuthcodeRequest() {
         $commandext = $this->createElement('command-ext:command-ext');
         $domainext = $this->createElement('command-ext-domain:domain');
         $domaininfoext = $this->createElement('command-ext-domain:info');

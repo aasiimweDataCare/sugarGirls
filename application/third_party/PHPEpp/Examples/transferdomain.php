@@ -2,8 +2,8 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppException;
+use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppTransferRequest;
 
 /*
@@ -37,15 +37,14 @@ try {
  * @param string $domainname
  * @param string $authcode
  */
-function transferdomain($conn, $domainname, $authcode)
-{
+function transferdomain($conn, $domainname, $authcode) {
     try {
         $domain = new eppDomain($domainname);
         $domain->setAuthorisationCode($authcode);
-        $transfer = new eppTransferRequest(eppTransferRequest::OPERATION_REQUEST, $domain);
+        $transfer = new eppTransferRequest(eppTransferRequest::OPERATION_REQUEST,$domain);
         if ($response = $conn->request($transfer)) {
             /* @var $response Metaregistrar\EPP\eppTransferResponse */
-            echo $response->getDomainName(), " transfer request was succesful\n";
+            echo $response->getDomainName()," transfer request was succesful\n";
         }
     } catch (eppException $e) {
         echo $e->getMessage() . "\n";

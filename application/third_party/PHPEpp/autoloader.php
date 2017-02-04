@@ -1,8 +1,7 @@
 <?php
 date_default_timezone_set('UTC');
 
-function autoloadRegistry($className)
-{
+function autoloadRegistry($className) {
     $fileName = str_replace('Metaregistrar\\EPP\\', '', $className);
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
         $fileName = __DIR__ . '\\Registries\\' . $fileName . '\\eppConnection.php';
@@ -28,8 +27,7 @@ function autoloadRegistry($className)
 
 }
 
-function autoloadEPP($className)
-{
+function autoloadEPP($className) {
     // First load data elements
     $fileName = str_replace('Metaregistrar\\EPP\\', '', $className);
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -72,9 +70,7 @@ function autoloadEPP($className)
         require($fileName);
     }
 }
-
-function autoloadTMCH($className)
-{
+function autoloadTMCH($className) {
     // First load data elements
     $fileName = str_replace('Metaregistrar\\TMCH\\', '', $className);
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {

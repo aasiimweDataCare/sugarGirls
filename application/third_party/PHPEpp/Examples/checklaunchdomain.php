@@ -42,8 +42,7 @@ try {
  * @param $conn eppConnection
  * @param $domains array
  */
-function checkdomains($conn, $domains)
-{
+function checkdomains($conn, $domains) {
     try {
         $check = new eppLaunchCheckRequest($domains);
         $check->setLaunchPhase('claims');

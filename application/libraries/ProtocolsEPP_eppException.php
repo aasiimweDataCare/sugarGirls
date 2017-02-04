@@ -9,7 +9,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-require_once APPPATH . "/third_party/PHPEpp/Protocols/EPP/eppException.php";
+require_once APPPATH."/third_party/PHPEpp/Protocols/EPP/eppException.php";
 
 
 class EppException extends Metaregistrar\EPP\eppException

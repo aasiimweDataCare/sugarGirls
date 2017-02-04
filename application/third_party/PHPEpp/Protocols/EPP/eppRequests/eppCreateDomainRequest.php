@@ -1,15 +1,14 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCreateDomainRequest extends eppDomainRequest
-{
+class eppCreateDomainRequest extends eppDomainRequest {
 
+    
 
-    function __construct($createinfo, $forcehostattr = false, $namespacesinroot = true)
-    {
+    function __construct($createinfo, $forcehostattr = false, $namespacesinroot=true) {
         $this->setNamespacesinroot($namespacesinroot);
         $this->setForcehostattr($forcehostattr);
-
+        
         parent::__construct(eppRequest::TYPE_CREATE);
 
         if ($createinfo instanceof eppDomain) {
@@ -21,14 +20,69 @@ class eppCreateDomainRequest extends eppDomainRequest
         $this->addSessionId();
     }
 
+    function __destruct() {
+        parent::__destruct();
+    }
+    
+
+    /*
+     * @param eppSecdns $secdns
+     */
+    public function addSecdns($secdns) {
+        /* @var eppSecDNS $secdns */
+        if (!$this->extension) {
+            $this->extension = $this->createElement('extension');
+            $this->getCommand()->appendChild($this->extension);
+        }
+        $seccreate = $this->createElement('secDNS:create');
+        $seccreate->setAttribute('xmlns:secDNS', 'urn:ietf:params:xml:ns:secDNS-1.1');
+        if ($secdns->getKeytag()) {
+            /*
+             * Keytag found, assuming client wants to add dnssec data via dsData interface
+             * http://tools.ietf.org/search/rfc5910#section-4.1
+             */
+            $secdsdata = $this->createElement('secDNS:dsData');
+            $secdsdata->appendChild($this->createElement('secDNS:keyTag', $secdns->getKeytag()));
+            $secdsdata->appendChild($this->createElement('secDNS:alg', $secdns->getAlgorithm()));
+            $secdsdata->appendChild($this->createElement('secDNS:digestType', $secdns->getDigestType()));
+            $secdsdata->appendChild($this->createElement('secDNS:digest', $secdns->getDigest()));
+            if ($secdns->getPubkey()) {
+                /*
+                 * Pubkey found, adding option key data to the request
+                 */
+                $seckeydata = $this->createElement('secDNS:keyData');
+                $seckeydata->appendChild($this->createElement('secDNS:flags', $secdns->getFlags()));
+                $seckeydata->appendChild($this->createElement('secDNS:protocol', $secdns->getProtocol()));
+                $seckeydata->appendChild($this->createElement('secDNS:alg', $secdns->getAlgorithm()));
+                $seckeydata->appendChild($this->createElement('secDNS:pubKey', $secdns->getPubkey()));
+                $secdsdata->appendChild($seckeydata);
+            }
+            $seccreate->appendChild($secdsdata);
+        } else {
+            /*
+             * Keytag not found, assuming client wants to add dnssec data via keyData interface
+             * http://tools.ietf.org/search/rfc5910#section-4.2
+             */
+            $seckeydata = $this->createElement('secDNS:keyData');
+            $seckeydata->appendChild($this->createElement('secDNS:flags', $secdns->getFlags()));
+            $seckeydata->appendChild($this->createElement('secDNS:protocol', $secdns->getProtocol()));
+            $seckeydata->appendChild($this->createElement('secDNS:alg', $secdns->getAlgorithm()));
+            $seckeydata->appendChild($this->createElement('secDNS:pubKey', $secdns->getPubkey()));
+            $seccreate->appendChild($seckeydata);
+        }
+        $this->extension->appendChild($seccreate);
+
+        // Put session id at the end of the EPP command chain
+        $this->addSessionId();
+    }
+
     /**
      *
      * @param eppDomain $domain
      * @return \DOMElement
      * @throws eppException
      */
-    public function setDomain(eppDomain $domain)
-    {
+    public function setDomain(eppDomain $domain) {
         if (!strlen($domain->getDomainname())) {
             throw new eppException('No valid domain name in create domain request');
         }
@@ -86,18 +140,24 @@ class eppCreateDomainRequest extends eppDomainRequest
         return;
     }
 
-
-    /*
-     * @param eppSecdns $secdns
+    /**
+     *
+     * @param \DOMElement $domain
+     * @param string $contactid
+     * @param string $contacttype
      */
+    private function addDomainContact($domain, $contactid, $contacttype) {
+        $domaincontact = $this->createElement('domain:contact', $contactid);
+        $domaincontact->setAttribute('type', $contacttype);
+        $domain->appendChild($domaincontact);
+    }
 
     /**
      *
      * @param eppHost $host
      * @return \DOMElement
      */
-    private function addDomainHostAttr(eppHost $host)
-    {
+    private function addDomainHostAttr(eppHost $host) {
 
         $ns = $this->createElement('domain:hostAttr');
         $ns->appendChild($this->createElement('domain:hostName', $host->getHostname()));
@@ -117,77 +177,9 @@ class eppCreateDomainRequest extends eppDomainRequest
      * @param eppHost $host
      * @return \DOMElement
      */
-    private function addDomainHostObj(eppHost $host)
-    {
+    private function addDomainHostObj(eppHost $host) {
         $ns = $this->createElement('domain:hostObj', $host->getHostname());
         return $ns;
-    }
-
-    /**
-     *
-     * @param \DOMElement $domain
-     * @param string $contactid
-     * @param string $contacttype
-     */
-    private function addDomainContact($domain, $contactid, $contacttype)
-    {
-        $domaincontact = $this->createElement('domain:contact', $contactid);
-        $domaincontact->setAttribute('type', $contacttype);
-        $domain->appendChild($domaincontact);
-    }
-
-    public function addSecdns($secdns)
-    {
-        /* @var eppSecDNS $secdns */
-        if (!$this->extension) {
-            $this->extension = $this->createElement('extension');
-            $this->getCommand()->appendChild($this->extension);
-        }
-        $seccreate = $this->createElement('secDNS:create');
-        $seccreate->setAttribute('xmlns:secDNS', 'urn:ietf:params:xml:ns:secDNS-1.1');
-        if ($secdns->getKeytag()) {
-            /*
-             * Keytag found, assuming client wants to add dnssec data via dsData interface
-             * http://tools.ietf.org/search/rfc5910#section-4.1
-             */
-            $secdsdata = $this->createElement('secDNS:dsData');
-            $secdsdata->appendChild($this->createElement('secDNS:keyTag', $secdns->getKeytag()));
-            $secdsdata->appendChild($this->createElement('secDNS:alg', $secdns->getAlgorithm()));
-            $secdsdata->appendChild($this->createElement('secDNS:digestType', $secdns->getDigestType()));
-            $secdsdata->appendChild($this->createElement('secDNS:digest', $secdns->getDigest()));
-            if ($secdns->getPubkey()) {
-                /*
-                 * Pubkey found, adding option key data to the request
-                 */
-                $seckeydata = $this->createElement('secDNS:keyData');
-                $seckeydata->appendChild($this->createElement('secDNS:flags', $secdns->getFlags()));
-                $seckeydata->appendChild($this->createElement('secDNS:protocol', $secdns->getProtocol()));
-                $seckeydata->appendChild($this->createElement('secDNS:alg', $secdns->getAlgorithm()));
-                $seckeydata->appendChild($this->createElement('secDNS:pubKey', $secdns->getPubkey()));
-                $secdsdata->appendChild($seckeydata);
-            }
-            $seccreate->appendChild($secdsdata);
-        } else {
-            /*
-             * Keytag not found, assuming client wants to add dnssec data via keyData interface
-             * http://tools.ietf.org/search/rfc5910#section-4.2
-             */
-            $seckeydata = $this->createElement('secDNS:keyData');
-            $seckeydata->appendChild($this->createElement('secDNS:flags', $secdns->getFlags()));
-            $seckeydata->appendChild($this->createElement('secDNS:protocol', $secdns->getProtocol()));
-            $seckeydata->appendChild($this->createElement('secDNS:alg', $secdns->getAlgorithm()));
-            $seckeydata->appendChild($this->createElement('secDNS:pubKey', $secdns->getPubkey()));
-            $seccreate->appendChild($seckeydata);
-        }
-        $this->extension->appendChild($seccreate);
-
-        // Put session id at the end of the EPP command chain
-        $this->addSessionId();
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 }
 

@@ -12,10 +12,8 @@ namespace Metaregistrar\EPP;
  */
 
 
-class rrpproxyEppUpdateDomainRequest extends eppUpdateDomainRequest
-{
-    function __construct(eppDomain $domain, $addinfo = null, $removeinfo = null, $updateinfo = null, $forcehostattr = false)
-    {
+class rrpproxyEppUpdateDomainRequest extends eppUpdateDomainRequest {
+    function __construct(eppDomain $domain, $addinfo = null, $removeinfo = null, $updateinfo = null, $forcehostattr=false) {
         $upd = new eppDomain($domain->getDomainname());
         parent::__construct($domain, null, null, $upd);
         $this->addTrustee();
@@ -23,8 +21,7 @@ class rrpproxyEppUpdateDomainRequest extends eppUpdateDomainRequest
 
     }
 
-    private function addTrustee()
-    {
+    private function addTrustee() {
         $ext = $this->createElement('extension');
         $infdata = $this->createElement('keysys:update');
         $domdata = $this->createElement('keysys:domain');

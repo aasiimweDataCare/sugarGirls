@@ -1,24 +1,24 @@
 <?php
 require('../../autoloader.php');
 
-use Metaregistrar\EPP\eppCheckContactRequest;
+use Metaregistrar\EPP\eppConnection;
+use Metaregistrar\EPP\eppException;
 use Metaregistrar\EPP\eppCheckDomainRequest;
 use Metaregistrar\EPP\eppCheckDomainResponse;
-use Metaregistrar\EPP\eppCheckHostRequest;
-use Metaregistrar\EPP\eppConnection;
+use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppContact;
+use Metaregistrar\EPP\eppHost;
 use Metaregistrar\EPP\eppContactHandle;
 use Metaregistrar\EPP\eppContactPostalInfo;
+use Metaregistrar\EPP\eppCheckContactRequest;
+use Metaregistrar\EPP\eppCheckHostRequest;
+use Metaregistrar\EPP\ficoraEppCreateContactRequest;
 use Metaregistrar\EPP\eppCreateDomainRequest;
 use Metaregistrar\EPP\eppCreateHostRequest;
-use Metaregistrar\EPP\eppDomain;
-use Metaregistrar\EPP\eppException;
-use Metaregistrar\EPP\eppHost;
-use Metaregistrar\EPP\eppPollRequest;
-use Metaregistrar\EPP\eppPollResponse;
 use Metaregistrar\EPP\ficoraEppCheckBalanceRequest;
 use Metaregistrar\EPP\ficoraEppCheckBalanceResponse;
-use Metaregistrar\EPP\ficoraEppCreateContactRequest;
+use Metaregistrar\EPP\eppPollRequest;
+use Metaregistrar\EPP\eppPollResponse;
 
 
 /*
@@ -42,21 +42,21 @@ try {
             echo "Checking " . count($domains) . " domain names\n";
             checkdomains($conn, $domains);
             echo "Checking contact\n";
-            checkcontact($conn, 'C5525');
+            checkcontact($conn,'C5525');
             echo "Checking hosts\n";
-            checkhosts($conn, ['ns1.metaregistrar.com', 'ns2.metaregistrar.com', 'ns3.metaregistrar.com']);
+            checkhosts($conn,['ns1.metaregistrar.com','ns2.metaregistrar.com','ns3.metaregistrar.com']);
             //echo "Creating contact\n";
-            //$contactid = createcontact($conn, 'ewout@metaregistrar.com','+35.8401231234','Department' ,'Metaregistrar' ,'Zuidelijk Halfrond 1' ,'8201 DD' , 'Gouda', 'NL');
+           //$contactid = createcontact($conn, 'ewout@metaregistrar.com','+35.8401231234','Department' ,'Metaregistrar' ,'Zuidelijk Halfrond 1' ,'8201 DD' , 'Gouda', 'NL');
             $registrant = 'C5525';
             $admin = 'C2526';
             $tech = 'C4529';
             echo "Creating domain\n";
-            createdomain($conn, 'ewoutdegraaf4.fi', $registrant, $admin, $tech, null, ['ns1.metaregistrar.com', 'ns2.metaregistrar.com']);
+            createdomain($conn,'ewoutdegraaf4.fi',$registrant,$admin,$tech,null,['ns1.metaregistrar.com','ns2.metaregistrar.com']);
             $conn->logout();
         }
     }
 } catch (eppException $e) {
-    echo "ERROR: " . $e->getMessage() . "\n";
+    echo "ERROR: " . $e->getMessage()."\n";
     echo $e->getLastCommand();
     echo "\n\n";
 }
@@ -64,12 +64,11 @@ try {
 /**
  * @param eppConnection $conn
  */
-function checkbalance($conn)
-{
+function checkbalance($conn) {
     $check = new ficoraEppCheckBalanceRequest();
     if ($response = $conn->request($check)) {
         /* @var $response ficoraEppCheckBalanceResponse */
-        echo "Balance is " . $response->getBalanceAmount() . " on " . $response->getBalanceDate() . "\n";
+        echo "Balance is ".$response->getBalanceAmount()." on ".$response->getBalanceDate()."\n";
         //echo $response->saveXML();
     }
 }
@@ -77,12 +76,11 @@ function checkbalance($conn)
 /**
  * @param eppConnection $conn
  */
-function checkpoll($conn)
-{
+function checkpoll($conn) {
     $poll = new eppPollRequest(eppPollRequest::POLL_REQ);
     if ($response = $conn->request($poll)) {
         /* @var $response eppPollResponse */
-        echo "You have " . $response->getMessageCount() . " poll messages waiting\n";
+        echo "You have ".$response->getMessageCount()." poll messages waiting\n";
     }
 }
 
@@ -90,10 +88,9 @@ function checkpoll($conn)
  * @param $conn eppConnection
  * @param $domains array of domain names
  */
-function checkdomains($conn, $domains)
-{
+function checkdomains($conn, $domains) {
     // Create request to be sent to EPP service
-    $check = new eppCheckDomainRequest($domains, false);
+    $check = new eppCheckDomainRequest($domains,false);
     // Write request to EPP service, read and check the results
     if ($response = $conn->request($check)) {
         /* @var $response eppCheckDomainResponse */
@@ -102,7 +99,7 @@ function checkdomains($conn, $domains)
         foreach ($checks as $check) {
             echo $check['domainname'] . " is " . ($check['available'] ? 'free' : 'taken');
             if ($check['available']) {
-                echo ' (' . $check['reason'] . ')';
+                echo ' (' . $check['reason'] .')';
             }
             echo "\n";
         }
@@ -110,11 +107,10 @@ function checkdomains($conn, $domains)
 }
 
 
-function checkcontact($conn, $contactid)
-{
+function checkcontact($conn, $contactid) {
     /* @var $conn Metaregistrar\EPP\eppConnection */
     try {
-        $check = new eppCheckContactRequest(new eppContactHandle($contactid), false);
+        $check = new eppCheckContactRequest(new eppContactHandle($contactid),false);
         if ($response = $conn->request($check)) {
             /* @var $response Metaregistrar\EPP\eppCheckContactResponse */
             //$response->dumpContents();
@@ -129,8 +125,8 @@ function checkcontact($conn, $contactid)
 }
 
 
-function createcontact($conn, $email, $telephone, $name, $organization, $address, $postcode, $city, $country)
-{
+
+function createcontact($conn, $email, $telephone, $name, $organization, $address, $postcode, $city, $country) {
     /* @var $conn Metaregistrar\EPP\eppConnection */
     try {
         $contactinfo = new eppContact(new eppContactPostalInfo($name, $city, $country, $organization, $address, null, $postcode, eppContact::TYPE_LOC), $email, $telephone);
@@ -153,7 +149,7 @@ function createcontact($conn, $email, $telephone, $name, $organization, $address
         }
     } catch (eppException $e) {
         echo $e->getMessage() . "\n";
-        echo $e->getLastCommand() . "\n";
+        echo $e->getLastCommand()."\n";
     }
     return null;
 }
@@ -164,14 +160,13 @@ function createcontact($conn, $email, $telephone, $name, $organization, $address
  * @param $hosts
  * @return bool|null
  */
-function checkhosts($conn, $hosts)
-{
+function checkhosts($conn, $hosts) {
     try {
         $checkhost = array();
         foreach ($hosts as $host) {
             $checkhost[] = new eppHost($host);
         }
-        $check = new eppCheckHostRequest($checkhost, false);
+        $check = new eppCheckHostRequest($checkhost,false);
         if ($response = $conn->request($check)) {
             /* @var $response Metaregistrar\EPP\eppCheckHostResponse */
             $checks = $response->getCheckedHosts();
@@ -195,11 +190,10 @@ function checkhosts($conn, $hosts)
  * @param string $hostname
  * @param string $ipaddress
  */
-function createhost($conn, $hostname, $ipaddress = null)
-{
+function createhost($conn, $hostname, $ipaddress=null) {
 
     try {
-        $create = new eppCreateHostRequest(new eppHost($hostname, $ipaddress), false);
+        $create = new eppCreateHostRequest(new eppHost($hostname,$ipaddress),false);
         if ($response = $conn->request($create)) {
             /* @var $response Metaregistrar\EPP\eppCreateHostResponse */
             echo "Host created on " . $response->getHostCreateDate() . " with name " . $response->getHostName() . "\n";
@@ -219,8 +213,7 @@ function createhost($conn, $hostname, $ipaddress = null)
  * @param string $billingcontact
  * @param array $nameservers
  */
-function createdomain($conn, $domainname, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers)
-{
+function createdomain($conn, $domainname, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers) {
     /* @var $conn Metaregistrar\EPP\eppConnection */
     try {
         $domain = new eppDomain($domainname, $registrant);
@@ -241,7 +234,7 @@ function createdomain($conn, $domainname, $registrant, $admincontact, $techconta
                 $domain->addHost(new eppHost($nameserver));
             }
         }
-        $create = new eppCreateDomainRequest($domain, false, false);
+        $create = new eppCreateDomainRequest($domain,false,false);
         $create->dumpContents();
         if ($response = $conn->request($create)) {
             /* @var $response Metaregistrar\EPP\eppCreateDomainResponse */

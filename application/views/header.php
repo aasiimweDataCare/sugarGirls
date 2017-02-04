@@ -20,29 +20,44 @@ if (empty($user_name)) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Online Dating and Travelling Site">
-    <meta name="keywords" content="Dating,Travelling,Girls,Sugar">
-    <meta name="author" content="Web, Solutions, Uganda, Asiimwe, Apollo,">
+    <meta name="description" content="<?= projectName; ?>">
+    <meta name="keywords" content="<?= projectName; ?>,Dating,Site,Sugar,Girls,Uganda,Kenya,Tanzania">
+    <meta name="author" content="ComeEasy Apollo Asiimwe">
     <link rel="icon" href="<?= base_url() ?>assets/images/favicon.png">
+    <link href="<?= base_url() ?>css/nta.css" media="all" rel="stylesheet" type="text/css">
+    <title><?= projectName; ?>: <?= $page_name; ?></title>
+    <link href="<?= base_url() ?>bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>dist/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="<?= base_url() ?>dist/css/bootstrap-datepicker3.css" rel="stylesheet">
+    <link href="<?= base_url() ?>dist/css/timeline.css" rel="stylesheet">
+    <link href="<?= base_url() ?>dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="<?= base_url() ?>font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
+    <style type="text/css">
+        @media screen and (min-width: 768px) {
+            .modal-dialog {
+                width: 700px; /* New width for default modal */
+            }
 
-    <link href="<?php echo base_url() ?>css/nta.css" media="all" rel="stylesheet" type="text/css">
-    <title><?= projectName; ?>:Login</title>
-    <!-- Bootstrap -->
-    <link href="<?php echo base_url() ?>bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>assets/jquery.ui.1.9.2.theme/ui/1.9.2/themes/base/jquery-ui.css"
-          type="text/html">
-    <link href="<?php echo base_url() ?>assets/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" type="text/html">
-    <link href="<?php echo base_url() ?>font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+            .modal-sm {
+                width: 350px; /* New width for small modal */
+            }
+        }
 
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/login.css">
+        @media screen and (min-width: 992px) {
+            .modal-lg {
+                width: 950px; /* New width for large modal */
+            }
+        }
+    </style>
 </head>
 <body>
-
-
+<div id="loading">
+    <img id="loading-image" src="<?= base_url() ?>assets/images/ajax_loader.gif" alt="Loading..."/>
+</div>
 <div class="container-fluid">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -51,10 +66,8 @@ if (empty($user_name)) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Brand</a>
+                <a class="navbar-brand" href="#">Home</a>
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
@@ -80,25 +93,7 @@ if (empty($user_name)) {
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
-                    <li><a href="#" onclick="location.href='<?= site_url('Login/register_form') ?>'">Sign Up</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#registerModal">Logged in as:</a></li>
                 </ul>
-
-                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.container-fluid -->
     </nav>
-
-    <div class="col-sm-8 container-fluid well-sm"><img src="<?php echo base_url() ?>assets/images/SG-logo.png"
-                                                       width="10%" height="10%"/></div>
-    <div class="col-sm-4 container-fluid">
-        <a href="#"> <i class="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;About</a>&nbsp;&nbsp;&nbsp;
-        <a href="#"> <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;&nbsp;How It works</a>&nbsp;&nbsp;&nbsp;
-        <a href="#"> <i class="fa fa-newspaper-o" aria-hidden="true"></i>&nbsp;&nbsp;Press</a>&nbsp;&nbsp;&nbsp;
-    </div>
-
-
-</div>
-
-
-

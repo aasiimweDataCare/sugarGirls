@@ -1,15 +1,13 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppInfoHostResponse extends eppInfoResponse
-{
+class eppInfoHostResponse extends eppInfoResponse {
 
     /**
      *
      * @return eppHost
      */
-    public function getHost()
-    {
+    public function getHost() {
         $hostname = $this->getHostName();
         $address = $this->getHostAddresses();
         $address = array_keys($address);
@@ -21,8 +19,7 @@ class eppInfoHostResponse extends eppInfoResponse
      *
      * @return string hostname
      */
-    public function getHostName()
-    {
+    public function getHostName() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:infData/host:name');
     }
 
@@ -30,8 +27,7 @@ class eppInfoHostResponse extends eppInfoResponse
      *
      * @return array of host addresses
      */
-    public function getHostAddresses()
-    {
+    public function getHostAddresses() {
         $ip = null;
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:resData/host:infData/host:addr');
@@ -44,19 +40,9 @@ class eppInfoHostResponse extends eppInfoResponse
 
     /**
      *
-     * @return string statuses
-     */
-    public function getHostStatusCSV()
-    {
-        return parent::arrayToCSV($this->getHostStatuses());
-    }
-
-    /**
-     *
      * @return string status
      */
-    public function getHostStatuses()
-    {
+    public function getHostStatuses() {
         $stat = null;
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:resData/host:infData/host:status/@s');
@@ -68,10 +54,17 @@ class eppInfoHostResponse extends eppInfoResponse
 
     /**
      *
+     * @return string statuses
+     */
+    public function getHostStatusCSV() {
+        return parent::arrayToCSV($this->getHostStatuses());
+    }
+
+    /**
+     *
      * @return string roid
      */
-    public function getHostRoid()
-    {
+    public function getHostRoid() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:infData/host:roid');
     }
 
@@ -79,8 +72,7 @@ class eppInfoHostResponse extends eppInfoResponse
      *
      * @return string create_date
      */
-    public function getHostCreateDate()
-    {
+    public function getHostCreateDate() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:infData/host:crDate');
     }
 
@@ -88,8 +80,7 @@ class eppInfoHostResponse extends eppInfoResponse
      *
      * @return string update_date
      */
-    public function getHostUpdateDate()
-    {
+    public function getHostUpdateDate() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:infData/host:upDate');
     }
 
@@ -97,8 +88,7 @@ class eppInfoHostResponse extends eppInfoResponse
      *
      * @return string client id
      */
-    public function getHostClientId()
-    {
+    public function getHostClientId() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:infData/host:clID');
     }
 
@@ -106,8 +96,7 @@ class eppInfoHostResponse extends eppInfoResponse
      *
      * @return string client id
      */
-    public function getHostCreateClientId()
-    {
+    public function getHostCreateClientId() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:infData/host:crID');
     }
 
@@ -115,8 +104,7 @@ class eppInfoHostResponse extends eppInfoResponse
      *
      * @return string client id
      */
-    public function getHostUpdateClientId()
-    {
+    public function getHostUpdateClientId() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:infData/host:upID');
     }
 }

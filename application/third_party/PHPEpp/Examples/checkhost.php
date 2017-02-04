@@ -1,9 +1,9 @@
 <?php
 require('../autoloader.php');
 
-use Metaregistrar\EPP\eppCheckHostRequest;
 use Metaregistrar\EPP\eppConnection;
 use Metaregistrar\EPP\eppException;
+use Metaregistrar\EPP\eppCheckHostRequest;
 
 /*
  * This script checks for the availability of nameservers
@@ -45,8 +45,7 @@ try {
  * @param $conn Metaregistrar\EPP\eppConnection
  * @param $hosts array of hostnames
  */
-function checkhosts($conn, $hosts)
-{
+function checkhosts($conn, $hosts) {
     // Create request to be sent to EPP service
     $check = new eppCheckHostRequest($hosts);
     // Write request to EPP service, read and check the results
@@ -54,8 +53,8 @@ function checkhosts($conn, $hosts)
         /* @var $response Metaregistrar\EPP\eppCheckHostResponse */
         // Walk through the results
         $checks = $response->getCheckedHosts();
-        foreach ($checks as $hostname => $check) {
-            echo $hostname . " is " . ($check ? 'free' : 'taken') . "\n";
+        foreach ($checks as $hostname=>$check) {
+            echo $hostname . " is " . ($check ? 'free' : 'taken')."\n";
         }
     }
 }

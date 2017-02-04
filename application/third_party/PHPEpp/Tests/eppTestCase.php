@@ -1,35 +1,25 @@
 <?php
-require(dirname(__FILE__) . '/../autoloader.php');
+require(dirname(__FILE__).'/../autoloader.php');
 
-class eppTestCase extends PHPUnit_Framework_TestCase
-{
+class eppTestCase extends PHPUnit_Framework_TestCase {
     /**
      * @var Metaregistrar\EPP\eppConnection
      *
      */
     protected $conn;
 
-    protected static function randomnumber($length)
-    {
-        $characters = '0123456789';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-
-    protected function setUp($configfile = null)
-    {
+    protected function setUp($configfile = null) {
         if (!$configfile) {
-            $configfile = dirname(__FILE__) . '/testsetup.ini';
+            $configfile = dirname(__FILE__).'/testsetup.ini';
         }
         $this->conn = self::setupConnection($configfile);
     }
 
-    private static function setupConnection($configfile)
-    {
+    protected function tearDown() {
+        self::teardownConncection($this->conn);
+    }
+
+    private static function setupConnection($configfile) {
         try {
             if ($conn = Metaregistrar\EPP\metaregEppConnection::create($configfile)) {
                 /* @var $conn Metaregistrar\EPP\eppConnection */
@@ -39,68 +29,22 @@ class eppTestCase extends PHPUnit_Framework_TestCase
                 }
             }
         } catch (Metaregistrar\EPP\eppException $e) {
-            echo "Test setup error in " . $e->getClass() . ": " . $e->getMessage() . "\n\n";
+            echo "Test setup error in ".$e->getClass().": " . $e->getMessage() . "\n\n";
             die();
         }
         return null;
     }
 
-    protected function tearDown()
-    {
-        self::teardownConncection($this->conn);
-    }
-
     /**
      * @param Metaregistrar\EPP\eppConnection $conn
      */
-    private static function teardownConncection($conn)
-    {
+    private static function teardownConncection($conn) {
         if ($conn) {
             $conn->logout();
         }
     }
 
-    /**
-     * Create a hostname to be used in create host or create domain testing
-     * @var string $hostname
-     * @return string
-     * @throws \Metaregistrar\EPP\eppException
-     */
-    protected function createHost($hostname)
-    {
-        $host = new Metaregistrar\EPP\eppHost($hostname);
-        $create = new Metaregistrar\EPP\eppCreateHostRequest($host);
-        if ($response = $this->conn->request($create)) {
-            /* @var $response Metaregistrar\EPP\eppCreateHostResponse */
-            return $hostname;
-        }
-        return null;
-    }
-
-    protected function createDomain($domainname = null)
-    {
-        // If no domain name was given, test with a random .FRL domain name
-        if (!$domainname) {
-            $domainname = $this->randomstring(20) . '.frl';
-        }
-        $contactid = $this->createContact();
-        $domain = new \Metaregistrar\EPP\eppDomain($domainname);
-        $domain->setPeriod(1);
-        $domain->setRegistrant($contactid);
-        $domain->setAuthorisationCode('fubar');
-        $domain->addContact(new \Metaregistrar\EPP\eppContactHandle($contactid, \Metaregistrar\EPP\eppContactHandle::CONTACT_TYPE_ADMIN));
-        $domain->addContact(new \Metaregistrar\EPP\eppContactHandle($contactid, \Metaregistrar\EPP\eppContactHandle::CONTACT_TYPE_TECH));
-        $domain->addContact(new \Metaregistrar\EPP\eppContactHandle($contactid, \Metaregistrar\EPP\eppContactHandle::CONTACT_TYPE_BILLING));
-        $create = new \Metaregistrar\EPP\eppCreateDomainRequest($domain);
-        if ($response = $this->conn->request($create)) {
-            /* @var $response \Metaregistrar\EPP\eppCreateDomainResponse */
-            return $response->getDomainName();
-        }
-        return null;
-    }
-
-    protected static function randomstring($length)
-    {
+    protected static function randomstring($length) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -110,13 +54,40 @@ class eppTestCase extends PHPUnit_Framework_TestCase
         return $randomString;
     }
 
+    protected static function randomnumber($length) {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    /**
+     * Create a hostname to be used in create host or create domain testing
+     * @var string $hostname
+     * @return string
+     * @throws \Metaregistrar\EPP\eppException
+     */
+    protected function createHost($hostname) {
+        $host = new Metaregistrar\EPP\eppHost($hostname);
+        $create = new Metaregistrar\EPP\eppCreateHostRequest($host);
+        if ($response = $this->conn->request($create)) {
+            /* @var $response Metaregistrar\EPP\eppCreateHostResponse */
+            return $hostname;
+        }
+        return null;
+    }
+
+
+
     /**
      * Create a contact to be used in create contact or create domain testing
      * @return string
      * @throws \Metaregistrar\EPP\eppException
      */
-    protected function createContact()
-    {
+    protected function createContact() {
         $name = 'Test name';
         $city = 'Test city';
         $country = 'NL';
@@ -140,12 +111,32 @@ class eppTestCase extends PHPUnit_Framework_TestCase
         return null;
     }
 
-    protected function deleteDomain($domainname)
-    {
+    protected function createDomain($domainname = null) {
+        // If no domain name was given, test with a random .FRL domain name
+        if (!$domainname) {
+            $domainname = $this->randomstring(20).'.frl';
+        }
+        $contactid = $this->createContact();
+        $domain = new \Metaregistrar\EPP\eppDomain($domainname);
+        $domain->setPeriod(1);
+        $domain->setRegistrant($contactid);
+        $domain->setAuthorisationCode('fubar');
+        $domain->addContact(new \Metaregistrar\EPP\eppContactHandle($contactid, \Metaregistrar\EPP\eppContactHandle::CONTACT_TYPE_ADMIN));
+        $domain->addContact(new \Metaregistrar\EPP\eppContactHandle($contactid, \Metaregistrar\EPP\eppContactHandle::CONTACT_TYPE_TECH));
+        $domain->addContact(new \Metaregistrar\EPP\eppContactHandle($contactid, \Metaregistrar\EPP\eppContactHandle::CONTACT_TYPE_BILLING));
+        $create = new \Metaregistrar\EPP\eppCreateDomainRequest($domain);
+        if ($response = $this->conn->request($create)) {
+            /* @var $response \Metaregistrar\EPP\eppCreateDomainResponse */
+            return $response->getDomainName();
+        }
+        return null;
+    }
+
+    protected function deleteDomain($domainname) {
         $domain = new \Metaregistrar\EPP\eppDomain($domainname);
         $delete = new \Metaregistrar\EPP\eppDeleteDomainRequest($domain);
         if ($response = $this->conn->request($delete)) {
-            if ($response->getResultCode() == 1000) {
+            if ($response->getResultCode()==1000) {
                 return true;
             }
         }
@@ -158,8 +149,7 @@ class eppTestCase extends PHPUnit_Framework_TestCase
      * @return \Metaregistrar\EPP\eppInfoContactResponse|\Metaregistrar\EPP\eppResponse
      * @throws \Metaregistrar\EPP\eppException
      */
-    protected function getContactInfo($contacthandle)
-    {
+    protected function getContactInfo($contacthandle) {
         $epp = new Metaregistrar\EPP\eppContactHandle($contacthandle);
         $info = new Metaregistrar\EPP\eppInfoContactRequest($epp);
         if ((($response = $this->conn->writeandread($info)) instanceof Metaregistrar\EPP\eppInfoContactResponse) && ($response->Success())) {

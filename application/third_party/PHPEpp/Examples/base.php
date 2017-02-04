@@ -1,7 +1,6 @@
 <?php
 
-function greet($conn)
-{
+function greet($conn) {
     // Set this to true to see the server greeting
     $showgreeting = false;
     try {
@@ -47,8 +46,7 @@ function greet($conn)
 }
 
 
-function login($conn)
-{
+function login($conn) {
     try {
         $login = new Metaregistrar\EPP\eppLoginRequest;
         if ((($response = $conn->writeandread($login)) instanceof Metaregistrar\EPP\eppLoginResponse) && ($response->Success())) {
@@ -61,8 +59,7 @@ function login($conn)
 }
 
 
-function logout($conn)
-{
+function logout($conn) {
     try {
         $logout = new Metaregistrar\EPP\eppLogoutRequest();
         if ((($response = $conn->writeandread($logout)) instanceof Metaregistrar\EPP\eppLogoutResponse) && ($response->Success())) {

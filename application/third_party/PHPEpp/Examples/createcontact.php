@@ -2,10 +2,10 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppContact;
-use Metaregistrar\EPP\eppContactPostalInfo;
-use Metaregistrar\EPP\eppCreateContactRequest;
 use Metaregistrar\EPP\eppException;
+use Metaregistrar\EPP\eppContactPostalInfo;
+use Metaregistrar\EPP\eppContact;
+use Metaregistrar\EPP\eppCreateContactRequest;
 
 /**
  * This code example creates a contact object with a registry
@@ -25,6 +25,7 @@ try {
 }
 
 
+
 /**
  * @param $conn eppConnection
  * @param $email string
@@ -37,8 +38,7 @@ try {
  * @param $country string
  * @return null
  */
-function createcontact($conn, $email, $telephone, $name, $organization, $address, $postcode, $city, $country)
-{
+function createcontact($conn, $email, $telephone, $name, $organization, $address, $postcode, $city, $country) {
     $postalinfo = new eppContactPostalInfo($name, $city, $country, $organization, $address, null, $postcode);
     $contactinfo = new eppContact($postalinfo, $email, $telephone);
     $contactinfo->setPassword('');

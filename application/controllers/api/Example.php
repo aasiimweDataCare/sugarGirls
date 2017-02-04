@@ -16,8 +16,7 @@ require APPPATH . '/libraries/REST_Controller.php';
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Example extends REST_Controller
-{
+class Example extends REST_Controller {
 
     function __construct()
     {
@@ -44,12 +43,16 @@ class Example extends REST_Controller
 
         // If the id parameter doesn't exist return all the users
 
-        if ($id === NULL) {
+        if ($id === NULL)
+        {
             // Check if the users data store contains users (in case the database result returns NULL)
-            if ($users) {
+            if ($users)
+            {
                 // Set the response and exit
                 $this->response($users, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-            } else {
+            }
+            else
+            {
                 // Set the response and exit
                 $this->response([
                     'status' => FALSE,
@@ -60,10 +63,11 @@ class Example extends REST_Controller
 
         // Find and return a single record for a particular user.
 
-        $id = (int)$id;
+        $id = (int) $id;
 
         // Validate the id.
-        if ($id <= 0) {
+        if ($id <= 0)
+        {
             // Invalid id, set the response and exit.
             $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
@@ -73,17 +77,23 @@ class Example extends REST_Controller
 
         $user = NULL;
 
-        if (!empty($users)) {
-            foreach ($users as $key => $value) {
-                if (isset($value['id']) && $value['id'] === $id) {
+        if (!empty($users))
+        {
+            foreach ($users as $key => $value)
+            {
+                if (isset($value['id']) && $value['id'] === $id)
+                {
                     $user = $value;
                 }
             }
         }
 
-        if (!empty($user)) {
+        if (!empty($user))
+        {
             $this->set_response($user, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-        } else {
+        }
+        else
+        {
             $this->set_response([
                 'status' => FALSE,
                 'message' => 'User could not be found'
@@ -106,10 +116,11 @@ class Example extends REST_Controller
 
     public function users_delete()
     {
-        $id = (int)$this->get('id');
+        $id = (int) $this->get('id');
 
         // Validate the id.
-        if ($id <= 0) {
+        if ($id <= 0)
+        {
             // Set the response and exit
             $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }

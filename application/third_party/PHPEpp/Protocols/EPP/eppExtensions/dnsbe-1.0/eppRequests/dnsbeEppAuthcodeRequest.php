@@ -19,10 +19,8 @@ namespace Metaregistrar\EPP;
 
 
 */
-class dnsbeEppAuthcodeRequest extends eppRequest
-{
-    function __construct($domainname)
-    {
+class dnsbeEppAuthcodeRequest extends eppRequest {
+    function __construct($domainname) {
         parent::__construct();
         if (is_string($domainname)) {
             if (strlen($domainname) > 0) {
@@ -36,8 +34,7 @@ class dnsbeEppAuthcodeRequest extends eppRequest
 
     }
 
-    private function addDnsbeExtension($domainname)
-    {
+    private function addDnsbeExtension($domainname) {
         $this->addExtension('xmlns:dnsbe', 'http://www.dns.be/xml/epp/dnsbe-1.0');
         $ext = $this->createElement('extension');
         $dnsext = $this->createElement('dnsbe:ext');

@@ -1,17 +1,7 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class ficoraEppInfoContactResponse extends eppInfoContactResponse
-{
-
-    /**
-     *
-     * @return int|null role
-     */
-    public function getContactRole()
-    {
-        return $this->getXpathQueryResult('/epp:epp/epp:response/epp:resData/contact:infData/contact:role', 'integer');
-    }
+class ficoraEppInfoContactResponse extends eppInfoContactResponse {
 
     /**
      * A helper function for retriving xpath query results.
@@ -30,6 +20,15 @@ class ficoraEppInfoContactResponse extends eppInfoContactResponse
         } else {
             return null;
         }
+    }
+
+    /**
+     *
+     * @return int|null role
+     */
+    public function getContactRole()
+    {
+        return $this->getXpathQueryResult('/epp:epp/epp:response/epp:resData/contact:infData/contact:role', 'integer');
     }
 
     /**
@@ -54,8 +53,7 @@ class ficoraEppInfoContactResponse extends eppInfoContactResponse
      *
      * @return ficoraEppContactPostalInfo[] postal info elements
      */
-    public function getContactPostalInfo()
-    {
+    public function getContactPostalInfo() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:resData/contact:infData/contact:postalInfo');
         $postalinfo = [];
@@ -87,22 +85,22 @@ class ficoraEppInfoContactResponse extends eppInfoContactResponse
                 /* @var $addr \DOMElement */
                 $testcity = $addr->getElementsByTagName('city');
                 /* @var $postalresult \DOMElement */
-
+                
                 if ($testcity->length > 0) {
                     $city = $testcity->item(0)->nodeValue;
                 }
                 $testcc = $addr->getElementsByTagName('cc');
-
+                
                 if ($testcc->length > 0) {
                     $country = $testcc->item(0)->nodeValue;
                 }
                 $testpc = $addr->getElementsByTagName('pc');
-
+                
                 if ($testpc->length > 0) {
                     $zipcode = $testpc->item(0)->nodeValue;
                 }
                 $testsp = $addr->getElementsByTagName('sp');
-
+                
                 if ($testsp->length > 0) {
                     $province = $testsp->item(0)->nodeValue;
                 }
@@ -144,9 +142,9 @@ class ficoraEppInfoContactResponse extends eppInfoContactResponse
 
     /**
      * Returns value of first matching element or default value if no matches
-     * @param  \DOMElement $element Element to query
-     * @param  string $tagName Tag name
-     * @param  mixed $defaultValue Default value
+     * @param  \DOMElement $element      Element to query
+     * @param  string      $tagName      Tag name
+     * @param  mixed      $defaultValue Default value 
      * @return mixed                    Element value or default value
      */
     private function getElementValueByTagNameOrDefault(\DOMElement $element, $tagName, $defaultValue = null)

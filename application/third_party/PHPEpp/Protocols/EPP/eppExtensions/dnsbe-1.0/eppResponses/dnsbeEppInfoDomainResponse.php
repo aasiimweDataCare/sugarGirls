@@ -1,9 +1,7 @@
 <?php
 namespace Metaregistrar\EPP;
-class dnsbeEppInfoDomainResponse extends eppInfoDomainResponse
-{
-    function __construct()
-    {
+class dnsbeEppInfoDomainResponse extends eppInfoDomainResponse {
+    function __construct() {
         parent::__construct();
     }
 
@@ -12,8 +10,7 @@ class dnsbeEppInfoDomainResponse extends eppInfoDomainResponse
      *
      * @return boolean
      */
-    public function getQuarantined()
-    {
+    public function getQuarantined() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:extension/dnsbe:ext/dnsbe:infData/dnsbe:domain/dnsbe:quarantined');
         if ($result->length > 0) {
@@ -32,8 +29,7 @@ class dnsbeEppInfoDomainResponse extends eppInfoDomainResponse
      *
      * @return boolean
      */
-    public function getOnHold()
-    {
+    public function getOnHold() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:extension/dnsbe:ext/dnsbe:infData/dnsbe:domain/dnsbe:onhold');
         if ($result->length > 0) {
@@ -51,8 +47,7 @@ class dnsbeEppInfoDomainResponse extends eppInfoDomainResponse
      *
      * @return string
      */
-    public function getDomainDeletionDate()
-    {
+    public function getDomainDeletionDate() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:extension/dnsbe:ext/dnsbe:infData/dnsbe:domain/dnsbe:deletionDate');
         if ($result->length > 0) {

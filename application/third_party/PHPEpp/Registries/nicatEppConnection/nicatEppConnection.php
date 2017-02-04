@@ -19,7 +19,7 @@ abstract class nicatEppConnection extends eppConnection
     |
     */
 
-    private $doPeerVerification = true;
+    private $doPeerVerification=true;
 
     /**
      * Wraps epp login, this function wrapper makes it easier to unittest the different
@@ -43,7 +43,7 @@ abstract class nicatEppConnection extends eppConnection
      *
      * @param bool|true $verifyPeer
      */
-    public function setVerifyPeer($verifyPeer = true)
+    public function setVerifyPeer($verifyPeer=true)
     {
         $this->doPeerVerification = $verifyPeer;
     }
@@ -55,8 +55,7 @@ abstract class nicatEppConnection extends eppConnection
      * @param int $port
      * @return boolean
      */
-    public function connect($hostname = null, $port = null)
-    {
+    public function connect($hostname = null, $port = null) {
         if ($hostname) {
             $this->hostname = $hostname;
         }
@@ -64,7 +63,7 @@ abstract class nicatEppConnection extends eppConnection
             $this->port = $port;
         }
         if ($this->local_cert_path) {
-            parent::connect($hostname, $port);
+            parent::connect($hostname,$port);
         } else {
             //We don't want our error handler to kick in at this point...
 
@@ -73,14 +72,14 @@ abstract class nicatEppConnection extends eppConnection
             $errstr = '';
             putenv('SURPRESS_ERROR_HANDLER=1');
             $context = stream_context_create();
-            if (!$this->doPeerVerification) {
+            if(!$this->doPeerVerification) {
                 stream_context_set_option($context, 'ssl', 'verify_peer', false);
                 stream_context_set_option($context, 'ssl', 'verify_peer_name', false);
             }
             $this->connection = stream_socket_client($target, $errno, $errstr, $this->timeout, STREAM_CLIENT_CONNECT, $context);
             putenv('SURPRESS_ERROR_HANDLER=0');
             if (is_resource($this->connection)) {
-                $this->writeLog("Connection made", "CONNECT");
+                $this->writeLog("Connection made","CONNECT");
                 stream_set_blocking($this->connection, false);
                 stream_set_timeout($this->connection, $this->timeout);
                 if ($errno == 0) {
@@ -91,7 +90,7 @@ abstract class nicatEppConnection extends eppConnection
                     return false;
                 }
             } else {
-                $this->writeLog("Connection could not be opened: $errno $errstr", "ERROR");
+                $this->writeLog("Connection could not be opened: $errno $errstr","ERROR");
                 return false;
             }
         }

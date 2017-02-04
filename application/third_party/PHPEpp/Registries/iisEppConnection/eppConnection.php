@@ -1,11 +1,9 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class iisEppConnection extends eppConnection
-{
+class iisEppConnection extends eppConnection {
 
-    public function __construct($logging = false, $settingsfile = null)
-    {
+    public function __construct($logging = false, $settingsfile = null) {
         // Construct the EPP connection object en specify if you want logging on or off
         parent::__construct($logging, $settingsfile);
 

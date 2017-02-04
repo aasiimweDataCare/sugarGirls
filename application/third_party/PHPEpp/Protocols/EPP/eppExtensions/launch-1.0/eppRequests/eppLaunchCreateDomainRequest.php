@@ -5,12 +5,10 @@ namespace Metaregistrar\EPP;
  */
 
 
-class eppLaunchCreateDomainRequest extends eppCreateDomainRequest
-{
+class eppLaunchCreateDomainRequest extends eppCreateDomainRequest {
     private $launchCreate = null;
 
-    function __construct(eppDomain $domain)
-    {
+    function __construct(eppDomain $domain) {
         parent::__construct($domain);
     }
 
@@ -20,8 +18,7 @@ class eppLaunchCreateDomainRequest extends eppCreateDomainRequest
      * @param $launchType String type of create to use, application or registration
      * @param null $customName String when $name is custom, you should specify this one.
      */
-    public function setLaunchPhase($name, $launchType = null, $customName = null)
-    {
+    public function setLaunchPhase($name, $launchType = null, $customName = null) {
         if (!$this->launchCreate) {
             $this->launchCreate = $this->createElement("launch:create");
             $this->getExtension()->appendchild($this->launchCreate);
@@ -50,8 +47,7 @@ class eppLaunchCreateDomainRequest extends eppCreateDomainRequest
      *  C:     </launch:create>
      *  C:    </extension>
      */
-    public function setLaunchCodeMark($mark, $validatorid)
-    {
+    public function setLaunchCodeMark($mark, $validatorid) {
         if (!$this->launchCreate) {
             $this->launchCreate = $this->createElement("launch:create");
         }
@@ -63,8 +59,7 @@ class eppLaunchCreateDomainRequest extends eppCreateDomainRequest
         $this->addSessionId();
     }
 
-    public function addLaunchClaim($validator, $noticeid, $notafter, $accepteddate)
-    {
+    public function addLaunchClaim($validator, $noticeid, $notafter, $accepteddate) {
         if (!$this->launchCreate) {
             $this->launchCreate = $this->createElement("launch:create");
         }

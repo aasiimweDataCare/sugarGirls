@@ -288,11 +288,9 @@
                             <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav navbar-kiri" id="bottom_menu">
                                     <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                                    <li><a href="indicator_definitions.php"><i class="fa fa-wrench"></i> Indicator
-                                            Definition</a></li>
+                                    <li><a href="indicator_definitions.php"><i class="fa fa-wrench"></i> Indicator Definition</a></li>
                                     <li class="dropdown">
-                                        <a href="indicator_tables.php" class="dropdown-toggle" data-toggle="dropdown"
-                                           role="button"
+                                        <a href="indicator_tables.php" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                            aria-expanded="false"><i class="fa fa-table"></i>
                                             Data Tables <span class="caret"></span></a>
                                         <ul class="dropdown-menu menu-top-front" role="menu">
@@ -314,6 +312,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <div class="row">
@@ -356,13 +355,15 @@
                                     <th rowspan="2">Data Tools</th>
                                 </tr>
                                 <tr>
-                                    <th>Activity Records</th>
-                                    <th>Exporters</th>
-                                    <th>Traders</th>
-                                    <th>VA's</th>
-                                    <th>Farmers</th>
+                                    <th >Activity Records</th>
+                                    <th >Exporters</th>
+                                    <th >Traders</th>
+                                    <th >VA's</th>
+                                    <th >Farmers</th>
 
                                 </tr>
+
+
 
 
                                 </thead>
@@ -375,7 +376,7 @@
                                     <td></td>
 
                                     <td></td>
-                                    <td><span class="sm-st-icon st-green"><i class="fa fa-check"></i></span></td>
+                                    <td> <span class="sm-st-icon st-green"><i class="fa fa-check"></i></span></td>
 
                                     <td></td>
                                     <td>Form 7</td>

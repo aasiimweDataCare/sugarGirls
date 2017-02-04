@@ -1,20 +1,16 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppHelloResponse extends eppResponse
-{
-    function __construct()
-    {
+class eppHelloResponse extends eppResponse {
+    function __construct() {
         parent::__construct();
     }
 
-    function __destruct()
-    {
+    function __destruct() {
         parent::__destruct();
     }
 
-    public function validateServices($language, $version)
-    {
+    public function validateServices($language, $version) {
         $resultcode = $this->getResultCode();
         if ($resultcode != 1000) {
             $errormessage = $this->getResultMessage();
@@ -87,26 +83,26 @@ class eppHelloResponse extends eppResponse
     }
 
     /**
-     * Versions are returned by the EPP greeting
-     * @return array of strings
+     * Server name is returned by EPP greeting (hello)
+     * @return string
      */
-    public function getVersions()
-    {
-        $xpath = $this->xPath();
-        $versions = $xpath->query('/epp:epp/epp:greeting/epp:svcMenu/epp:version');
-        $vers = [];
-        foreach ($versions as $version) {
-            $vers[] = $version->nodeValue;
-        }
-        return $vers;
+    public function getServerName() {
+        return $this->queryPath('/epp:epp/epp:greeting/epp:svID');
+    }
+
+    /**
+     * Server date is returned by EPP greeting (hello)
+     * @return string
+     */
+    public function getServerDate() {
+        return $this->queryPath('/epp:epp/epp:greeting/epp:svDate');
     }
 
     /**
      * Languages are returned by EPP greeting (hello)
      * @return array of strings
      */
-    public function getLanguages()
-    {
+    public function getLanguages() {
         $xpath = $this->xPath();
         $languages = $xpath->query('/epp:epp/epp:greeting/epp:svcMenu/epp:lang');
         $lang = [];
@@ -120,8 +116,7 @@ class eppHelloResponse extends eppResponse
      * Services are returned by EPP greeting (hello)
      * @return array of strings
      */
-    public function getServices()
-    {
+    public function getServices() {
         $xpath = $this->xPath();
         $services = $xpath->query('/epp:epp/epp:greeting/epp:svcMenu/epp:objURI');
         $svcs = [];
@@ -135,8 +130,7 @@ class eppHelloResponse extends eppResponse
      * Extensions are returned by EPP greeting (hello)
      * @return array of strings
      */
-    public function getExtensions()
-    {
+    public function getExtensions() {
         $xpath = $this->xPath();
         $extensions = $xpath->query('/epp:epp/epp:greeting/epp:svcMenu/epp:svcExtension/epp:extURI');
         $exts = [];
@@ -147,20 +141,16 @@ class eppHelloResponse extends eppResponse
     }
 
     /**
-     * Server name is returned by EPP greeting (hello)
-     * @return string
+     * Versions are returned by the EPP greeting
+     * @return array of strings
      */
-    public function getServerName()
-    {
-        return $this->queryPath('/epp:epp/epp:greeting/epp:svID');
-    }
-
-    /**
-     * Server date is returned by EPP greeting (hello)
-     * @return string
-     */
-    public function getServerDate()
-    {
-        return $this->queryPath('/epp:epp/epp:greeting/epp:svDate');
+    public function getVersions() {
+        $xpath = $this->xPath();
+        $versions = $xpath->query('/epp:epp/epp:greeting/epp:svcMenu/epp:version');
+        $vers = [];
+        foreach ($versions as $version) {
+            $vers[] = $version->nodeValue;
+        }
+        return $vers;
     }
 }

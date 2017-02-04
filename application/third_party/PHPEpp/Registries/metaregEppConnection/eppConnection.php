@@ -1,11 +1,9 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class metaregEppConnection extends eppConnection
-{
-
-    public function __construct($logging = false, $settingsfile = null)
-    {
+class metaregEppConnection extends eppConnection {
+    
+    public function __construct($logging = false, $settingsfile = null) {
         // Construct the EPP connection object en specify if you want logging on or off
         parent::__construct($logging, $settingsfile);
 

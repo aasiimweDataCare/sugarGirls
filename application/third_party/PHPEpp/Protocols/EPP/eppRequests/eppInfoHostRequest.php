@@ -5,10 +5,8 @@ namespace Metaregistrar\EPP;
  * This object contains all the logic to create an EPP host:info command
  */
 
-class eppInfoHostRequest extends eppHostRequest
-{
-    function __construct($inforequest, $namespacesinroot = true)
-    {
+class eppInfoHostRequest extends eppHostRequest {
+    function __construct($inforequest, $namespacesinroot = true) {
         $this->setNamespacesinroot($namespacesinroot);
         parent::__construct(eppRequest::TYPE_INFO);
 
@@ -20,16 +18,15 @@ class eppInfoHostRequest extends eppHostRequest
         $this->addSessionId();
     }
 
-    public function setHost(eppHost $host)
-    {
+    function __destruct() {
+        parent::__destruct();
+    }
+
+
+    public function setHost(eppHost $host) {
         #
         # Domain check structure
         #
         $this->hostobject->appendChild($this->createElement('host:name', $host->getHostname()));
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 }

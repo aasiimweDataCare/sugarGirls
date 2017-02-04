@@ -1,15 +1,12 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCreateResponse extends eppResponse
-{
-    function __construct()
-    {
+class eppCreateResponse extends eppResponse {
+    function __construct() {
         parent::__construct();
     }
 
-    function __destruct()
-    {
+    function __destruct() {
         parent::__destruct();
     }
 
@@ -21,8 +18,7 @@ class eppCreateResponse extends eppResponse
      *
      * @return string contact_id
      */
-    public function getContactId()
-    {
+    public function getContactId() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/contact:creData/contact:id');
     }
 
@@ -30,8 +26,7 @@ class eppCreateResponse extends eppResponse
      *
      * @return string create_date
      */
-    public function getContactCreateDate()
-    {
+    public function getContactCreateDate() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/contact:creData/contact:crDate');
     }
 
@@ -39,8 +34,7 @@ class eppCreateResponse extends eppResponse
      *
      * @return eppContactHandle contacthandle
      */
-    public function getContactHandle()
-    {
+    public function getContactHandle() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:resData/contact:creData/contact:id');
         $contacthandle = new eppContactHandle($result->item(0)->nodeValue);
@@ -51,26 +45,23 @@ class eppCreateResponse extends eppResponse
      * DOMAIN CREATE RESPONSES
      */
 
-    public function getDomainCreateDate()
-    {
+    public function getDomainCreateDate() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/domain:creData/domain:crDate');
     }
 
 
-    public function getDomainExpirationDate()
-    {
+    public function getDomainExpirationDate() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/domain:creData/domain:exDate');
     }
 
-    public function getDomain()
-    {
-        $return = new eppDomain($this->getDomainName());
-        return $return;
+
+    public function getDomainName() {
+        return $this->queryPath('/epp:epp/epp:response/epp:resData/domain:creData/domain:name');
     }
 
-    public function getDomainName()
-    {
-        return $this->queryPath('/epp:epp/epp:response/epp:resData/domain:creData/domain:name');
+    public function getDomain() {
+        $return = new eppDomain($this->getDomainName());
+        return $return;
     }
 
     /**
@@ -78,13 +69,11 @@ class eppCreateResponse extends eppResponse
      */
 
 
-    public function getHostName()
-    {
+    public function getHostName() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:creData/host:name');
     }
 
-    public function getHostCreateDate()
-    {
+    public function getHostCreateDate() {
         return $this->queryPath('/epp:epp/epp:response/epp:resData/host:creData/host:crDate');
     }
 }

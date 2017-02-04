@@ -1,15 +1,12 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCheckContactResponse extends eppResponse
-{
-    function __construct()
-    {
+class eppCheckContactResponse extends eppResponse {
+    function __construct() {
         parent::__construct();
     }
 
-    function __destruct()
-    {
+    function __destruct() {
         parent::__destruct();
     }
 
@@ -17,8 +14,7 @@ class eppCheckContactResponse extends eppResponse
      *
      * @return array of checked contacts with status true/false
      */
-    public function getCheckedContacts()
-    {
+    public function getCheckedContacts() {
         $avail = null;
         $result = null;
         if ($this->getResultCode() == self::RESULT_SUCCESS) {

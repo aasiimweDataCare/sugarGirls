@@ -5,14 +5,12 @@ namespace Metaregistrar\EPP;
  * This object contains all the logic to create an EPP hello command
  */
 
-class eppPollRequest extends eppRequest
-{
+class eppPollRequest extends eppRequest {
 
     const POLL_REQ = 'req';
     const POLL_ACK = 'ack';
 
-    function __construct($polltype, $messageid = null, $services = null, $extensions = null)
-    {
+    function __construct($polltype, $messageid = null, $services = null, $extensions = null) {
         parent::__construct();
 
         #
@@ -36,8 +34,12 @@ class eppPollRequest extends eppRequest
         $this->addSessionId();
     }
 
-    public function setRequest($polltype, $messageid = null)
-    {
+    function __destruct() {
+        parent::__destruct();
+    }
+
+
+    public function setRequest($polltype, $messageid = null) {
         #
         # Create poll command
         #
@@ -50,10 +52,5 @@ class eppPollRequest extends eppRequest
             $poll->setAttribute('msgID', $messageid);
         }
         $this->getCommand()->appendChild($poll);
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 }

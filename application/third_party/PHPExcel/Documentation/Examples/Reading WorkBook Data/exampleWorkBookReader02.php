@@ -8,15 +8,14 @@ date_default_timezone_set('Europe/London');
 ?>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <title>PHPExcel Reading WorkBook Data Example #02</title>
+<title>PHPExcel Reading WorkBook Data Example #02</title>
 
 </head>
 <body>
 
 <h1>PHPExcel Reading WorkBook Data Example #02</h1>
-
 <h2>Read a list of Custom Properties for a WorkBook</h2>
 <?php
 
@@ -42,9 +41,10 @@ echo '<hr />';
 $customPropertyList = $objPHPExcel->getProperties()->getCustomProperties();
 
 echo '<b>Custom Property names: </b><br />';
-foreach ($customPropertyList as $customPropertyName) {
-    echo $customPropertyName, '<br />';
+foreach($customPropertyList as $customPropertyName) {
+	echo $customPropertyName,'<br />';
 }
+
 
 
 ?>

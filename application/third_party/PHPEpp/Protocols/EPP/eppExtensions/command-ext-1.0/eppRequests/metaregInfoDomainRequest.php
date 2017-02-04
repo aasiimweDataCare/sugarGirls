@@ -1,8 +1,7 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class metaregInfoDomainRequest extends eppInfoDomainRequest
-{
+class metaregInfoDomainRequest extends eppInfoDomainRequest {
     private $domaininfoext;
 
     /**
@@ -14,8 +13,7 @@ class metaregInfoDomainRequest extends eppInfoDomainRequest
      * Support tokenized login for the Metaregistrar interface
      * @param string $token
      */
-    function __construct($domainname)
-    {
+    function __construct($domainname) {
         /*
   <epp xmlns="urn:ietf:params:xml:ns:epp-1.0" xmlns:command-ext-domain="http://www.metaregistrar.com/epp/command-ext-domain-1.0" xmlns:command-ext="http://www.metaregistrar.com/epp/command-ext-1.0" xmlns:ext="http://www.metaregistrar.com/epp/ext-1.0">
   <command>
@@ -43,8 +41,7 @@ class metaregInfoDomainRequest extends eppInfoDomainRequest
         $this->addSessionId();
     }
 
-    function addOption(metaregInfoDomainOptionsType $option)
-    {
+    function addOption(metaregInfoDomainOptionsType $option) {
         if (in_array($option, $this->options)) {
             throw new eppException("Duplicate option: $option");
         }

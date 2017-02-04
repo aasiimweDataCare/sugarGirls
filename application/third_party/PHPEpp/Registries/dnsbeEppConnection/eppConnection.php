@@ -2,11 +2,9 @@
 namespace Metaregistrar\EPP;
 
 
-class dnsbeEppConnection extends eppConnection
-{
+class dnsbeEppConnection extends eppConnection {
 
-    public function __construct($logging = false, $settingsfile = null)
-    {
+    public function __construct($logging = false, $settingsfile = null) {
         parent::__construct($logging, $settingsfile);
         parent::addExtension('nsgroup', 'http://www.dns.be/xml/epp/nsgroup-1.0');
         parent::addExtension('registrar', 'http://www.dns.be/xml/epp/registrar-1.0');

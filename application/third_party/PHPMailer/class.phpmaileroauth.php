@@ -57,6 +57,23 @@ class PHPMailerOAuth extends PHPMailer
     protected $oauth = null;
 
     /**
+     * Get a PHPMailerOAuthGoogle instance to use.
+     * @return PHPMailerOAuthGoogle
+     */
+    public function getOAUTHInstance()
+    {
+        if (!is_object($this->oauth)) {
+            $this->oauth = new PHPMailerOAuthGoogle(
+                $this->oauthUserEmail,
+                $this->oauthClientSecret,
+                $this->oauthClientId,
+                $this->oauthRefreshToken
+            );
+        }
+        return $this->oauth;
+    }
+
+    /**
      * Initiate a connection to an SMTP server.
      * Overrides the original smtpConnect method to add support for OAuth.
      * @param array $options An array of options compatible with stream_context_create()
@@ -114,7 +131,7 @@ class PHPMailerOAuth extends PHPMailer
             if ('tls' === $secure or 'ssl' === $secure) {
                 //Check for an OpenSSL constant rather than using extension_loaded, which is sometimes disabled
                 if (!$sslext) {
-                    throw new phpmailerException($this->lang('extension_missing') . 'openssl', self::STOP_CRITICAL);
+                    throw new phpmailerException($this->lang('extension_missing').'openssl', self::STOP_CRITICAL);
                 }
             }
             $host = $hostinfo[3];
@@ -175,22 +192,5 @@ class PHPMailerOAuth extends PHPMailer
             throw $lastexception;
         }
         return false;
-    }
-
-    /**
-     * Get a PHPMailerOAuthGoogle instance to use.
-     * @return PHPMailerOAuthGoogle
-     */
-    public function getOAUTHInstance()
-    {
-        if (!is_object($this->oauth)) {
-            $this->oauth = new PHPMailerOAuthGoogle(
-                $this->oauthUserEmail,
-                $this->oauthClientSecret,
-                $this->oauthClientId,
-                $this->oauthRefreshToken
-            );
-        }
-        return $this->oauth;
     }
 }

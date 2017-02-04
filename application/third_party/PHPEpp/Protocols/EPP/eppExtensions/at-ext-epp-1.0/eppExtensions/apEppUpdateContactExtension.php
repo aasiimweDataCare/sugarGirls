@@ -11,18 +11,17 @@ namespace Metaregistrar\EPP;
 
 class apEppUpdateContactExtension extends atEppExtensionChain
 {
-    protected $atEppContact = null;
+    protected $atEppContact=null;
 
-    function __construct(atEppContact $atEppContact, atEppExtensionChain $additionaEppExtension = null)
-    {
-        if (!is_null($additionaEppExtension)) {
+    function __construct(atEppContact $atEppContact, atEppExtensionChain $additionaEppExtension=null) {
+        if(!is_null($additionaEppExtension)) {
             parent::__construct($additionaEppExtension);
         }
         $this->atEppContact = $atEppContact;
     }
 
 
-    public function setEppRequestExtension(eppRequest $request, \DOMElement $extension)
+    public function setEppRequestExtension(eppRequest $request,\DOMElement $extension)
     {
         $request->addExtension('xmlns:xsi', atEppConstants::w3SchemaLocation);
 
@@ -36,8 +35,9 @@ class apEppUpdateContactExtension extends atEppExtensionChain
         $extChange_->appendChild($facet_);
         $contactExt_->appendChild($extChange_);
         $extension->appendchild($contactExt_);
-        if (!is_null($this->additionaEppExtension)) {
-            $this->additionaEppExtension->setEppRequestExtension($request, $extension);
+        if(!is_null($this->additionaEppExtension))
+        {
+            $this->additionaEppExtension->setEppRequestExtension($request,$extension);
         }
 
 

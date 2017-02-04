@@ -1,15 +1,13 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppUpdateHostRequest extends eppHostRequest
-{
+class eppUpdateHostRequest extends eppHostRequest {
     /**
      * @var \DOMElement
      */
     public $hostobject;
 
-    function __construct($objectname, $addinfo = null, $removeinfo = null, $updateinfo = null, $namespacesinroot = true)
-    {
+    function __construct($objectname, $addinfo = null, $removeinfo = null, $updateinfo = null, $namespacesinroot = true) {
         $this->setNamespacesinroot($namespacesinroot);
         parent::__construct(eppRequest::TYPE_UPDATE);
 
@@ -30,6 +28,11 @@ class eppUpdateHostRequest extends eppHostRequest
         $this->addSessionId();
     }
 
+    function __destruct() {
+        parent::__destruct();
+    }
+
+
     /**
      *
      * @param string $hostname
@@ -39,8 +42,7 @@ class eppUpdateHostRequest extends eppHostRequest
      * @return \DOMElement
      * @throws eppException
      */
-    public function updateHost($hostname, $addInfo, $removeInfo, $updateInfo)
-    {
+    public function updateHost($hostname, $addInfo, $removeInfo, $updateInfo) {
         #
         # Object create structure
         #
@@ -74,8 +76,7 @@ class eppUpdateHostRequest extends eppHostRequest
      * @param \DOMElement $element
      * @param eppHost $host
      */
-    private function addHostChanges($element, eppHost $host)
-    {
+    private function addHostChanges($element, eppHost $host) {
         $addresses = $host->getIpAddresses();
         if (is_array($addresses)) {
             foreach ($addresses as $address => $type) {
@@ -92,11 +93,6 @@ class eppUpdateHostRequest extends eppHostRequest
                 $element->appendChild($stat);
             }
         }
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 
 }

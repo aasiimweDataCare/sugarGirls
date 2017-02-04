@@ -1,5 +1,5 @@
 $(function () {
-    console.log("Hello there");
+	console.log("Hello there");
     var nav = function () {
         $('.gw-nav > li > a').click(function () {
             var gw_nav = $('.gw-nav');

@@ -1,16 +1,14 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppTransferRequest extends eppRequest
-{
+class eppTransferRequest extends eppRequest {
     const OPERATION_QUERY = 'query';
     const OPERATION_REQUEST = 'request';
     const OPERATION_APPROVE = 'approve';
     const OPERATION_REJECT = 'reject';
     const OPERATION_CANCEL = 'cancel';
 
-    function __construct($operation, $object)
-    {
+    function __construct($operation, $object) {
         parent::__construct();
 
         #
@@ -75,8 +73,12 @@ class eppTransferRequest extends eppRequest
         $this->addSessionId();
     }
 
-    public function setDomainQuery(eppDomain $domain)
-    {
+    function __destruct() {
+        parent::__destruct();
+    }
+
+
+    public function setDomainQuery(eppDomain $domain) {
         #
         # Object create structure
         #
@@ -93,8 +95,62 @@ class eppTransferRequest extends eppRequest
         $this->getCommand()->appendChild($transfer);
     }
 
-    public function setContactQuery(eppContactHandle $contact)
-    {
+
+    public function setDomainApprove(eppDomain $domain) {
+        #
+        # Object create structure
+        #
+        $transfer = $this->createElement('transfer');
+        $transfer->setAttribute('op', self::OPERATION_APPROVE);
+        $this->domainobject = $this->createElement('domain:transfer');
+        $this->domainobject->appendChild($this->createElement('domain:name', $domain->getDomainname()));
+        if (strlen($domain->getAuthorisationCode())) {
+            $authinfo = $this->createElement('domain:authInfo');
+            $authinfo->appendChild($this->createElement('domain:pw', $domain->getAuthorisationCode()));
+            $this->domainobject->appendChild($authinfo);
+        }
+        $transfer->appendChild($this->domainobject);
+        $this->getCommand()->appendChild($transfer);
+    }
+
+
+    public function setDomainReject(eppDomain $domain) {
+        #
+        # Object create structure
+        #
+        $transfer = $this->createElement('transfer');
+        $transfer->setAttribute('op', self::OPERATION_REJECT);
+        $this->domainobject = $this->createElement('domain:transfer');
+        $this->domainobject->appendChild($this->createElement('domain:name', $domain->getDomainname()));
+        if (strlen($domain->getAuthorisationCode())) {
+            $authinfo = $this->createElement('domain:authInfo');
+            $authinfo->appendChild($this->createElement('domain:pw', $domain->getAuthorisationCode()));
+            $this->domainobject->appendChild($authinfo);
+        }
+        $transfer->appendChild($this->domainobject);
+        $this->getCommand()->appendChild($transfer);
+    }
+
+
+    public function setDomainCancel(eppDomain $domain) {
+        #
+        # Object create structure
+        #
+        $transfer = $this->createElement('transfer');
+        $transfer->setAttribute('op', self::OPERATION_CANCEL);
+        $this->domainobject = $this->createElement('domain:transfer');
+        $this->domainobject->appendChild($this->createElement('domain:name', $domain->getDomainname()));
+        if (strlen($domain->getAuthorisationCode())) {
+            $authinfo = $this->createElement('domain:authInfo');
+            $authinfo->appendChild($this->createElement('domain:pw', $domain->getAuthorisationCode()));
+            $this->domainobject->appendChild($authinfo);
+        }
+        $transfer->appendChild($this->domainobject);
+        $this->getCommand()->appendChild($transfer);
+    }
+
+
+    public function setContactQuery(eppContactHandle $contact) {
         #
         # Object create structure
         #
@@ -106,8 +162,8 @@ class eppTransferRequest extends eppRequest
         $this->getCommand()->appendChild($transfer);
     }
 
-    public function setDomainRequest(eppDomain $domain)
-    {
+
+    public function setDomainRequest(eppDomain $domain) {
         #
         # Object create structure
         #
@@ -129,67 +185,8 @@ class eppTransferRequest extends eppRequest
         $this->getCommand()->appendChild($transfer);
     }
 
-    public function setDomainCancel(eppDomain $domain)
-    {
-        #
-        # Object create structure
-        #
-        $transfer = $this->createElement('transfer');
-        $transfer->setAttribute('op', self::OPERATION_CANCEL);
-        $this->domainobject = $this->createElement('domain:transfer');
-        $this->domainobject->appendChild($this->createElement('domain:name', $domain->getDomainname()));
-        if (strlen($domain->getAuthorisationCode())) {
-            $authinfo = $this->createElement('domain:authInfo');
-            $authinfo->appendChild($this->createElement('domain:pw', $domain->getAuthorisationCode()));
-            $this->domainobject->appendChild($authinfo);
-        }
-        $transfer->appendChild($this->domainobject);
-        $this->getCommand()->appendChild($transfer);
-    }
 
-    public function setDomainApprove(eppDomain $domain)
-    {
-        #
-        # Object create structure
-        #
-        $transfer = $this->createElement('transfer');
-        $transfer->setAttribute('op', self::OPERATION_APPROVE);
-        $this->domainobject = $this->createElement('domain:transfer');
-        $this->domainobject->appendChild($this->createElement('domain:name', $domain->getDomainname()));
-        if (strlen($domain->getAuthorisationCode())) {
-            $authinfo = $this->createElement('domain:authInfo');
-            $authinfo->appendChild($this->createElement('domain:pw', $domain->getAuthorisationCode()));
-            $this->domainobject->appendChild($authinfo);
-        }
-        $transfer->appendChild($this->domainobject);
-        $this->getCommand()->appendChild($transfer);
-    }
-
-    public function setDomainReject(eppDomain $domain)
-    {
-        #
-        # Object create structure
-        #
-        $transfer = $this->createElement('transfer');
-        $transfer->setAttribute('op', self::OPERATION_REJECT);
-        $this->domainobject = $this->createElement('domain:transfer');
-        $this->domainobject->appendChild($this->createElement('domain:name', $domain->getDomainname()));
-        if (strlen($domain->getAuthorisationCode())) {
-            $authinfo = $this->createElement('domain:authInfo');
-            $authinfo->appendChild($this->createElement('domain:pw', $domain->getAuthorisationCode()));
-            $this->domainobject->appendChild($authinfo);
-        }
-        $transfer->appendChild($this->domainobject);
-        $this->getCommand()->appendChild($transfer);
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
-    }
-
-    public function setContactRequest(eppContactHandle $contact)
-    {
+    public function setContactRequest(eppContactHandle $contact) {
         #
         # Object create structure
         #

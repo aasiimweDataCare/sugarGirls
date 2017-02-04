@@ -1,8 +1,7 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppException extends \Exception
-{
+class eppException extends \Exception {
     /**
      * @var string
      */
@@ -25,8 +24,7 @@ class eppException extends \Exception
      * @param int $id
      * @param string $command
      */
-    public function __construct($message = "", $code = 0, \Exception $previous = null, $reason = null, $command = null)
-    {
+    public function __construct($message = "", $code = 0, \Exception $previous = null, $reason = null, $command = null) {
         $this->reason = $reason;
         $trace = $this->getTrace();
         $this->class = $trace[0]['class'];
@@ -40,24 +38,21 @@ class eppException extends \Exception
     /**
      * @return string
      */
-    public function getLastCommand()
-    {
+    public function getLastCommand() {
         return $this->lastcommand;
     }
 
     /**
      * @return string
      */
-    public function getClass()
-    {
+    public function getClass() {
         return $this->class;
     }
 
     /**
      * @return string
      */
-    public function getReason()
-    {
+    public function getReason() {
         return $this->reason;
     }
 }

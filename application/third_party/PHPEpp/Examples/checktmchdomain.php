@@ -3,9 +3,9 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppDomainClaim;
 use Metaregistrar\EPP\eppException;
 use Metaregistrar\EPP\eppLaunchCheckRequest;
+use Metaregistrar\EPP\eppDomainClaim;
 use Metaregistrar\TMCH\cnisTmchConnection;
 use Metaregistrar\TMCH\tmchException;
 
@@ -42,8 +42,7 @@ try {
  * @param $conn eppConnection
  * @param $domains array
  */
-function checkdomains($conn, $domains)
-{
+function checkdomains($conn, $domains) {
     try {
         $check = new eppLaunchCheckRequest($domains);
         $check->setLaunchPhase(eppLaunchCheckRequest::PHASE_CLAIMS, 'test', eppLaunchCheckRequest::TYPE_CLAIMS);
@@ -61,7 +60,7 @@ function checkdomains($conn, $domains)
                             // Do not forget to fill in the CNIS login details!
                             $tmch = new cnisTmchConnection('');
                             $output = $tmch->getCnis($check['claim']->getClaimKey());
-                            echo "Notice ID: " . $output->getNoticeId() . " Not after: " . $output->getNotAfter() . "\n";
+                            echo "Notice ID: ".$output->getNoticeId()." Not after: ".$output->getNotAfter()."\n";
                         } else {
                             throw new Metaregistrar\EPP\eppException("Domain name " . $check['domainname'] . " is claimed, but no valid claim key is present");
                         }

@@ -15,20 +15,17 @@ namespace Metaregistrar\EPP;
      </command>
  </epp>
  */
-class sidnEppRenewRequest extends eppRenewRequest
-{
+class sidnEppRenewRequest extends eppRenewRequest {
 
 
-    function __construct($domainname, $expdate, $period)
-    {
+    function __construct($domainname, $expdate, $period) {
         parent::__construct($domainname, $expdate);
 
         $this->addSidnExtension($period);
         $this->addSessionId();
     }
 
-    private function addSidnExtension($period)
-    {
+    private function addSidnExtension($period) {
         $renew = $this->getCommand()->getElementsByTagName('domain:renew')->item(0);
         $period = $this->createElement('domain:period', $period);
         $period->setAttribute("unit", "m");

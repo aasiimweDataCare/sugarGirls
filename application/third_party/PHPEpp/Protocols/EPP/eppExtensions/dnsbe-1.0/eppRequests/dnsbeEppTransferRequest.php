@@ -20,17 +20,14 @@ namespace Metaregistrar\EPP;
     </dnsbe:ext>
 </extension>
 */
-class dnsbeEppTransferRequest extends eppTransferRequest
-{
-    function __construct($operation, $object, $tech = null, $billing = null, $onsite = null, $registrant = null)
-    {
+class dnsbeEppTransferRequest extends eppTransferRequest {
+    function __construct($operation, $object, $tech = null, $billing = null, $onsite = null, $registrant = null) {
         parent::__construct($operation, $object);
         $this->addDnsbeExtension($tech, $billing, $onsite, $registrant);
         $this->addSessionId();
     }
 
-    public function addDnsbeExtension($tech = null, $billing = null, $onsite = null, $registrant = null)
-    {
+    public function addDnsbeExtension($tech = null, $billing = null, $onsite=null, $registrant=null) {
         $this->addExtension('xmlns:dnsbe', 'http://www.dns.be/xml/epp/dnsbe-1.0');
         $ext = $this->createElement('extension');
         $sidnext = $this->createElement('dnsbe:ext');

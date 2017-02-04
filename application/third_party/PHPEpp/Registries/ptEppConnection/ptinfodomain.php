@@ -2,11 +2,11 @@
 require('../../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppContactHandle;
-use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppException;
-use Metaregistrar\EPP\eppHost;
+use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\ptEppInfoDomainRequest;
+use Metaregistrar\EPP\eppContactHandle;
+use Metaregistrar\EPP\eppHost;
 
 
 /*
@@ -24,7 +24,7 @@ $domainname = $argv[1];
 echo "Retrieving info on " . $domainname . "\n";
 try {
     // Please enter your own settings file here under before using this example
-    if ($conn = eppConnection::create('pt.ini', true)) {
+    if ($conn = eppConnection::create('pt.ini',true)) {
         // Connect to the EPP server
         if ($conn->login()) {
             $roid = '12345';
@@ -41,18 +41,17 @@ try {
  * @param $domainname string
  * @return string
  */
-function infodomain($conn, $domainname, $roid)
-{
+function infodomain($conn, $domainname,$roid) {
     try {
         $domain = new eppDomain($domainname);
         $domain->setAuthorisationCode(null);
-        $info = new ptEppInfoDomainRequest($domain, $roid);
+        $info = new ptEppInfoDomainRequest($domain,$roid);
         if ($response = $conn->request($info)) {
             /* @var $response Metaregistrar\EPP\eppInfoDomainResponse */
             $d = $response->getDomain();
             echo "Info domain for " . $d->getDomainname() . ":\n";
             echo "Created on " . $response->getDomainCreateDate() . "\n";
-            echo "Last update on " . $response->getDomainUpdateDate() . "\n";
+            echo "Last update on ".$response->getDomainUpdateDate()."\n";
             echo "Registrant " . $d->getRegistrant() . "\n";
             echo "Contact info:\n";
             foreach ($d->getContacts() as $contact) {

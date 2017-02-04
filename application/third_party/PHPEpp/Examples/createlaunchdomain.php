@@ -3,9 +3,9 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppContactHandle;
-use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppException;
+use Metaregistrar\EPP\eppDomain;
+use Metaregistrar\EPP\eppContactHandle;
 use Metaregistrar\EPP\eppHost;
 use Metaregistrar\EPP\eppLaunchCreateDomainRequest;
 
@@ -43,7 +43,7 @@ try {
         }
     }
 } catch (eppException $e) {
-    echo "ERROR: " . $e->getMessage() . "\n\n";
+        echo "ERROR: " . $e->getMessage() . "\n\n";
 }
 
 
@@ -57,8 +57,7 @@ try {
  * @param $nameservers array
  * @return bool
  */
-function createdomain($conn, $domainname, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers)
-{
+function createdomain($conn, $domainname, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers) {
     $domain = new eppDomain($domainname, $registrant);
     $domain->setRegistrant(new eppContactHandle($registrant));
     $domain->addContact(new eppContactHandle($admincontact, eppContactHandle::CONTACT_TYPE_ADMIN));

@@ -9,7 +9,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-require_once APPPATH . "/third_party/PHPEpp/Protocols/EPP/eppBase.php";
+require_once APPPATH."/third_party/PHPEpp/Protocols/EPP/eppBase.php";
 
 
 class EppBase extends Metaregistrar\EPP\eppBase

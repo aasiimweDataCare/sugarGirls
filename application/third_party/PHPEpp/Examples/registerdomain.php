@@ -1,17 +1,17 @@
 <?php
 require('../autoloader.php');
 
-use Metaregistrar\EPP\eppCheckRequest;
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppContact;
+use Metaregistrar\EPP\eppException;
 use Metaregistrar\EPP\eppContactHandle;
+use Metaregistrar\EPP\eppCheckRequest;
 use Metaregistrar\EPP\eppContactPostalInfo;
+use Metaregistrar\EPP\eppContact;
 use Metaregistrar\EPP\eppCreateContactRequest;
-use Metaregistrar\EPP\eppCreateDomainRequest;
+use Metaregistrar\EPP\eppHost;
 use Metaregistrar\EPP\eppCreateHostRequest;
 use Metaregistrar\EPP\eppDomain;
-use Metaregistrar\EPP\eppException;
-use Metaregistrar\EPP\eppHost;
+use Metaregistrar\EPP\eppCreateDomainRequest;
 
 /*
  * This sample script registers a domain name within your account
@@ -22,10 +22,11 @@ use Metaregistrar\EPP\eppHost;
  */
 
 
-if ($argc <= 1) {
+if ($argc <= 1)
+{
     echo "Usage: registerdomain.php <domainname>\n";
-    echo "Please enter the domain name to be created\n\n";
-    die();
+	echo "Please enter the domain name to be created\n\n";
+	die();
 }
 
 $domainname = $argv[1];
@@ -42,8 +43,8 @@ try {
             if (!checkhosts($conn, array('ns5.metaregistrar.nl'))) {
                 createhost($conn, 'ns2.metaregistrar.nl');
             }
-            $nameservers = array('ns1.metaregistrar.nl', 'ns2.metaregistrar.nl');
-            $contactid = createcontact($conn, 'test@test.com', '+31.61234567890', 'Person name', null, 'Address 1', '12345', 'City', 'NL');
+            $nameservers = array('ns1.metaregistrar.nl','ns2.metaregistrar.nl');
+            $contactid = createcontact($conn,'test@test.com','+31.61234567890','Person name',null,'Address 1','12345','City','NL');
             if ($contactid) {
                 createdomain($conn, $domainname, $contactid, $contactid, $contactid, $contactid, $nameservers);
             }
@@ -54,8 +55,7 @@ try {
     echo $e->getMessage();
 }
 
-function checkcontact($conn, $contactid)
-{
+function checkcontact($conn, $contactid) {
     /* @var $conn Metaregistrar\EPP\eppConnection */
     try {
         $check = new eppCheckRequest(new eppContactHandle($contactid));
@@ -72,8 +72,7 @@ function checkcontact($conn, $contactid)
 }
 
 
-function createcontact($conn, $email, $telephone, $name, $organization, $address, $postcode, $city, $country)
-{
+function createcontact($conn, $email, $telephone, $name, $organization, $address, $postcode, $city, $country) {
     /* @var $conn Metaregistrar\EPP\eppConnection */
     try {
         $contactinfo = new eppContact(new eppContactPostalInfo($name, $city, $country, $organization, $address, null, $postcode, Metaregistrar\EPP\eppContact::TYPE_LOC), $email, $telephone);
@@ -96,8 +95,7 @@ function createcontact($conn, $email, $telephone, $name, $organization, $address
  * @param $hosts
  * @return bool|null
  */
-function checkhosts($conn, $hosts)
-{
+function checkhosts($conn, $hosts) {
     try {
         $checkhost = array();
         foreach ($hosts as $host) {
@@ -127,11 +125,10 @@ function checkhosts($conn, $hosts)
  * @param string $hostname
  * @param string $ipaddress
  */
-function createhost($conn, $hostname, $ipaddress = null)
-{
+function createhost($conn, $hostname, $ipaddress=null) {
 
     try {
-        $create = new eppCreateHostRequest(new eppHost($hostname, $ipaddress));
+        $create = new eppCreateHostRequest(new eppHost($hostname,$ipaddress));
         if ($response = $conn->request($create)) {
             /* @var $response Metaregistrar\EPP\eppCreateHostResponse */
             echo "Host created on " . $response->getHostCreateDate() . " with name " . $response->getHostName() . "\n";
@@ -151,8 +148,7 @@ function createhost($conn, $hostname, $ipaddress = null)
  * @param string $billingcontact
  * @param array $nameservers
  */
-function createdomain($conn, $domainname, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers)
-{
+function createdomain($conn, $domainname, $registrant, $admincontact, $techcontact, $billingcontact, $nameservers) {
     /* @var $conn Metaregistrar\EPP\eppConnection */
     try {
         $domain = new eppDomain($domainname, $registrant);

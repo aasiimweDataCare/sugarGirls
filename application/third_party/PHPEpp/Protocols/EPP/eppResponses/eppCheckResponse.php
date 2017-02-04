@@ -1,15 +1,12 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppCheckResponse extends eppResponse
-{
-    function __construct()
-    {
+class eppCheckResponse extends eppResponse {
+    function __construct() {
         parent::__construct();
     }
 
-    function __destruct()
-    {
+    function __destruct() {
         parent::__destruct();
     }
 
@@ -17,8 +14,7 @@ class eppCheckResponse extends eppResponse
      *
      * @return array of checked domains with status true/false
      */
-    public function getCheckedDomains()
-    {
+    public function getCheckedDomains() {
         $result = null;
         if ($this->getResultCode() == self::RESULT_SUCCESS) {
             $result = array();
@@ -58,8 +54,7 @@ class eppCheckResponse extends eppResponse
      *
      * @return array of checked hosts with status true/false
      */
-    public function getCheckedHosts()
-    {
+    public function getCheckedHosts() {
         $result = null;
         if ($this->getResultCode() == self::RESULT_SUCCESS) {
             $xpath = $this->xPath();
@@ -88,8 +83,7 @@ class eppCheckResponse extends eppResponse
      *
      * @return array of checked contacts with status true/false
      */
-    public function getCheckedContacts()
-    {
+    public function getCheckedContacts() {
         $result = null;
         if ($this->getResultCode() == self::RESULT_SUCCESS) {
             $xpath = $this->xPath();

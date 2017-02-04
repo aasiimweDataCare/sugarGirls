@@ -4,9 +4,8 @@ namespace Metaregistrar\EPP;
  * This object contains all the logic to create an EPP command
  */
 
-class eppRequest extends \DOMDocument
-{
-
+class eppRequest extends \DOMDocument {
+    
     CONST TYPE_CHECK = 'check';
     CONST TYPE_CREATE = 'create';
     CONST TYPE_INFO = 'info';
@@ -14,7 +13,7 @@ class eppRequest extends \DOMDocument
     CONST TYPE_DELETE = 'delete';
     CONST TYPE_TRANSFER = 'transfer';
     CONST TYPE_RENEW = 'renew';
-
+    
     /**
      * Element object to add command structures
      * @var \DomElement
@@ -37,6 +36,7 @@ class eppRequest extends \DOMDocument
     public $sessionid = null;
 
 
+
     /*
      * Login element
      * @var \DomElement
@@ -55,8 +55,7 @@ class eppRequest extends \DOMDocument
      */
     private $namespacesinroot = true;
 
-    function __construct()
-    {
+    function __construct() {
         $this->sessionid = uniqid();
         parent::__construct('1.0', 'UTF-8');
         $this->formatOutput = true;
@@ -64,40 +63,63 @@ class eppRequest extends \DOMDocument
         #$this->validateOnParse = true;
     }
 
-    protected static function isAscii($str)
-    {
-        return mb_check_encoding($str, 'ASCII');
-    }
-
-    function __destruct()
-    {
+    function __destruct() {
     }
 
     /**
-     * Determine whether the namespaces must be put in the root or at the corresponding objects
+     * Determine whether the namespaces must be put in the root or at the corresponding objects 
      * @param bool $setting
      */
-    public function setNamespacesinroot($setting)
-    {
+    public function setNamespacesinroot($setting) {
         $this->namespacesinroot = $setting;
     }
-
-    public function rootNamespaces()
-    {
+    
+    public function rootNamespaces() {
         return $this->namespacesinroot;
     }
+    
+    protected function getEpp() {
+        if (!$this->epp) {
+            #
+            # if its not there, then create base epp structure
+            #
+            $this->epp = $this->createElement('epp');
+            $this->appendChild($this->epp);
+        }
+        return $this->epp;
+    }
 
-    public function addExtension($name, $value)
-    {
+    protected function getCommand() {
+        if (!$this->command) {
+            #
+            # If its not there, then create command structure
+            #
+            $this->command = $this->createElement('command');
+            $this->getEpp()->appendChild($this->command);
+        }
+        return $this->command;
+    }
+
+    protected function getExtension() {
+        if (!$this->extension) {
+            #
+            # If its not there, then create extension structure
+            #
+            $this->extension = $this->createElement('extension');
+            $this->getCommand()->appendChild($this->extension);
+        }
+        return $this->extension;
+    }
+
+    public function addExtension($name, $value) {
         if ($epp = $this->getEpp()) {
             $epp->setAttribute($name, $value);
         } else {
             throw new eppException('Cannot set attribute on an empty epp element');
         }
     }
-
-    public function addSessionId()
-    {
+    
+    public function addSessionId() {
         #
         # Remove earlier session id's to make sure session id is at the end
         #
@@ -111,18 +133,20 @@ class eppRequest extends \DOMDocument
         $this->getCommand()->appendChild($this->createElement('clTRID', $this->sessionid));
     }
 
-    public function getSessionId()
-    {
+    public function getSessionId() {
         return $this->sessionid;
     }
 
-    public function dumpContents()
-    {
+    public function dumpContents() {
         echo $this->saveXML();
     }
+    
+    
+    protected static function isAscii($str) {
+        return mb_check_encoding($str, 'ASCII');
+    }
 
-    public function addNamespaces($namespaces)
-    {
+    public function addNamespaces($namespaces) {
         if (is_array($namespaces)) {
             foreach ($namespaces as $namespace => $xmlns) {
                 $this->getEpp()->setAttribute('xmlns:' . $xmlns, $namespace);
@@ -139,42 +163,8 @@ class eppRequest extends \DOMDocument
             }
         }
     }
-
-    protected function getExtension()
-    {
-        if (!$this->extension) {
-            #
-            # If its not there, then create extension structure
-            #
-            $this->extension = $this->createElement('extension');
-            $this->getCommand()->appendChild($this->extension);
-        }
-        return $this->extension;
-    }
-
-    protected function getCommand()
-    {
-        if (!$this->command) {
-            #
-            # If its not there, then create command structure
-            #
-            $this->command = $this->createElement('command');
-            $this->getEpp()->appendChild($this->command);
-        }
-        return $this->command;
-    }
-
-    protected function getEpp()
-    {
-        if (!$this->epp) {
-            #
-            # if its not there, then create base epp structure
-            #
-            $this->epp = $this->createElement('epp');
-            $this->appendChild($this->epp);
-        }
-        return $this->epp;
-    }
+    
 
 
+    
 }

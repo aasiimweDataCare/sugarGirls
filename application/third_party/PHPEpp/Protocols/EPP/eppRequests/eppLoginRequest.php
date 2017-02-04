@@ -4,16 +4,14 @@ namespace Metaregistrar\EPP;
  * This object contains all the logic to create an EPP hello command
  */
 
-class eppLoginRequest extends eppRequest
-{
+class eppLoginRequest extends eppRequest {
 
     /**
      * @var \DOMElement
      */
     protected $options = null;
 
-    function __construct($newpassword = null)
-    {
+    function __construct($newpassword = null) {
         parent::__construct();
         #
         # Login parameters
@@ -27,12 +25,17 @@ class eppLoginRequest extends eppRequest
         $this->addSessionId();
     }
 
-    function __destruct()
-    {
+    function __destruct() {
     }
 
-    public function addNewPassword($password)
-    {
+    private function checkForOptions() {
+        if (!$this->options) {
+            $this->options = $this->createElement('options');
+            $this->login->appendChild($this->options);
+        }
+    }
+
+    public function addNewPassword($password) {
         if (!strlen($password)) {
             throw new eppException('No new password specified for password change');
         }
@@ -40,16 +43,14 @@ class eppLoginRequest extends eppRequest
         $pw->appendChild($this->createCDATASection($password));
     }
 
-    public function addUsername($username)
-    {
+    public function addUsername($username) {
         if (!strlen($username)) {
             throw new eppException('No userid specified for login attempt');
         }
         $this->login->appendChild($this->createElement('clID', $username));
     }
 
-    public function addPassword($password)
-    {
+    public function addPassword($password) {
         if (!strlen($password)) {
             throw new eppException('No password specified for login attempt');
         }
@@ -57,8 +58,7 @@ class eppLoginRequest extends eppRequest
         $pw->appendChild($this->createCDATASection($password));
     }
 
-    public function addVersion($version)
-    {
+    public function addVersion($version) {
         $this->checkForOptions();
         if (!strlen($version)) {
             throw new eppException('No version number specified for login attempt');
@@ -69,16 +69,7 @@ class eppLoginRequest extends eppRequest
 
     }
 
-    private function checkForOptions()
-    {
-        if (!$this->options) {
-            $this->options = $this->createElement('options');
-            $this->login->appendChild($this->options);
-        }
-    }
-
-    public function addLanguage($language)
-    {
+    public function addLanguage($language) {
         $this->checkForOptions();
         if (!strlen($language)) {
             throw new eppException('No language specified for login attempt');
@@ -97,8 +88,7 @@ class eppLoginRequest extends eppRequest
      * @param array $services
      * @param array $extensions
      */
-    public function addServices($services, $extensions)
-    {
+    public function addServices($services, $extensions) {
         #
         # Login options: Requested services
         #

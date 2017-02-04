@@ -1,10 +1,9 @@
 <?php
 require("../autoloader.php");
 
-use Metaregistrar\TMCH\cnisTmchConnection;
 use Metaregistrar\TMCH\dnlTmchConnection;
+use Metaregistrar\TMCH\cnisTmchConnection;
 use Metaregistrar\TMCH\tmchException;
-
 /* This test file retrieves the latest test-domain-name-list (DNL) and gets the claim notice from the first item of this list. */
 
 try {

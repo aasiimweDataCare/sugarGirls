@@ -1,11 +1,9 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppUndeleteRequest extends eppRequest
-{
+class eppUndeleteRequest extends eppRequest {
 
-    function __construct($restoreinfo)
-    {
+    function __construct($restoreinfo) {
         parent::__construct();
         if ($restoreinfo instanceof eppDomain) {
             $this->setDomain($restoreinfo);
@@ -16,8 +14,12 @@ class eppUndeleteRequest extends eppRequest
 
     }
 
-    public function setDomain(eppDomain $domain)
-    {
+    function __destruct() {
+        parent::__destruct();
+    }
+
+
+    public function setDomain(eppDomain $domain) {
         if (!strlen($domain->getDomainname())) {
             throw new eppException('eppUndeleteRequest domain object does not contain a valid domain name');
         }
@@ -29,11 +31,6 @@ class eppUndeleteRequest extends eppRequest
         $undelete->appendChild($this->createElement('domain:name', $domain->getDomainname()));
         $commandext->appendChild($undelete);
         $this->getExtension()->appendChild($commandext);
-    }
-
-    function __destruct()
-    {
-        parent::__destruct();
     }
 
 }

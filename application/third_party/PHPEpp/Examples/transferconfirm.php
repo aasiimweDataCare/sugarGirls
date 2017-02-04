@@ -2,10 +2,10 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppException;
 use Metaregistrar\EPP\eppPollRequest;
 use Metaregistrar\EPP\eppResponse;
+use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppTransferRequest;
 
 /*
@@ -24,7 +24,7 @@ try {
         if ($conn->login()) {
             $messageid = poll($conn);
             if ($messageid) {
-                transferconfirm($conn, $domainname);
+                transferconfirm($conn,$domainname);
                 pollack($conn, $messageid);
             }
             $conn->logout();
@@ -38,8 +38,7 @@ try {
  * @param eppConnection $conn
  * @return null
  */
-function poll($conn)
-{
+function poll($conn) {
     try {
         $poll = new eppPollRequest(eppPollRequest::POLL_REQ, 0);
         if ($response = $conn->request($poll)) {
@@ -65,8 +64,7 @@ function poll($conn)
  * @param $messageid
  * @return null
  */
-function pollack($conn, $messageid)
-{
+function pollack($conn, $messageid) {
     try {
         $poll = new eppPollRequest(eppPollRequest::POLL_ACK, $messageid);
         if ($response = $conn->request($poll)) {
@@ -83,8 +81,7 @@ function pollack($conn, $messageid)
  * @param $domainname string
  * @return null
  */
-function transferconfirm($conn, $domainname)
-{
+function transferconfirm($conn,$domainname) {
     try {
         $transfer = new eppTransferRequest(eppTransferRequest::OPERATION_APPROVE, new eppDomain($domainname));
         if ($response = $conn->request($transfer)) {

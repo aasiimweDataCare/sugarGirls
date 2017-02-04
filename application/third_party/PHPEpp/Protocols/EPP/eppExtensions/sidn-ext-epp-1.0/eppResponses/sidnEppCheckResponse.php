@@ -11,15 +11,12 @@ namespace Metaregistrar\EPP;
     </extension>
 
  */
-class sidnEppCheckResponse extends eppCheckResponse
-{
-    function __construct()
-    {
+class sidnEppCheckResponse extends eppCheckResponse {
+    function __construct() {
         parent::__construct();
     }
 
-    public function getCheckResults()
-    {
+    public function getCheckResults() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:extension/sidn-ext-epp:ext/sidn-ext-epp:response/sidn-ext-epp:msg');
         foreach ($result as $code) {

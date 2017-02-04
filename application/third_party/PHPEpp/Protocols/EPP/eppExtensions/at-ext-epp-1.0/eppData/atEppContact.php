@@ -7,8 +7,7 @@ namespace Metaregistrar\EPP;
  *
  */
 
-class atEppContact extends eppContact
-{
+class atEppContact extends eppContact {
 
 
     #
@@ -23,11 +22,14 @@ class atEppContact extends eppContact
     const PERS_TYPE_ROLE = 'role';
 
 
+
     private $personType = self::PERS_TYPE_PRIVATPERSON;
 
-    private $whoisHidePhone = 0;
-    private $whoisHideFax = 0;
-    private $whoisHideEmail = 0;
+    private $whoisHidePhone=0;
+    private $whoisHideFax=0;
+    private $whoisHideEmail=0;
+
+
 
 
     /**
@@ -43,37 +45,32 @@ class atEppContact extends eppContact
      * @param null $status
      * @throws eppException
      */
-    public function __construct($postalInfo = null, $personType = self::PERS_TYPE_UNSPECIFIED, $email = null, $voice = null, $fax = null, $whoisHideEmail = false, $whoisHidePhone = false, $whoisHideFax = false, $password = null, $status = null)
-    {
-        parent::__construct($postalInfo, $email, $voice, $fax, $password, $status);
-        $this->setPersonType($personType);
+    public function __construct($postalInfo = null,$personType=self::PERS_TYPE_UNSPECIFIED, $email = null, $voice = null, $fax = null,$whoisHideEmail=false,$whoisHidePhone=false,$whoisHideFax=false, $password = null, $status = null) {
+       parent::__construct($postalInfo , $email , $voice , $fax , $password , $status );
+       $this->setPersonType($personType);
         $this->setWhoisHideEmail($whoisHideEmail);
         $this->setWhoisHideFax($whoisHideFax);
         $this->setWhoisHidePhone($whoisHidePhone);
     }
 
-    private function setPersonType($personType)
-    {
-        if ($personType !== self::PERS_TYPE_ORGANISATION && $personType !== self::PERS_TYPE_PRIVATPERSON && $personType !== self::PERS_TYPE_ROLE) {
-            throw new eppException('Invalid personType ' . htmlspecialchars($personType) . ' assigned! One of the following personTypes are allowd: privateperson (natural person) organisation (companies ect.) role (e.g. administrators ect.)');
-        }
-        $this->personType = $personType;
-    }
 
-    private function setWhoisHideEmail($whoisHideEmail = false)
-    {
-        $this->whoisHideEmail = $whoisHideEmail ? 1 : 0;
-    }
 
-    private function setWhoisHideFax($whoisHideFax = false)
-    {
-        $this->whoisHideFax = $whoisHideFax ? 1 : 0;
-    }
 
-    private function setWhoisHidePhone($whoisHidePhone = false)
+    private function setWhoisHidePhone($whoisHidePhone=false)
     {
         $this->whoisHidePhone = $whoisHidePhone ? 1 : 0;
     }
+
+    private function setWhoisHideFax($whoisHideFax=false)
+    {
+        $this->whoisHideFax = $whoisHideFax? 1 : 0;
+    }
+
+    private function setWhoisHideEmail($whoisHideEmail=false)
+    {
+        $this->whoisHideEmail = $whoisHideEmail? 1 : 0;
+    }
+
 
     public function getWhoisHidePhone()
     {
@@ -87,7 +84,17 @@ class atEppContact extends eppContact
 
     public function getWhoisHideEmail()
     {
-        return $this->whoisHideEmail;
+        return  $this->whoisHideEmail;
+    }
+
+
+    private function setPersonType($personType)
+    {
+        if($personType !== self::PERS_TYPE_ORGANISATION && $personType !== self::PERS_TYPE_PRIVATPERSON && $personType !== self::PERS_TYPE_ROLE)
+        {
+            throw new eppException('Invalid personType ' . htmlspecialchars ($personType) . ' assigned! One of the following personTypes are allowd: privateperson (natural person) organisation (companies ect.) role (e.g. administrators ect.)');
+        }
+        $this->personType=$personType;
     }
 
     public function getPersonType()
@@ -96,12 +103,12 @@ class atEppContact extends eppContact
     }
 
 
+
     /**
      *
      * @return string ContactId
      */
-    public function generateContactId()
-    {
+    public function generateContactId() {
         return "AUTO";
     }
 }

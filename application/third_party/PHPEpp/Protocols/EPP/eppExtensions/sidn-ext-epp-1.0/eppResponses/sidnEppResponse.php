@@ -1,15 +1,12 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class sidnEppResponse extends eppResponse
-{
-    function __construct()
-    {
+class sidnEppResponse extends eppResponse {
+    function __construct() {
         parent::__construct();
     }
 
-    public function Success()
-    {
+    public function Success() {
         $xpath = $this->xPath();
         $result = $xpath->query('/epp:epp/epp:response/epp:result/@code');
         $resultcode = $result->item(0)->nodeValue;

@@ -5,30 +5,29 @@ namespace Metaregistrar\EPP;
      */
 
 /**
- * C:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
- * C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
- * C:  <command>
- * C:   <check>
- * C:    <domain:check
- * C:     xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
- * C:      <domain:name>example1.tld</domain:name>
- * C:      <domain:name>example2.tld</domain:name>
- * C:    </domain:check>
- * C:   </check>
- * C:   <extension>
- * C:    <launch:check
- * C:     xmlns:launch="urn:ietf:params:xml:ns:launch-1.0"
- * C:     type="avail">
- * C:      <launch:phase name="idn-release">custom</launch:phase>
- * C:    </launch:check>
- * C:   </extension>
- * C:   <clTRID>ABC-12345</clTRID>
- * C:  </command>
- * C:</epp>
+C:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+C:  <command>
+C:   <check>
+C:    <domain:check
+C:     xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+C:      <domain:name>example1.tld</domain:name>
+C:      <domain:name>example2.tld</domain:name>
+C:    </domain:check>
+C:   </check>
+C:   <extension>
+C:    <launch:check
+C:     xmlns:launch="urn:ietf:params:xml:ns:launch-1.0"
+C:     type="avail">
+C:      <launch:phase name="idn-release">custom</launch:phase>
+C:    </launch:check>
+C:   </extension>
+C:   <clTRID>ABC-12345</clTRID>
+C:  </command>
+C:</epp>
  */
 
-class eppLaunchCheckRequest extends eppCheckRequest
-{
+class eppLaunchCheckRequest extends eppCheckRequest {
     CONST TYPE_CLAIMS = 'claims';
     CONST TYPE_AVAIL = 'avail';
     CONST PHASE_SUNRISE = 'sunrise';
@@ -44,8 +43,7 @@ class eppLaunchCheckRequest extends eppCheckRequest
     CONST STATUS_REJECTED = 'rejected';
     CONST STATUS_CUSTOM = 'custom';
 
-    function __construct($checkrequest)
-    {
+    function __construct($checkrequest) {
         parent::__construct($checkrequest);
         $this->addExtension('xmlns:launch', 'urn:ietf:params:xml:ns:launch-1.0');
     }
@@ -56,8 +54,7 @@ class eppLaunchCheckRequest extends eppCheckRequest
      * @param $customName String when $name is PHASE_CUSTOM you should specify this one.
      * @param $type String Type of request, 'claims' or 'avail'
      */
-    public function setLaunchPhase($name, $customName = null, $type = self::TYPE_AVAIL)
-    {
+    public function setLaunchPhase($name, $customName = null, $type = self::TYPE_AVAIL) {
         $launchCheck = $this->createElement("launch:check");
         $launchCheck->setAttribute("type", $type);
 

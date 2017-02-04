@@ -1,11 +1,10 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class ficoraEppUpdateDomainRequest extends eppUpdateDomainRequest
-{
+class ficoraEppUpdateDomainRequest extends eppUpdateDomainRequest {
 
     // Note: default value for $namespacesinroot differs from parent
-    public function __construct($objectname, ficoraEppDomain $addinfo = null, ficoraEppDomain $removeinfo = null, ficoraEppDomain $updateinfo = null, $forcehostattr = false, $namespacesinroot = false)
+    public function __construct($objectname, ficoraEppDomain $addinfo = null, ficoraEppDomain $removeinfo = null, ficoraEppDomain $updateinfo = null, $forcehostattr=false, $namespacesinroot=false)
     {
         parent::__construct($objectname, $addinfo, $removeinfo, $updateinfo, $forcehostattr, $namespacesinroot);
     }
@@ -15,8 +14,7 @@ class ficoraEppUpdateDomainRequest extends eppUpdateDomainRequest
      * @param \domElement $element
      * @param eppDomain $domain ficoraEppDomain element containing changes
      */
-    protected function addDomainChanges($element, eppDomain $domain)
-    {
+    protected function addDomainChanges($element, eppDomain $domain) {
         // can't change function argument class due to strict standards warning
         if (!$domain instanceof ficoraEppDomain) {
             throw new eppException('Domains passed to ficoraEppUpdateDomainRequest must be instances of ficoraEppDomain');
@@ -30,7 +28,7 @@ class ficoraEppUpdateDomainRequest extends eppUpdateDomainRequest
             $nameservers = $this->createElement('domain:ns');
             foreach ($hosts as $host) {
                 /* @var eppHost $host */
-                if (($this->getForcehostattr()) || (is_array($host->getIpAddresses()))) {
+                if (($this->getForcehostattr()) ||  (is_array($host->getIpAddresses()))) {
                     $nameservers->appendChild($this->addDomainHostAttr($host));
                 } else {
                     $nameservers->appendChild($this->addDomainHostObj($host));

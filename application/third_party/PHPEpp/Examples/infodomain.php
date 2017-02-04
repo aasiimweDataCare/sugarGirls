@@ -2,11 +2,11 @@
 require('../autoloader.php');
 
 use Metaregistrar\EPP\eppConnection;
-use Metaregistrar\EPP\eppContactHandle;
-use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppException;
-use Metaregistrar\EPP\eppHost;
+use Metaregistrar\EPP\eppDomain;
 use Metaregistrar\EPP\eppInfoDomainRequest;
+use Metaregistrar\EPP\eppContactHandle;
+use Metaregistrar\EPP\eppHost;
 
 
 /*
@@ -40,8 +40,7 @@ try {
  * @param $domainname string
  * @return string
  */
-function infodomain($conn, $domainname)
-{
+function infodomain($conn, $domainname) {
     try {
         $info = new eppInfoDomainRequest(new eppDomain($domainname));
         if ($response = $conn->request($info)) {
@@ -49,7 +48,7 @@ function infodomain($conn, $domainname)
             $d = $response->getDomain();
             echo "Info domain for " . $d->getDomainname() . ":\n";
             echo "Created on " . $response->getDomainCreateDate() . "\n";
-            echo "Last update on " . $response->getDomainUpdateDate() . "\n";
+            echo "Last update on ".$response->getDomainUpdateDate()."\n";
             echo "Registrant " . $d->getRegistrant() . "\n";
             echo "Contact info:\n";
             foreach ($d->getContacts() as $contact) {

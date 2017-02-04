@@ -1,8 +1,7 @@
 <?php
 namespace Metaregistrar\EPP;
 
-class eppContactRequest extends eppRequest
-{
+class eppContactRequest extends eppRequest {
 
 
     /**
@@ -11,13 +10,12 @@ class eppContactRequest extends eppRequest
      */
     public $contactobject = null;
 
-    function __construct($type)
-    {
+    function __construct($type) {
         parent::__construct();
         $check = $this->createElement($type);
-        $this->contactobject = $this->createElement('contact:' . $type);
+        $this->contactobject = $this->createElement('contact:'.$type);
         if (!$this->rootNamespaces()) {
-            $this->contactobject->setAttribute('xmlns:contact', 'urn:ietf:params:xml:ns:contact-1.0');
+            $this->contactobject->setAttribute('xmlns:contact','urn:ietf:params:xml:ns:contact-1.0');
         }
         $check->appendChild($this->contactobject);
         $this->getCommand()->appendChild($check);

@@ -19,7 +19,7 @@
         <footer>
             <div class="container">
 
-                <p>Developed By <a target="_blank" href="#" rel="author">Web solutions&trade;</a>&nbsp;&nbsp;&copy;2015
+                <p>Developed By <a target="_blank" href="#" rel="author">ComeEasy&trade;</a>&nbsp;&nbsp;&copy;2015
                     - <?php echo date('Y'); ?>
                 </p>
             </div>
@@ -31,13 +31,8 @@
 
 <!-- jQuery -->
 <script src="<?php echo base_url() ?>highcharts/lib_js/jquery.min.2.1.4.js"></script>
-<!-- Bootstrap Core JavaScript -->
 <script src="<?php echo base_url() ?>bootstrap-3.3.5/js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
 <script src="<?php echo base_url() ?>metis-menu/metisMenu.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
 <script src="<?php echo base_url() ?>dist/js/sb-admin-2.js"></script>
 <script src="<?php echo base_url() ?>dist/js/addRow.js"></script>
 <script src="<?php echo base_url() ?>dist/js/bootstrap-datepicker.js"></script>
