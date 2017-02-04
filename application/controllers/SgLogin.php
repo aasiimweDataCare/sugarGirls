@@ -20,7 +20,7 @@ class SgLogin extends CI_Controller
         $this->load->helper('html');
         $this->load->database();
         $this->load->library('form_validation');
-        //load the login model
+        $this->load->model('Setups_model');
         $this->load->model('Login_model');
     }
 
@@ -68,21 +68,14 @@ class SgLogin extends CI_Controller
                         );
                         $this->session->set_userdata($sessiondata);
                         $this->Login_model->Login_systemLogs();
-
-                        if (!in_array(($row->tbl_user_groupsId), array('5', '6', '13', '14'), true)) {
                             redirect("SgUserProfile/index");
-                        } else {
-
-                            redirect("SgUserProfile/salesDashboard");
-
-                        }
 
 
                     }
 
 
                 } else {
-                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Invalid username and password!</div>');
+                    $this->session->set_flashdata('msg_login', '<div class="alert alert-danger text-center">Invalid username and password!</div>');
                     redirect('SgLogin/index');
                 }
             } //if validation fails
@@ -107,21 +100,127 @@ class SgLogin extends CI_Controller
         $this->load->view('footer_close_tags');
     }
 
-    public function register_submit()
+    public function register_form_part_two()
     {
+        //get the posted filter values
+        $pageAndFilterParameters = array(
+            'page_name' => 'Register part two',
+        );
+        $this->session->set_userdata($pageAndFilterParameters);
+
+        $data['country'] = $this->Setups_model->get_country();
+        $data['ethnicity'] = $this->Setups_model->get_ethnicity();
+        $data['body_type'] = $this->Setups_model->get_body_type();
+        $data['relationship_status'] = $this->Setups_model->get_relationship_status();
+        $data['travelling_with'] = $this->Setups_model->get_travelling_with();
+
+
+        $this->load->view('header', $data);
+        $this->load->view('left_nav_menu', $data);
+        $this->load->view('SgMain/sg_register_part_two_view', $data);
+        $this->load->view('footer', $data);
+        $this->load->view('footer_close_tags');
+    }
+
+    //register_submit_part_two
+    public function register_submit_part_two()
+    {
+        $data = '';
+
         //set validations
-        $this->form_validation->set_rules("username", "Username", 'trim|required|min_length[5]|max_length[12]|xss_clean|callback_alpha_space_only');
+        $this->form_validation->set_rules("username", "Username", 'trim|required|min_length[5]|max_length[20]|callback_alpha_space_only');
         $this->form_validation->set_rules("email_add", "Email Address", "trim|required|valid_email");
         $this->form_validation->set_rules("password", "Safe Password", "trim|required|min_length[8]");
         $this->form_validation->set_rules("cpassword", "Confirm Password", "trim|required|matches[password]");
-        $this->form_validation->set_rules("promo_code", "Promo Code", "trim|required");
-        $this->form_validation->set_rules("privacy_policy", "Privacy Policy", "trim|required");
+        $this->form_validation->set_rules("promo_code", "Promo Code", "trim");
+        $this->form_validation->set_rules("privacy_policy", "Privacy Policy Check", "trim|callback_accept_terms");
 
 
         if ($this->form_validation->run() == FALSE) {
-            redirect('SgLogin/register_form');
+            //failed validation
+            $this->load->view('header');
+            $this->load->view('left_nav_menu', $data);
+            $this->load->view('SgMain/sg_register_part_two_view', $data);
+            $this->load->view('footer', $data);
+            $this->load->view('footer_close_tags');
         } else {
-            echo('no');
+            //passed validation
+            $s = substr(str_shuffle(str_repeat(defaultRandomStringArray, 6)), 0, 6);
+            $data_to_insert = array(
+                'country' => null,
+                'state' => null,
+                'groupCode' => null,
+                'userName' => $this->input->post('username'),
+                'fullNames' => null,
+                'password' => md5($this->input->post('password')),
+                'EncryptionHint' => $s . $this->input->post('password'),
+                'EnteredBy' => null,
+                'EntryDate' => date('Y-m-d h:i:s'),
+                'userStatus' => 'Active',
+                'email' => $this->input->post('email_add'),
+                'dob' => null,
+                'gender' => null,
+                'emailStatus' => 'Not Sent',
+                'updatedby' => null
+            );
+
+            //insert the form data into database
+            $this->db->insert('tbl_users', $data_to_insert);
+
+            //display success message
+            $this->session->set_flashdata('msg_sg_register_part_two', '<div class="alert alert-success text-center">Your User Profile has updated</div>');
+            redirect('SgLogin/register_form_part_two');
+        }
+    }
+
+    public function register_submit()
+    {
+        $data = '';
+
+        //set validations
+        $this->form_validation->set_rules("username", "Username", 'trim|required|min_length[5]|max_length[20]|callback_alpha_space_only');
+        $this->form_validation->set_rules("email_add", "Email Address", "trim|required|valid_email");
+        $this->form_validation->set_rules("password", "Safe Password", "trim|required|min_length[8]");
+        $this->form_validation->set_rules("cpassword", "Confirm Password", "trim|required|matches[password]");
+        $this->form_validation->set_rules("promo_code", "Promo Code", "trim");
+        $this->form_validation->set_rules("privacy_policy", "Privacy Policy Check", "trim|callback_accept_terms");
+
+
+
+        if ($this->form_validation->run() == FALSE) {
+            //failed validation
+            $this->load->view('header');
+            $this->load->view('left_nav_menu', $data);
+            $this->load->view('SgMain/sg_register_view', $data);
+            $this->load->view('footer', $data);
+            $this->load->view('footer_close_tags');
+        } else {
+            //passed validation
+            $s = substr(str_shuffle(str_repeat(defaultRandomStringArray, 6)), 0, 6);
+            $data_to_insert = array(
+                'country' => null,
+                'state' => null,
+                'groupCode' => null,
+                'userName' => $this->input->post('username'),
+                'fullNames' => null,
+                'password' => md5($this->input->post('password')),
+                'EncryptionHint' => $s . $this->input->post('password'),
+                'EnteredBy' => null,
+                'EntryDate' => date('Y-m-d h:i:s'),
+                'userStatus' => 'Active',
+                'email' => $this->input->post('email_add'),
+                'dob' => null,
+                'gender' => null,
+                'emailStatus' => 'Not Sent',
+                'updatedby' => null
+            );
+
+            //insert the form data into database
+            $this->db->insert('tbl_users', $data_to_insert);
+
+            //display success message
+            $this->session->set_flashdata('msg_sg_register', '<div class="alert alert-success text-center">Your User Profile has successfully been captured</div>');
+            redirect('SgLogin/register_form');
         }
     }
 
@@ -140,6 +239,15 @@ class SgLogin extends CI_Controller
         } else {
             return TRUE;
         }
+    }
+
+    function accept_terms($str)
+    {
+        if ($str === '1') {
+            return TRUE;
+        }
+        $this->form_validation->set_message('accept_terms', 'Agree to our terms and conditions');
+        return FALSE;
     }
 
 

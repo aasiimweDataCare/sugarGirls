@@ -20,7 +20,6 @@ class SgMain extends CI_Controller
         $this->load->helper('html');
         $this->load->library('form_validation');
         $this->load->library('email');
-
         $this->load->library('pagination');
     }
 
@@ -29,9 +28,7 @@ class SgMain extends CI_Controller
     {
         $pageName = array('page_name' => 'Home Page');
         $this->session->set_userdata($pageName);
-
         $data = '';
-
         $this->load->view('header');
         $this->load->view('left_nav_menu', $data);
         $this->load->view('SgMain/eppMain_view', $data);

@@ -7,11 +7,9 @@
  */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-$user_name = ($this->session->userdata['user_name']);
 $page_name = ($this->session->userdata['page_name']);
-if (empty($user_name)) {
-    redirect('LoginController');
+if (empty($page_name)) {
+    redirect('SgLogin');
 }
 ?>
 <!DOCTYPE html>
@@ -55,8 +53,7 @@ if (empty($user_name)) {
 <div id="loading">
     <img id="loading-image" src="<?= base_url() ?>assets/images/ajax_loader.gif" alt="Loading..."/>
 </div>
-<div class="container-fluid">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -66,7 +63,10 @@ if (empty($user_name)) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Home</a>
+                <a class="navbar-brand" href="<?= site_url('SgLogin/index') ?>">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    Home
+                </a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -97,3 +97,5 @@ if (empty($user_name)) {
                 </ul>
             </div>
     </nav>
+<div class="clearfix"></div>
+<div id="page-wrapper">

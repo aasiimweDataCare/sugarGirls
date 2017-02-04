@@ -113,7 +113,7 @@ $config['enable_hooks'] = FALSE;
 | http://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'EppClient_';
+$config['subclass_prefix'] = 'SG_';
 
 /*
 |--------------------------------------------------------------------------
@@ -506,4 +506,4 @@ $config['rewrite_short_tags'] = FALSE;
 | Comma-separated:	'10.0.1.200,192.168.5.0/24'
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
-$config['proxy_ips'] = '51.255.207.31';
+

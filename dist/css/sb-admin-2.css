@@ -8,136 +8,17 @@ body {
     margin: 0;
     font-size: 12px;
     font-family: "nta", "GDS-Regular", sans-serif !important;
-    /*font-weight: 900;*/
     background-color: rgba(42, 148, 255, 0.19);
     color:#00296B;
+    margin: 5% 0% 0% 0%;
 }
 
 label {
     color: #29388F;
 }
 
-
-
-.data-grid{
-    background-color: inherit;
-
-}
-.data-grid tr:nth-child(even){
-    background-color: #F5F5F5;
-}
-.data-grid tr:nth-child(odd){
-    background-color: #8CD6DE;
-}
-
-
-.data-grid tr:nth-child(odd)  td[rowspan]{
-    background: #8CD6DE;
-}
-.data-grid tr:nth-child(even)  td[rowspan]{
-    background: #F5F5F5;
-}
-
-.data-grid tr:nth-last-child(1){
-    background-color: inherit;
-}
-
-.data-grid tr:hover{
-    background-color: #00296B;
-    color:white; !important
-opacity: 0.50;
-    filter: alpha(opacity=50);
-
-}
-
-.data-grid tr:hover  td[rowspan]{
-    background-color: #00296B;
-    color:white; !important
-opacity: 0.50;
-    filter: alpha(opacity=50);
-}
-
-
-.data-grid-form{
-    background-color: inherit;
-}
-
-.data-grid-form tr:nth-child(odd){
-    background-color: #C5EFEF;
-}
-.data-grid-form tr:nth-child(even){
-    background-color: #F5F5F5;
-}
-
-.data-grid-form tr:nth-last-child(1){
-    background-color: inherit;
-}
-
-
-.standard-report-grid{
-    background-color: inherit;
-
-}
-.standard-report-grid tr:nth-child(even){
-    background-color: #F5F5F5;
-}
-.standard-report-grid tr:nth-child(odd){
-    background-color: #8CD6DE;
-}
-
-
-.standard-report-grid tr:nth-child(odd)  td[rowspan]{
-    background: #8CD6DE;
-}
-.standard-report-grid tr:nth-child(even)  td[rowspan]{
-    background: #F5F5F5;
-}
-
-.standard-report-grid tr:nth-last-child(1){
-    background-color: inherit;
-}
-
-
-
-
-.standard-report-grid-form{
-    background-color: inherit;
-}
-
-.standard-report-grid-form tr:nth-child(odd){
-    background-color: #C5EFEF;
-}
-.standard-report-grid-form tr:nth-child(even){
-    background-color: #F5F5F5;
-}
-
-.standard-report-grid-form tr:nth-last-child(1){
-    background-color: inherit;
-}
-
-.first-cell-header{
-    min-width: 5px;
-    max-width: 5px;
-}
-
-.small-cell-header{
-    min-width: 80px;
-}
-
-.large-cell-header{
-    min-width: 150px;
-}
-
-.largest-cell-header{
-    min-width: 280px;
-}
-
-.small-form-label{
-    min-width: 80px;
-}
-
-.large-form-label{
-    min-width: 200px;
+.custom-forms {
+    background-color: rgba(255, 166, 252, 0.19);
 }
 
 
@@ -273,6 +154,9 @@ opacity: 0.50;
     line-height: 0.8;
 }
 
+.custom-submit-btn {
+    background-color: #ff41f9;
+}
 
 .chat {
     margin: 0;
@@ -2563,4 +2447,18 @@ th,thead >tr {
     background: -o-linear-gradient(right, #003399, #E9FCFF); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, #003399, #E9FCFF); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to right, #003399 , #E9FCFF); /* Standard syntax */
+}
+
+legend {
+    display: block;
+    width: auto;
+    padding: 0 5px;
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+fieldset {
+    border: 2px groove threedface;
+    padding: 5px;
 }
