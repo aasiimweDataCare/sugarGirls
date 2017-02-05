@@ -4,6 +4,7 @@
     echo form_open("SgLogin/register_submit_part_two", $attributes);
     ?>
 
+    <?= $this->session->flashdata('msg_sg_register'); ?>
     <?= $this->session->flashdata('msg_sg_register_part_two'); ?>
 
     <h2 class="text-center">Complete your profile to get started!</h2>
@@ -118,7 +119,6 @@
                 </div>
             </div>
 
-
             <div class="form-group" id="locationField">
                 <label for="location" class="control-label">Location</label>
                 <input
@@ -136,100 +136,110 @@
                        hidden="hidden">
                 <input class="field" id="postal_code" name="postal_code" disabled="true" hidden="hidden">
                 <input class="field" id="country" name="country" disabled="true" hidden="hidden">
-
             </div>
-            <script>
-                // This example displays an address form, using the autocomplete feature
-                // of the Google Places API to help users fill in the information.
 
-                // This example requires the Places library. Include the libraries=places
-                // parameter when you first load the API. For example:
-                // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-                var placeSearch, autocomplete;
-                var componentForm = {
-                    street_number: 'short_name',
-                    route: 'long_name',
-                    locality: 'long_name',
-                    administrative_area_level_1: 'short_name',
-                    country: 'long_name',
-                    postal_code: 'short_name'
-                };
-
-                function initAutocomplete() {
-                    // Create the autocomplete object, restricting the search to geographical
-                    // location types.
-                    autocomplete = new google.maps.places.Autocomplete(
-                        /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-                        {types: ['geocode']});
-
-                    // When the user selects an address from the dropdown, populate the address
-                    // fields in the form.
-                    autocomplete.addListener('place_changed', fillInAddress);
-                }
-
-                function fillInAddress() {
-                    // Get the place details from the autocomplete object.
-                    var place = autocomplete.getPlace();
-
-                    for (var component in componentForm) {
-                        document.getElementById(component).value = '';
-                        document.getElementById(component).disabled = false;
-                    }
-
-                    // Get each component of the address from the place details
-                    // and fill the corresponding field on the form.
-                    for (var i = 0; i < place.address_components.length; i++) {
-                        var addressType = place.address_components[i].types[0];
-                        if (componentForm[addressType]) {
-                            var val = place.address_components[i][componentForm[addressType]];
-                            document.getElementById(addressType).value = val;
-                        }
-                    }
-                }
-
-                // Bias the autocomplete object to the user's geographical location,
-                // as supplied by the browser's 'navigator.geolocation' object.
-                function geolocate() {
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function (position) {
-                            var geolocation = {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude
-                            };
-                            var circle = new google.maps.Circle({
-                                center: geolocation,
-                                radius: position.coords.accuracy
-                            });
-                            autocomplete.setBounds(circle.getBounds());
-                        });
-                    }
-                }
-            </script>
-            <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMFx39NK5e5phZUUEaDyIlgevM0_Nhv2A&libraries=places&callback=initAutocomplete"
-                async defer>
-            </script>
-
+            <div class="form-group">
+                <label for="self_description" class="control-label">Describe your self</label>
+                <textarea placeholder="Describe your self.." class="form-control"
+                          id="self_description"
+                          name="self_description"
+                          cols="60" rows="5"><?php echo set_value('self_description'); ?></textarea>
+                <span class="text-danger"><?= form_error('self_description'); ?></span>
+            </div>
         </div>
     </div>
-
+    <div class="clearfix"></div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Optional</h3>
         </div>
         <div class="panel-body">
-            Panel content
+            <div class="form-group">
+                <label for="height" class="control-label">Height</label>
+                <?php
+                $attributes = 'class = "form-control" name="height" id = "height" title="Height"';
+                echo form_dropdown('height', $height, set_value('height'), $attributes);
+                ?>
+                <span class="text-danger">
+                        <?= form_error('height'); ?>
+                    </span>
+            </div>
+
+            <div class="form-group">
+                <label for="education" class="control-label">Education</label>
+                <?php
+                $attributes = 'class = "form-control" name="education" id = "education" title=Education"';
+                echo form_dropdown('education', $education, set_value('education'), $attributes);
+                ?>
+                <span class="text-danger">
+                        <?= form_error('education'); ?>
+                    </span>
+            </div>
+
+            <div class="form-group">
+                <label for="religion" class="control-label">Religion</label>
+                <?php
+                $attributes = 'class = "form-control" name="religion" id = "religion" title="Religion"';
+                echo form_dropdown('religion', $religion, set_value('religion'), $attributes);
+                ?>
+                <span class="text-danger">
+                        <?= form_error('religion'); ?>
+                    </span>
+            </div>
+
+            <div class="form-group">
+                <label for="children" class="control-label">Children</label>
+                <?php
+                $attributes = 'class = "form-control" name="children" id = "children" title="Children"';
+                echo form_dropdown('children', $children, set_value('children'), $attributes);
+                ?>
+                <span class="text-danger">
+                        <?= form_error('children'); ?>
+                    </span>
+            </div>
+
+            <div class="form-group">
+                <label for="smoking" class="control-label">Smoking</label>
+                <?php
+                $attributes = 'class = "form-control" name="smoking" id = "smoking" title="Smoking Habit"';
+                echo form_dropdown('smoking', $smoking, set_value('smoking'), $attributes);
+                ?>
+                <span class="text-danger">
+                        <?= form_error('smoking'); ?>
+                    </span>
+            </div>
+
+            <div class="form-group">
+                <label for="drinking" class="control-label">Drinking</label>
+                <?php
+                $attributes = 'class = "form-control" name="drinking" id = "drinking" title="Drinking Habit"';
+                echo form_dropdown('drinking', $drinking, set_value('drinking'), $attributes);
+                ?>
+                <span class="text-danger">
+                        <?= form_error('drinking'); ?>
+                    </span>
+            </div>
+
+            <div class="form-group">
+                <label for="why_travel" class="control-label">Why I want to Travel</label>
+                <textarea placeholder="Why You want to Travel..." class="form-control"
+                          id="why_travel"
+                          name="why_travel"
+                          cols="60" rows="5"><?php echo set_value('why_travel'); ?></textarea>
+                <span class="text-danger"><?= form_error('why_travel'); ?></span>
+            </div>
+
         </div>
     </div>
 
-    <input type="submit" name="register_user" id="register_user" value="Create Account"
+    <input type="submit" name="register_user" id="register_user" value="Save Profile"
            class="btn btn-success custom-submit-btn"/>
     <br/>
     <?= form_close(); ?>
-    <?= $this->session->flashdata('msg_sg_register'); ?>
-    <p class="footer">Please <a href="#" data-toggle="modal" data-target="#loginModal">Log
-            In</a> if you already have an account</p>
-
+    <?= $this->session->flashdata('msg_sg_register_part_two'); ?>
+    <p class="footer">Please
+        <a href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
+        if you already have an account
+    </p>
 </div>
 <div class="clearfix"></div>

@@ -86,8 +86,6 @@ define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
 define('projectName', 'Sugar Girls');
-define('cpma_dollar_rate', 2500);
-define('Ha', 0.40468);
 define('thisMonth', date('F'));
 define('thisYear', date('Y'));
 define('digitMonth', date('m'));
@@ -95,6 +93,8 @@ define('toDay', date('Y-m-d H:i:s'));
 define('defaultRandomStringArray', 'abcdefghijklmnopqrstuvwxyz'
     . 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     . '0123456789!@#$%^&*()');
+define('googleAddressAPI_Key', 'AIzaSyCMFx39NK5e5phZUUEaDyIlgevM0_Nhv2A');
+
 
 
 

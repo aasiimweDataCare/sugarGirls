@@ -116,5 +116,119 @@ class Setups_model extends CI_Model
         return $travelling_with_result = array_combine($travelling_with_id, $travelling_with_name);
     }
 
+    function get_heights()
+    {
+        $this->db->select('tbl_heights_id');
+        $this->db->select('name');
+        $this->db->from('tbl_heights');
+        $this->db->order_by('name', 'asc');
+        $query = $this->db->get();
+        $result = $query->result();
+
+        $heights_id = array('-select your height-');
+        $heights_name = array('-select your height-');
+
+        for ($i = 0; $i < count($result); $i++) {
+            array_push($heights_id, $result[$i]->tbl_heights_id);
+            array_push($heights_name, $result[$i]->name);
+        }
+        return $heights_result = array_combine($heights_id, $heights_name);
+    }
+
+    function get_education()
+    {
+        $this->db->select('tbl_education_id');
+        $this->db->select('name');
+        $this->db->from('tbl_education');
+        $this->db->order_by('name', 'asc');
+        $query = $this->db->get();
+        $result = $query->result();
+
+        $education_id = array('-select your education-');
+        $education_name = array('-select your education-');
+
+        for ($i = 0; $i < count($result); $i++) {
+            array_push($education_id, $result[$i]->tbl_education_id);
+            array_push($education_name, $result[$i]->name);
+        }
+        return $education_result = array_combine($education_id, $education_name);
+    }
+
+    function get_religion()
+    {
+        $this->db->select('tbl_religion_id');
+        $this->db->select('name');
+        $this->db->from('tbl_religion');
+        $this->db->order_by('name', 'asc');
+        $query = $this->db->get();
+        $result = $query->result();
+
+        $religion_id = array('-select your religion-');
+        $religion_name = array('-select your religion-');
+
+        for ($i = 0; $i < count($result); $i++) {
+            array_push($religion_id, $result[$i]->tbl_religion_id);
+            array_push($religion_name, $result[$i]->name);
+        }
+        return $religion_result = array_combine($religion_id, $religion_name);
+    }
+
+    function get_children()
+    {
+        $this->db->select('tbl_children_id');
+        $this->db->select('name');
+        $this->db->from('tbl_children');
+        $this->db->order_by('name', 'asc');
+        $query = $this->db->get();
+        $result = $query->result();
+
+        $children_id = array('-select number of children-');
+        $children_name = array('-select number of children-');
+
+        for ($i = 0; $i < count($result); $i++) {
+            array_push($children_id, $result[$i]->tbl_children_id);
+            array_push($children_name, $result[$i]->name);
+        }
+        return $children_result = array_combine($children_id, $children_name);
+    }
+
+    function get_smoking()
+    {
+        $this->db->select('tbl_smoking_id');
+        $this->db->select('name');
+        $this->db->from('tbl_smoking');
+        $this->db->order_by('name', 'asc');
+        $query = $this->db->get();
+        $result = $query->result();
+
+        $smoking_id = array('-select smoking habit-');
+        $smoking_name = array('-select smoking habit-');
+
+        for ($i = 0; $i < count($result); $i++) {
+            array_push($smoking_id, $result[$i]->tbl_smoking_id);
+            array_push($smoking_name, $result[$i]->name);
+        }
+        return $smoking_result = array_combine($smoking_id, $smoking_name);
+    }
+
+    function get_drinking()
+    {
+        $this->db->select('tbl_drinking_id');
+        $this->db->select('name');
+        $this->db->from('tbl_drinking');
+        $this->db->order_by('name', 'asc');
+        $query = $this->db->get();
+        $result = $query->result();
+
+        $drinking_id = array('-select drinking habit-');
+        $drinking_name = array('-select drinking habit-');
+
+        for ($i = 0; $i < count($result); $i++) {
+            array_push($drinking_id, $result[$i]->tbl_drinking_id);
+            array_push($drinking_name, $result[$i]->name);
+        }
+        return $drinking_result = array_combine($drinking_id, $drinking_name);
+    }
+
 
 }

@@ -113,6 +113,15 @@ class SgLogin extends CI_Controller
         $data['body_type'] = $this->Setups_model->get_body_type();
         $data['relationship_status'] = $this->Setups_model->get_relationship_status();
         $data['travelling_with'] = $this->Setups_model->get_travelling_with();
+        $data['height'] = $this->Setups_model->get_heights();
+        $data['education'] = $this->Setups_model->get_education();
+        $data['religion'] = $this->Setups_model->get_religion();
+        $data['children'] = $this->Setups_model->get_children();
+        $data['smoking'] = $this->Setups_model->get_smoking();
+        $data['drinking'] = $this->Setups_model->get_drinking();
+
+
+
 
 
         $this->load->view('header', $data);
@@ -220,7 +229,7 @@ class SgLogin extends CI_Controller
 
             //display success message
             $this->session->set_flashdata('msg_sg_register', '<div class="alert alert-success text-center">Your User Profile has successfully been captured</div>');
-            redirect('SgLogin/register_form');
+            redirect('SgLogin/register_form_part_two');
         }
     }
 

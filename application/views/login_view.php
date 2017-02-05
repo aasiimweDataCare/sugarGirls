@@ -60,11 +60,10 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
-                    <li><a href="<?= site_url('SgLogin/register_form_part_two') ?>">Sign Up For Free</a></li>
+                    <li><a href="<?= site_url('SgLogin/register_form') ?>">Sign Up For Free</a></li>
                 </ul>
             </div>
     </nav>
-
     <div class="col-sm-8 container-fluid well-sm">
         <img src="<?php echo base_url() ?>assets/images/SG-logo.png" width="10%" height="10%"/></div>
     <div class="col-sm-4 container-fluid">
@@ -72,8 +71,6 @@
         <a href="#"> <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;&nbsp;How It works</a>&nbsp;&nbsp;&nbsp;
         <a href="#"> <i class="fa fa-newspaper-o" aria-hidden="true"></i>&nbsp;&nbsp;Press</a>&nbsp;&nbsp;&nbsp;
     </div>
-
-
 </div>
 <div class="col-sm-12 col-xs-12 container-fluid">
 </div>
@@ -136,7 +133,5 @@
         </div>
     </div>
 </div>
-
-
 </body>
 </html>
