@@ -1,7 +1,7 @@
 <div class="col-sm-6 col-sm-offset-3 container-fluid custom-forms">
     <?php
     $attributes = array("class" => "", "id" => "sg_register_form", "name" => "sg_register_form");
-    echo form_open("SgLogin/register_submit", $attributes);
+    echo form_open("SgHome/register_submit", $attributes);
     ?>
 
     <?= $this->session->flashdata('msg_sg_register'); ?>

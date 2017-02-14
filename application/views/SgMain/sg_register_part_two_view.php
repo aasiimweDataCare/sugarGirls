@@ -1,7 +1,7 @@
 <div class="col-sm-6 col-sm-offset-3 container-fluid custom-forms">
     <?php
     $attributes = array("class" => "", "id" => "sg_register_form_part_two", "name" => "sg_register_form_part_two");
-    echo form_open("SgLogin/register_submit_part_two", $attributes);
+    echo form_open("SgHome/register_submit_part_two", $attributes);
     ?>
 
     <?= $this->session->flashdata('msg_sg_register'); ?>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="form-group">
-                <label for="country" class="control-label">Interested in traveling with</label>
+                <label for="travelling_with" class="control-label">Interested in traveling with</label>
                 <?php
                 $attributes = 'class = "form-control" name="travelling_with" id = "travelling_with" title="interested in travelling with"';
                 echo form_dropdown('travelling_with', $travelling_with, set_value('travelling_with'), $attributes);

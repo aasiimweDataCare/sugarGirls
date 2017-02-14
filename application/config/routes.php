@@ -50,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //$route['default_controller'] = 'welcome';
-$route['default_controller'] = 'SgLogin';
+$route['default_controller'] = 'SgHome';
 $route['assets/(:any)'] = 'assets/$1';
 $route['pages/(:any)'] = 'pages/$1';
 $route['404_override'] = '';

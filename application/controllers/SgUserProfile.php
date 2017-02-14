@@ -20,7 +20,6 @@ class SgUserProfile extends CI_Controller
         $this->load->helper('html');
         $this->load->library('form_validation');
         $this->load->library('email');
-
         $this->load->library('pagination');
     }
 

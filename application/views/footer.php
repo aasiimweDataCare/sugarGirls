@@ -40,7 +40,7 @@
                     <div class="col-xs-12 custom-forms">
                         <?php
                         $attributes = array("class" => "", "id" => "loginform", "name" => "loginform");
-                        echo form_open("SgLogin/index", $attributes); ?>
+                        echo form_open("SgHome/index", $attributes); ?>
                         <div class="form-group">
                             <label for="txt_username" class="control-label">Username</label>
                             <input type="text" class="form-control" id="txt_username" name="txt_username"
@@ -82,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 New To SugarGirls.com?
-                <a href="<?= site_url('SgLogin/register_form') ?>" class="btn btn-primary">Register</a>
+                <a href="<?= site_url('SgHome/register_form') ?>" class="btn btn-primary">Register</a>
             </div>
         </div>
     </div>

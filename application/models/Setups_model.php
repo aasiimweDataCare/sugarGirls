@@ -230,5 +230,4 @@ class Setups_model extends CI_Model
         return $drinking_result = array_combine($drinking_id, $drinking_name);
     }
 
-
 }

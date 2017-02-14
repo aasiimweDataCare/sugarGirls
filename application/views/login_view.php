@@ -29,38 +29,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= site_url('SgLogin/index') ?>">
+                <a class="navbar-brand" href="<?= site_url('SgHome/index') ?>">
                     <i class="fa fa-home" aria-hidden="true"></i>
                     Home
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Favorites <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">My Trips</a></li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
-                    <li><a href="<?= site_url('SgLogin/register_form') ?>">Sign Up For Free</a></li>
+                    <li><a href="<?= site_url('SgHome/register_form_part_two') ?>">Sign Up For Free</a></li>
                 </ul>
             </div>
     </nav>
@@ -88,7 +75,7 @@
                     <div class="col-xs-12 custom-forms">
                         <?php
                         $attributes = array("class" => "", "id" => "loginform", "name" => "loginform");
-                        echo form_open("SgLogin/index", $attributes); ?>
+                        echo form_open("SgHome/index", $attributes); ?>
                         <div class="form-group">
                             <label for="txt_username" class="control-label">Username</label>
                             <input type="text" class="form-control" id="txt_username" name="txt_username"
@@ -128,7 +115,7 @@
             </div>
             <div class="modal-footer">
                 New To SugarGirls.com?
-                <a href="<?= site_url('SgLogin/register_form') ?>" class="btn btn-primary">Register</a>
+                <a href="<?= site_url('SgHome/register_form') ?>" class="btn btn-primary">Register</a>
             </div>
         </div>
     </div>
