@@ -148,3 +148,22 @@ if (!function_exists('appendSuperpositionInteger()')) {
     }
 }
 
+if (!function_exists('empty_clean_select()')) {
+    function empty_clean_select($str)
+    {
+        switch (true) {
+            case(substr($str, 0, 7) == '-select'):
+                $value = null;
+                break;
+
+            default:
+                $value = $str;
+                break;
+
+        }
+
+        return $value;
+    }
+
+}
+

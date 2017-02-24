@@ -117,6 +117,7 @@
                         </div>
                     </div>
                 </div>
+                <span class="text-danger"><?= form_error('looking_for[]'); ?></span>
             </div>
 
             <div class="form-group" id="locationField">
@@ -136,6 +137,7 @@
                        hidden="hidden">
                 <input class="field" id="postal_code" name="postal_code" disabled="true" hidden="hidden">
                 <input class="field" id="country" name="country" disabled="true" hidden="hidden">
+
             </div>
 
             <div class="form-group">

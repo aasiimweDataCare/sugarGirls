@@ -18,6 +18,7 @@ class SgHome extends CI_Controller
         $this->load->helper('form');
         $this->load->helper('url');
         $this->load->helper('html');
+        $this->load->helper('utility');
         $this->load->database();
         $this->load->library('form_validation');
         $this->load->model('Setups_model');
@@ -36,7 +37,7 @@ class SgHome extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             //validation fails
-            $this->load->view('login_view');
+            $this->load->view('home_view');
         } else {
             //validation succeeds
             if ($this->input->post('btn_login') == "Login") {
@@ -148,7 +149,8 @@ class SgHome extends CI_Controller
         $this->form_validation->set_rules("body_type", "Body Type", "trim|required|callback_combo_check_body_type");
         $this->form_validation->set_rules("relationship_status", "Relationship Status", "trim|required|callback_combo_check_relationship_status");
         $this->form_validation->set_rules("travelling_with", "Travelling With", "trim|required|callback_combo_check_travelling_with");
-        $this->form_validation->set_rules("looking_for[]", "Looking For", "trim|required|callback_accept_terms");
+        $this->form_validation->set_rules("looking_for[]", "Looking For", "trim|required|callback_validate_check_box_options");
+        $this->form_validation->set_rules("location", "Location", "trim|required");
         $this->form_validation->set_rules("street_number", "Street Number", "trim");
         $this->form_validation->set_rules("route", "Route", "trim");
         $this->form_validation->set_rules("locality", "Locality", "trim");
@@ -158,12 +160,12 @@ class SgHome extends CI_Controller
         $this->form_validation->set_rules("self_description", "Self Description", "trim|required|min_length[20]");
 
         //Non mandatory
-        $this->form_validation->set_rules("height", "Height", "trim|callback_combo_check_height");
-        $this->form_validation->set_rules("education", "Education", "trim|callback_combo_check_education");
-        $this->form_validation->set_rules("religion", "Religion", "trim|callback_combo_check_religion");
-        $this->form_validation->set_rules("children", "Children", "trim|callback_combo_check_children");
-        $this->form_validation->set_rules("smoking", "Smoking", "trim|callback_combo_check_smoking");
-        $this->form_validation->set_rules("drinking", "Drinking", "trim|callback_combo_check_drinking");
+        $this->form_validation->set_rules("height", "Height", "trim");
+        $this->form_validation->set_rules("education", "Education", "trim");
+        $this->form_validation->set_rules("religion", "Religion", "trim");
+        $this->form_validation->set_rules("children", "Children", "trim");
+        $this->form_validation->set_rules("smoking", "Smoking", "trim");
+        $this->form_validation->set_rules("drinking", "Drinking", "trim");
         $this->form_validation->set_rules("why_travel", "Why Travel", "trim|min_length[20]");
 
 
@@ -177,29 +179,41 @@ class SgHome extends CI_Controller
         } else {
             //passed validation
             $s = substr(str_shuffle(str_repeat(defaultRandomStringArray, 6)), 0, 6);
+            $userId = 112;
+            $lookingFor_options = '';
+            for ($x = 0; $x < count($this->input->post('looking_for')); $x++) {
+                $looking_for = $this->input->post('looking_for')[$x];
+                $lookingFor_options .= $looking_for . ",";
+            }
             $data_to_insert = array(
-                'country' => null,
-                'state' => null,
-                'groupCode' => null,
-                'userName' => $this->input->post('username'),
-                'fullNames' => null,
-                'password' => md5($this->input->post('password')),
-                'EncryptionHint' => $s . $this->input->post('password'),
-                'EnteredBy' => null,
-                'EntryDate' => date('Y-m-d h:i:s'),
-                'userStatus' => 'Active',
-                'email' => $this->input->post('email_add'),
-                'dob' => null,
-                'gender' => null,
-                'emailStatus' => 'Not Sent',
-                'updatedby' => null
+                'ethnicity' => empty_clean_select($this->input->post('ethnicity')),
+                'body_type' => empty_clean_select($this->input->post('body_type')),
+                'relationship_status' => empty_clean_select($this->input->post('relationship_status')),
+                'travelling_with' => empty_clean_select($this->input->post('travelling_with')),
+                'looking_for' => $lookingFor_options,
+                'location' => $this->input->post('location'),
+                'street_number' => $this->input->post('street_number'),
+                'route' => $this->input->post('route'),
+                'locality' => $this->input->post('locality'),
+                'administrative_area_level_1' => $this->input->post('administrative_area_level_1'),
+                'postal_code' => (!empty($this->input->post('postal_code'))) ? ($this->input->post('postal_code')) : 0,
+                'country_text' => $this->input->post('country_text'),
+                'self_description' => $this->input->post('self_description'),
+                'height' => empty_clean_select($this->input->post('height')),
+                'education' => empty_clean_select($this->input->post('education')),
+                'religion' => empty_clean_select($this->input->post('religion')),
+                'children' => empty_clean_select($this->input->post('children')),
+                'smoking' => empty_clean_select($this->input->post('smoking')),
+                'drinking' => empty_clean_select($this->input->post('drinking')),
+                'why_travel' => $this->input->post('why_travel')
             );
 
             //insert the form data into database
-            $this->db->insert('tbl_users', $data_to_insert);
+            $this->db->where('tbl_userId', $userId);
+            $this->db->update('tbl_users', $data_to_insert);
 
             //display success message
-            $this->session->set_flashdata('msg_sg_register_part_two', '<div class="alert alert-success text-center">Your User Profile has updated</div>');
+            $this->session->set_flashdata('msg_sg_register_part_two', '<div class="alert alert-success text-center">Your User Profile has been updated</div>');
             redirect('SgHome/register_form_part_two');
         }
     }
@@ -370,21 +384,12 @@ class SgHome extends CI_Controller
         }
     }
 
-    function accept_terms($str)
+    function validate_check_box_options($str)
     {
-        if ($str === '1') {
+        if (!empty($str)) {
             return TRUE;
         }
-        $this->form_validation->set_message('accept_terms', 'Agree to our terms and conditions');
-        return FALSE;
-    }
-
-    function looking_for($str)
-    {
-        if ($str === '1') {
-            return TRUE;
-        }
-        $this->form_validation->set_message('accept_terms', 'Agree to our terms and conditions');
+        $this->form_validation->set_message('validate_check_box_options', 'Please check at least one option');
         return FALSE;
     }
 

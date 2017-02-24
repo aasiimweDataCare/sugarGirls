@@ -18,19 +18,18 @@ if (empty($page_name)) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?= projectName; ?>">
-    <meta name="keywords" content="<?= projectName; ?>,Dating,Site,Sugar,Girls,Uganda,Kenya,Tanzania">
-    <meta name="author" content="ComeEasy Apollo Asiimwe">
+    <meta name="description" content="Online Dating and Travelling Site">
+    <meta name="keywords" content="Dating,Travelling,Girls,Sugar">
+    <meta name="author" content="ComeEasy, ICT,Solutions, Uganda, Asiimwe, Apollo,">
     <link rel="icon" href="<?= base_url() ?>assets/images/favicon.png">
-    <link href="<?= base_url() ?>css/nta.css" media="all" rel="stylesheet" type="text/css">
+    <link href="<?= base_url() ?>dist/css/nta.css" media="all" rel="stylesheet" type="text/css">
     <title><?= projectName; ?>: <?= $page_name; ?></title>
     <link href="<?= base_url() ?>bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?= base_url() ?>dist/css/bootstrap-datepicker.css" rel="stylesheet">
     <link href="<?= base_url() ?>dist/css/bootstrap-datepicker3.css" rel="stylesheet">
-    <link href="<?= base_url() ?>dist/css/timeline.css" rel="stylesheet">
-    <link href="<?= base_url() ?>dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="<?= base_url() ?>font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          type="text/css">
+    <link href="<?= base_url() ?>assets/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" type="text/html">
+    <link href="<?= base_url() ?>font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>dist/css/sb-admin-2.css">
     <style type="text/css">
         @media screen and (min-width: 768px) {
             .modal-dialog {

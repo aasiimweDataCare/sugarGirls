@@ -1,4 +1,3 @@
-</div>
 <div class="clearfix"></div>
 <div align="center" class="row">
     <div class="col-xs-18 col-md-12">
